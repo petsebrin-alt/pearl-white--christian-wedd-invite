@@ -48,6 +48,7 @@ To save entries to a Google Sheet:
 
 ```
 PRD.md, THEME.md          requirements and visual direction
+vercel.json               tells Vercel to publish only site/
 site/
   index.html              page shell + static splash markup
   content.js              ← all wedding details (edit here)
@@ -65,4 +66,7 @@ Each section has its own script (`js/sections/NN-name.js`) and its own block in 
 
 ## Deploy
 
-Upload the contents of `site/` to any static host, such as Netlify (drag and drop), GitHub Pages, Cloudflare Pages or Vercel.
+The website lives in `site/`, so the host must serve that folder as the site root.
+
+- **Vercel** (connected to this GitHub repo): `vercel.json` sets the output directory to `site`, so every push redeploys automatically and only the website is published. Planning files such as PRD.md stay private. Leave the Vercel project's Root Directory empty and its Framework Preset on "Other".
+- **Other static hosts** (Netlify, Cloudflare Pages, GitHub Pages): set the publish or output directory to `site`, or upload the contents of `site/`.
