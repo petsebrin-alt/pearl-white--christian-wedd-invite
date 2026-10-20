@@ -26,6 +26,7 @@
     return String(v).trim() !== '';
   };
   AD.reducedMotion = function () {
+    if (document.documentElement.classList.contains('is-still')) return true;   // showcase view (?still)
     return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   };
   AD.announce = function (msg) {

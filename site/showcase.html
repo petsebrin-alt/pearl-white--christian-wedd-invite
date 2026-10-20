@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Angel &amp; David · Every Section on iPhone</title>
+  <meta name="description" content="Every section of Angel and David's wedding invitation, each shown live inside an iPhone 17 Pro Max.">
+  <meta name="theme-color" content="#F4F1EB">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Pinyon+Script&display=swap">
+  <link rel="stylesheet" href="css/iphone.css?v=20261020z">
+  <style>
+    /* =====================================================================
+       Every section of the invitation, each live inside its own iPhone 17
+       Pro Max (index.html?still opens straight on that section, at rest).
+       The page background is the invitation's own paper and pearl flowers.
+       ===================================================================== */
+    .board {
+      position: relative;
+      z-index: 1;
+      max-width: 1560px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.25rem, 4vw, 3.5rem) clamp(3rem, 6vw, 5rem);
+    }
+    .board__head { margin: 0 0 clamp(2rem, 4vw, 3.25rem); text-align: center; }
+    .board__names { margin: 0; font: 400 clamp(2.6rem, 2rem + 2.5vw, 4rem)/1.1 "Pinyon Script", cursive; color: #121212; }
+    .board__date { margin: .4rem 0 0; font: 600 .875rem/1 "Cormorant Garamond", serif; letter-spacing: .32em; text-transform: uppercase; color: #5c5852; }
+    .phones {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+      gap: clamp(2.25rem, 4vw, 3.5rem) clamp(1.25rem, 2.5vw, 2.5rem);
+    }
+    .phone { display: flex; flex-direction: column; align-items: center; }
+    .phone .device-wrap { width: 100%; aspect-ratio: 472 / 988; }
+    .phone__cap { margin: 1rem 0 0; text-align: center; font: 600 .78rem/1.35 "Cormorant Garamond", serif; letter-spacing: .22em; text-transform: uppercase; color: #2b2a28; }
+    .phone__cap span { display: block; margin-bottom: .2rem; font-size: .7rem; letter-spacing: .3em; color: #8a8378; }
+    @media print { .decor { position: absolute; } }
+  </style>
+</head>
+<body>
+  <div class="decor" aria-hidden="true">
+    <img class="dc--tl" src="assets/images/pearl-spray.webp?v=20261020y" alt="">
+    <img class="dc--tr" src="assets/images/pearl-drops.webp?v=20261020y" alt="">
+    <img class="dc--tr2" src="assets/images/pearl-drops.webp?v=20261020y" alt="">
+    <img class="dc--bl" src="assets/images/pearl-bloom.webp?v=20261020y" alt="">
+    <img class="dc--bl-sprig" src="assets/images/pearl-sprig.webp?v=20261020y" alt="">
+    <img class="dc--br" src="assets/images/pearl-spray.webp?v=20261020y" alt="">
+    <img class="dc--br-bud" src="assets/images/pearl-bud.webp?v=20261020y" alt="">
+    <span class="pearl-line p1"></span>
+    <span class="pearl-line p2"></span>
+  </div>
+
+  <main class="board">
+    <header class="board__head">
+      <h1 class="board__names">Angel &amp; David</h1>
+      <p class="board__date">27 · 01 · 2027</p>
+    </header>
+    <ol class="phones" id="phones"></ol>
+  </main>
+
+  <script>
+    (function () {
+      // [section number, name, what the phone opens on]
+      var SECTIONS = [
+        ['1', 'Opening', 'index.html'],
+        ['1', 'The Wedding of', 'index.html?still'],
+        ['2', 'Welcome', 'index.html?still#welcome'],
+        ['3', 'Save the Date', 'index.html?still#save-the-date'],
+        ['4', 'Countdown', 'index.html?still#countdown'],
+        ['5', 'Parents & Family', 'index.html?still#family'],
+        ['6', 'Wedding Events', 'index.html?still#events'],
+        ['7', 'Dress Code', 'index.html?still#dress-code'],
+        ['8', 'Gifting', 'index.html?still#gifting'],
+        ['9', 'Venues', 'index.html?still#venues'],
+        ['10', 'Wishing Wall', 'index.html?still#wishes'],
+        ['11', 'RSVP', 'index.html?still#rsvp'],
+        ['12', 'Transport & Stay', 'index.html?still#travel'],
+        ['13', 'Contact', 'index.html?still#contact'],
+        ['14', 'Thank You', 'index.html?still&end']
+      ];
+      var STATUS = '<div class="statusbar" aria-hidden="true"><span>9:41</span><span class="statusbar__icons">' +
+        '<svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>' +
+        '<svg viewBox="0 0 16 12"><path d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0z" fill="#111"/><path d="M3.6 6.3a6.2 6.2 0 0 1 8.8 0l1.4-1.6a8.3 8.3 0 0 0-11.6 0z" fill="#111"/><path d="M.6 3a10.6 10.6 0 0 1 14.8 0L16 2.3l-.1-.1a11.7 11.7 0 0 0-15.8 0L0 2.3z" fill="#111"/></svg>' +
+        '<svg viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.6" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2.2" fill="#111"/><path d="M25 4.5v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2z" fill="#111" fill-opacity=".4"/></svg>' +
+        '</span></div>';
+
+      function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+      document.getElementById('phones').innerHTML = SECTIONS.map(function (s, i) {
+        return '<li class="phone">' +
+          '<div class="device-wrap"><div class="device">' +
+            '<span class="btn-side btn-side--action"></span><span class="btn-side btn-side--vol-up"></span><span class="btn-side btn-side--vol-dn"></span>' +
+            '<span class="btn-side btn-side--power"></span><span class="btn-side btn-side--camera"></span>' +
+            '<div class="device__bezel"><div class="device__screen">' + STATUS +
+              '<span class="island" aria-hidden="true"></span>' +
+              '<iframe class="screen-frame" src="' + s[2] + '" title="' + esc(s[1]) + ' — Angel and David\'s wedding invitation"' + (i > 5 ? ' loading="lazy"' : '') + '></iframe>' +
+              '<span class="home-indicator" aria-hidden="true"></span><span class="glare" aria-hidden="true"></span>' +
+            '</div></div>' +
+          '</div></div>' +
+          '<p class="phone__cap"><span>Section ' + s[0] + '</span>' + esc(s[1]) + '</p>' +
+        '</li>';
+      }).join('');
+
+      // Each phone keeps its real 440 × 956 screen and is scaled to its column.
+      var wraps = Array.prototype.slice.call(document.querySelectorAll('.phone .device-wrap'));
+      function fit() {
+        wraps.forEach(function (w) { w.firstChild.style.setProperty('--s', (w.clientWidth / 472).toFixed(4)); });
+      }
+      window.addEventListener('resize', fit);
+      fit();
+    })();
+  </script>
+</body>
+</html>

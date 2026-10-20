@@ -331,6 +331,23 @@
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(remeasure);
       window.addEventListener('resize', remeasure);
 
+      // Showcase view (?still): no envelope or drive — straight to the names,
+      // then to the #section in the address (or the very end with &end).
+      if (root.classList.contains('is-still')) {
+        env.hidden = true;
+        finish();
+        var jump = function () {
+          var t = window.location.hash ? $(window.location.hash.slice(1)) : null;
+          if (/[?&]end(?:[=&]|$)/.test(window.location.search)) window.scrollTo(0, document.documentElement.scrollHeight);
+          else if (t) t.scrollIntoView({ behavior: 'auto' });
+        };
+        jump();
+        // Fonts and images can shift the page a little; land on the section again.
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(jump);
+        window.addEventListener('load', jump);
+        return;
+      }
+
       btn.addEventListener('click', function (e) { e.stopPropagation(); open(); });
       splash.addEventListener('click', function () { if (phase === 'idle') open(); });
       cue.addEventListener('click', function () {

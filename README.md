@@ -16,7 +16,18 @@ You can also double-click `site/index.html`, but a local server is closer to how
 
 ## iPhone showcase
 
-Open `mockup.html` (e.g. <http://localhost:8080/mockup.html>, or `/mockup.html` on the live site) to see the invitation running live inside a centred iPhone 17 Pro Max (screen 440 × 956) on a pearl-white background with pearl lace-flower corners. The page has no text or buttons. Tap the seal and scroll inside the phone to see every section; refresh the page to replay the opening.
+The showcase pages use the invitation's own background: the pearl-white linen paper with the pearl flowers and pearl strands.
+
+- `mockup.html` shows the invitation running live inside a centred iPhone 17 Pro Max (screen 440 × 956). It has no text or buttons. Tap the seal and scroll inside the phone; refresh to replay the opening. Add `?section=rsvp` (any section id, `names` for the names screen, or `end` for the parked car) to open the phone on one section.
+- `showcase.html` shows **every section at once**, each in its own iPhone 17 Pro Max, in page order with a small caption. Each phone is live and can be scrolled.
+- Both open sections with `index.html?still#section-id`: the opening is skipped and everything is shown at rest. Guests never see this view.
+- `showcase-images/` (outside the website) holds ready-to-share pictures: `00-all-sections.jpg` (the whole board, 2400 × 3345) and one 4:5 picture per section (`01-opening.jpg` … `15-thank-you.jpg`, 2160 × 2700).
+
+To make the pictures again after a change, start the local server and run headless Chrome on each page, for example:
+
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --hide-scrollbars --window-size=1080,1350 --force-device-scale-factor=2 --virtual-time-budget=12000 --run-all-compositor-stages-before-draw --screenshot=rsvp.png "http://localhost:8080/mockup.html?section=rsvp"
+```
 
 ## Edit wedding details
 
@@ -57,6 +68,8 @@ vercel.json               tells Vercel to publish only site/
 site/
   index.html              page shell + static splash markup
   mockup.html             showcase: the live invitation inside a centred iPhone 17 Pro Max
+  showcase.html           every section, each in its own iPhone 17 Pro Max
+  css/iphone.css          the iPhone frame and pearl background for both showcase pages
   content.js              ← all wedding details (edit here)
   css/base.css            tokens, typography, layout
   css/components.css      buttons, placeholders, dialogs, forms

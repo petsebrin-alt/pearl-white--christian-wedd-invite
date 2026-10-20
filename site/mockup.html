@@ -5,163 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Angel &amp; David · Invitation on iPhone</title>
   <meta name="description" content="Angel and David's wedding invitation running live inside an iPhone 17 Pro Max.">
-  <meta name="theme-color" content="#F3EFE8">
+  <meta name="theme-color" content="#F4F1EB">
   <meta name="color-scheme" content="light">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/iphone.css?v=20261020z">
   <style>
-    /* =====================================================================
-       Showcase page: only the iPhone 17 Pro Max, centred, with the live
-       invitation (index.html) inside, on a pearl-white background with
-       pearl net-flower corners and pearl strands. No text or controls.
-       ===================================================================== */
-    :root {
-      --paper-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .33 0 0 0 0 .28 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      color-scheme: light;
-    }
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { margin: 0; height: 100%; }
-    html { overflow: hidden; }
-    body {
-      height: 100vh;
-      height: 100svh;
-      overflow: hidden;
-      background:
-        radial-gradient(55% 60% at 50% 50%, rgba(255, 255, 255, .96) 0%, rgba(255, 255, 255, .55) 45%, rgba(255, 255, 255, 0) 80%),
-        repeating-linear-gradient(45deg, rgba(255, 255, 255, .5) 0 1px, rgba(255, 255, 255, 0) 1px 7px),
-        repeating-linear-gradient(-45deg, rgba(120, 108, 90, .05) 0 1px, rgba(120, 108, 90, 0) 1px 7px),
-        linear-gradient(135deg, #ece7de 0%, #f5f2ec 45%, #efeae2 70%, #e6e0d5 100%);
-    }
-    body::before { content: ""; position: fixed; inset: 0; background: var(--paper-noise); opacity: .7; pointer-events: none; }
-
-    /* ---------- Pearl net-flower corners and pearl strands ---------- */
-    .decor { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
-    .decor img {
-      position: absolute;
-      width: clamp(240px, 30vw, 520px);
-      height: auto;
-      filter: drop-shadow(0 0 .7px rgba(80, 68, 50, .5)) drop-shadow(0 8px 12px rgba(80, 68, 50, .18));
-      opacity: .95;
-    }
-    .decor .d1 { left: -8%; top: -10%; transform: rotate(28deg); }
-    .decor .d2 { right: -9%; bottom: -12%; transform: rotate(205deg); }
-    .decor .d3 { left: -10%; bottom: -14%; transform: rotate(-35deg) scaleX(-1); width: clamp(200px, 22vw, 380px); opacity: .8; }
-    .decor .d4 { right: -6%; top: -9%; transform: rotate(150deg) scaleX(-1); width: clamp(180px, 18vw, 320px); opacity: .75; }
-    .pearl-line {
-      position: absolute;
-      height: 16px;
-      background: url("assets/images/lace-pearl-trim.webp?v=20261020f") repeat-x 0 50% / auto 100%;
-      opacity: .85;
-      filter: drop-shadow(0 2px 3px rgba(80, 68, 50, .18));
-    }
-    .pearl-line.p1 { left: -4%; top: 22%; width: 30vw; transform: rotate(-18deg); }
-    .pearl-line.p2 { right: -4%; bottom: 20%; width: 28vw; transform: rotate(-18deg); }
-
-    /* ---------- Centred stage ---------- */
-    .stage {
-      position: relative;
-      z-index: 1;
-      height: 100vh;
-      height: 100svh;
-      display: grid;
-      place-items: center;
-    }
-
-    /* ---------- iPhone 17 Pro Max (screen 440 × 956 CSS px) ---------- */
-    .device-wrap { position: relative; }
-    .device {
-      --sw: 440px; --sh: 956px; --sr: 62px;
-      --bezel: 11px; --band: 5px;
-      --island-w: 126px; --island-h: 37px; --island-top: 12px; --status-h: 58px;
-      position: absolute;
-      left: 0; top: 0;
-      width: calc(var(--sw) + 2 * (var(--bezel) + var(--band)));
-      height: calc(var(--sh) + 2 * (var(--bezel) + var(--band)));
-      padding: var(--band);
-      border-radius: calc(var(--sr) + var(--bezel) + var(--band));
-      transform-origin: 0 0;
-      transform: scale(.4);   /* until the script fits it to the window */
-      /* White titanium band */
-      background: linear-gradient(145deg, #f3f1ed 0%, #cfcbc4 18%, #f7f5f2 34%, #bdb8b0 52%, #ebe8e3 70%, #c7c2ba 86%, #f1efeb 100%);
-      box-shadow:
-        0 0 0 1px rgba(120, 112, 100, .35),
-        inset 0 0 0 1px rgba(255, 255, 255, .7),
-        0 50px 90px -40px rgba(55, 45, 30, .55),
-        0 18px 40px -20px rgba(55, 45, 30, .35);
-    }
-    .device__bezel {
-      position: relative;
-      height: 100%;
-      padding: var(--bezel);
-      border-radius: calc(var(--sr) + var(--bezel));
-      background: #070708;
-      box-shadow: inset 0 0 0 1.5px #1c1c1e;
-    }
-    .device__screen {
-      position: relative;
-      width: var(--sw);
-      height: var(--sh);
-      border-radius: var(--sr);
-      overflow: hidden;
-      background: #f4f1ec;
-      isolation: isolate;
-    }
-    .statusbar {
-      position: absolute;
-      inset: 0 0 auto 0;
-      height: var(--status-h);
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 4px 32px 0 46px;
-      background: #f4f1ec;
-      font: 600 17px/1 -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
-      letter-spacing: -.01em;
-      color: #111;
-      pointer-events: none;
-    }
-    .statusbar__icons { display: flex; align-items: center; gap: 6px; }
-    .statusbar__icons svg { display: block; height: 12px; width: auto; }
-    .island {
-      position: absolute;
-      left: 50%;
-      top: var(--island-top);
-      z-index: 3;
-      width: var(--island-w);
-      height: var(--island-h);
-      transform: translateX(-50%);
-      border-radius: 999px;
-      background: #000;
-      pointer-events: none;
-    }
-    .island::after { content: ""; position: absolute; right: 22px; top: 50%; width: 11px; height: 11px; margin-top: -5.5px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #2b3242 0 25%, #0a0c12 60%); box-shadow: 0 0 0 1.5px #121318; }
-    .screen-frame {
-      position: absolute;
-      left: 0; right: 0;
-      top: var(--status-h);
-      bottom: 0;
-      z-index: 1;
-      width: 100%;
-      height: calc(100% - var(--status-h));
-      border: 0;
-      background: #f4f1ec;
-    }
-    .home-indicator { position: absolute; left: 50%; bottom: 8px; z-index: 3; width: 140px; height: 5px; margin-left: -70px; border-radius: 3px; background: rgba(17, 17, 17, .82); pointer-events: none; }
-    .glare { position: absolute; inset: 0; z-index: 4; border-radius: inherit; pointer-events: none; background: linear-gradient(118deg, rgba(255, 255, 255, .1) 0%, rgba(255, 255, 255, 0) 32%); }
-    .btn-side { position: absolute; width: 4px; border-radius: 2px; background: linear-gradient(90deg, #b9b4ac, #e9e6e1 60%, #c9c4bc); box-shadow: 0 0 0 .5px rgba(110, 100, 88, .45); }
-    .btn-side--action { left: -3px; top: 190px; height: 34px; }
-    .btn-side--vol-up { left: -3px; top: 252px; height: 64px; }
-    .btn-side--vol-dn { left: -3px; top: 330px; height: 64px; }
-    .btn-side--power { right: -3px; top: 278px; height: 104px; }
-    .btn-side--camera { right: -2px; top: 600px; height: 62px; width: 3px; background: linear-gradient(90deg, #8f8a83, #d7d3cd); }
+    /* One phone, centred; no text or controls. */
+    html, body { height: 100%; overflow: hidden; }
+    .stage { position: relative; z-index: 1; height: 100vh; height: 100svh; display: grid; place-items: center; }
   </style>
 </head>
 <body>
   <div class="decor" aria-hidden="true">
-    <img class="d1" src="assets/images/net-flower.webp?v=20261020f" alt="">
-    <img class="d2" src="assets/images/net-flower.webp?v=20261020f" alt="">
-    <img class="d3" src="assets/images/net-flower.webp?v=20261020f" alt="">
-    <img class="d4" src="assets/images/net-flower.webp?v=20261020f" alt="">
+    <img class="dc--tl" src="assets/images/pearl-spray.webp?v=20261020y" alt="">
+    <img class="dc--tr" src="assets/images/pearl-drops.webp?v=20261020y" alt="">
+    <img class="dc--tr2" src="assets/images/pearl-drops.webp?v=20261020y" alt="">
+    <img class="dc--bl" src="assets/images/pearl-bloom.webp?v=20261020y" alt="">
+    <img class="dc--bl-sprig" src="assets/images/pearl-sprig.webp?v=20261020y" alt="">
+    <img class="dc--br" src="assets/images/pearl-spray.webp?v=20261020y" alt="">
+    <img class="dc--br-bud" src="assets/images/pearl-bud.webp?v=20261020y" alt="">
     <span class="pearl-line p1"></span>
     <span class="pearl-line p2"></span>
   </div>
@@ -197,6 +59,15 @@
   <script>
     (function () {
       var device = document.getElementById('device');
+
+      // Optional: open the phone on one section, at rest (used for the
+      // section images): mockup.html?section=rsvp, ?section=end (the parked
+      // car) or ?section=names (the names screen after the opening).
+      var sec = (location.search.match(/[?&]section=([a-z-]+)/) || [])[1];
+      if (sec) {
+        document.querySelector('.screen-frame').src = sec === 'names' ? 'index.html?still'
+          : sec === 'end' ? 'index.html?still&end' : 'index.html?still#' + sec;
+      }
       var wrap = document.getElementById('device-wrap');
       var DW = 440 + 32, DH = 956 + 32;   // phone incl. bezel and band
 
@@ -205,7 +76,7 @@
       function fit() {
         var vw = document.documentElement.clientWidth, vh = window.innerHeight;
         var s = Math.max(0.3, Math.min(1, (vh - 48) / DH, (vw - 32) / DW));
-        device.style.transform = 'scale(' + s + ')';
+        device.style.setProperty('--s', s);
         wrap.style.width = Math.round(DW * s) + 'px';
         wrap.style.height = Math.round(DH * s) + 'px';
       }
