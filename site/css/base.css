@@ -1,0 +1,233 @@
+/* =============================================================================
+   BASE — tokens, reset, typography, layout
+   Palette and type are defined in THEME.md.
+   ========================================================================== */
+
+:root {
+  /* Core palette */
+  --pearl: #F8F6F1;
+  --white: #FFFFFF;
+  --ivory: #F3EEE3;
+  --ivory-deep: #EAE3D4;
+  --ink: #121212;
+  --charcoal: #2B2A28;
+  --muted: #5C5852;
+  --hairline: #D9D3C7;
+  --field-border: #8F877A;
+
+  /* Pearl and satin shading (decoration only) */
+  --pearl-hi: #FFFFFF;
+  --pearl-mid: #EEE9E1;
+  --pearl-lo: #D3CBBD;
+  --pearl-blush: #F2E9E6;
+  --satin-fold: #E2DDD3;
+  --satin-deep: #C9C2B4;
+
+  /* Floral greens (florals only) */
+  --olive: #6B7445;
+  --olive-deep: #4E5632;
+  --olive-soft: #A3AA7E;
+
+  /* Feedback */
+  --error: #8A2B2B;
+  --focus: #121212;
+
+  /* Type */
+  --font-display: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
+  --font-script: "Pinyon Script", "Snell Roundhand", "Apple Chancery", cursive;
+  --font-body: "Jost", "Helvetica Neue", Arial, sans-serif;
+
+  /* Motion */
+  --ease-settle: cubic-bezier(.22, .61, .36, 1);
+  --ease-cloth: cubic-bezier(.65, 0, .35, 1);
+
+  /* Surfaces */
+  --radius-card: 4px;
+  --shadow-card: 0 1px 2px rgba(18, 18, 18, .06), 0 14px 34px -14px rgba(18, 18, 18, .16);
+  --shadow-soft: 0 1px 2px rgba(18, 18, 18, .05), 0 8px 22px -12px rgba(18, 18, 18, .14);
+
+  /* Layout */
+  --gutter: clamp(1rem, 4.5vw, 2rem);
+  --header-h: 60px;
+  --max: 72rem;
+
+  /* Paper fibre texture (very faint) */
+  --paper-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .33 0 0 0 0 .28 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  /* Lace scallop edge */
+  --lace: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='13' viewBox='0 0 26 13'%3E%3Cpath d='M0 0h26v1.5c0 6.1-5.8 11-13 11S0 7.6 0 1.5z' fill='%23fff' stroke='%23d9d3c7' stroke-width='.7'/%3E%3Ccircle cx='13' cy='5.4' r='1.9' fill='none' stroke='%23cfc7b9' stroke-width='.7'/%3E%3Ccircle cx='5.6' cy='3.4' r='.8' fill='%23d9d3c7'/%3E%3Ccircle cx='20.4' cy='3.4' r='.8' fill='%23d9d3c7'/%3E%3Ccircle cx='13' cy='10' r='.6' fill='%23d9d3c7'/%3E%3C/svg%3E");
+
+  color-scheme: light;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--pearl);
+  overflow-x: clip;
+}
+html.motion-ok { scroll-behavior: smooth; }
+html.is-locked, html.splash-active { overflow: hidden; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: clamp(1rem, .97rem + .15vw, 1.0625rem);
+  line-height: 1.65;
+  color: var(--charcoal);
+  background: var(--pearl) var(--paper-noise);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
+button, input, textarea, select { font: inherit; color: inherit; letter-spacing: inherit; }
+button { cursor: pointer; }
+p { margin: 0 0 1em; }
+a { color: inherit; text-underline-offset: .2em; text-decoration-thickness: 1px; }
+ul, ol { padding: 0; margin: 0; }
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+legend { padding: 0; }
+[hidden] { display: none !important; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.15;
+  margin: 0;
+  letter-spacing: .005em;
+  text-wrap: balance;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+::selection { background: #e8e2d6; color: var(--ink); }
+
+/* ---------- Utilities ---------- */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem; top: -4rem;
+  z-index: 1000;
+  background: var(--ink);
+  color: #fff;
+  padding: .75rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: .875rem;
+}
+.skip-link:focus { top: calc(1rem + env(safe-area-inset-top)); }
+.splash-active .skip-link { display: none; }
+
+.svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.container {
+  width: min(100% - 2 * var(--gutter), var(--max));
+  margin-inline: auto;
+}
+.container--narrow { width: min(100% - 2 * var(--gutter), 44rem); }
+.container--text { width: min(100% - 2 * var(--gutter), 38rem); }
+
+/* ---------- Sections ---------- */
+.section {
+  position: relative;
+  padding-block: clamp(4.5rem, 9vw, 7.5rem);
+  scroll-margin-top: calc(var(--header-h) - 1px);
+  overflow-x: clip;
+}
+.section--white { background: var(--white) var(--paper-noise); }
+.section--ivory { background: var(--ivory) var(--paper-noise); }
+
+.section-head {
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto clamp(2.25rem, 5vw, 3.5rem);
+}
+.eyebrow {
+  font: 500 .75rem/1.4 var(--font-body);
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 .85rem;
+}
+.section-title {
+  font-size: clamp(2.1rem, 1.55rem + 2.4vw, 3.1rem);
+  font-weight: 500;
+}
+.section-intro {
+  margin: 1.1rem auto 0;
+  max-width: 34rem;
+  color: var(--charcoal);
+}
+.section-head .ornament-divider { margin: 1.1rem auto 0; }
+
+.script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+.serif-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+}
+.numerals { font-variant-numeric: lining-nums tabular-nums; }
+
+/* ---------- Scroll reveal (only when motion is allowed and JS is running) ---------- */
+.motion-ok .reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .7s var(--ease-settle), transform .7s var(--ease-settle);
+}
+.motion-ok .reveal.is-in { opacity: 1; transform: none; }
+.motion-ok .reveal[data-delay="1"] { transition-delay: .08s; }
+.motion-ok .reveal[data-delay="2"] { transition-delay: .16s; }
+.motion-ok .reveal[data-delay="3"] { transition-delay: .24s; }
+
+/* ---------- Fallback (scripts failed) ---------- */
+.fallback {
+  max-width: 30rem;
+  margin: 12vh auto;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  background: #fff;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+}
+.app-failed .fallback { display: block; }
+.app-failed .splash, .app-failed .site-header, .app-failed main { display: none !important; }
+.fallback__kicker { font-size: .75rem; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.fallback__names { font-family: var(--font-script); font-size: 3rem; color: var(--ink); line-height: 1.1; margin: .25em 0; }
+.fallback__date { font-family: var(--font-display); font-size: 1.4rem; color: var(--ink); }
+.fallback__small { font-size: .9rem; color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

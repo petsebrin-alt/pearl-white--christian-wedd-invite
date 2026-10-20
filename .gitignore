@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Editors / local tool settings
+.vscode/
+.idea/
+.claude/settings.local.json
+
+# Dependencies and logs
+node_modules/
+*.log
