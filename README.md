@@ -14,6 +14,10 @@ Then open <http://localhost:8080>. To check it on your phone, connect it to the 
 
 You can also double-click `site/index.html`, but a local server is closer to how the live site behaves.
 
+## iPhone showcase
+
+Open `mockup.html` (e.g. <http://localhost:8080/mockup.html>, or `/mockup.html` on the live site) to see the invitation running live inside an iPhone Pro Max on a pearl-white background. Switch between iPhone 17 Pro Max (440 × 956) and iPhone 14 Pro Max (430 × 932), and use **Replay opening** to restart the envelope animation. Tap the seal and scroll inside the phone to see every section.
+
 ## Edit wedding details
 
 Every name, date, time, venue, contact and message lives in **`site/content.js`**.
@@ -51,6 +55,7 @@ PRD.md, THEME.md          requirements and visual direction
 vercel.json               tells Vercel to publish only site/
 site/
   index.html              page shell + static splash markup
+  mockup.html             showcase: the live invitation inside an iPhone 17 / 14 Pro Max
   content.js              ← all wedding details (edit here)
   css/base.css            tokens, typography, layout
   css/components.css      buttons, placeholders, dialogs, forms

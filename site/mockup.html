@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Angel &amp; David · Invitation on iPhone</title>
+  <meta name="description" content="Preview of Angel and David's wedding invitation running live inside an iPhone Pro Max.">
+  <meta name="theme-color" content="#F3EFE8">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500&family=Pinyon+Script&display=swap">
+  <style>
+    /* =====================================================================
+       Showcase page: the live invitation (index.html) inside an iPhone
+       Pro Max frame, on a pearl-white background in the wedding palette.
+       ===================================================================== */
+    :root {
+      --pearl: #F8F6F1;
+      --ivory: #F3EEE3;
+      --ink: #121212;
+      --charcoal: #2B2A28;
+      --muted: #5C5852;
+      --hairline: #D9D3C7;
+      --olive: #6B7445;
+      --font-display: "Cormorant Garamond", Garamond, "Times New Roman", serif;
+      --font-script: "Pinyon Script", "Snell Roundhand", cursive;
+      --font-body: "Jost", "Helvetica Neue", Arial, sans-serif;
+      --paper-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36 0 0 0 0 .33 0 0 0 0 .28 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      color-scheme: light;
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    html { overflow-x: hidden; }
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow-x: hidden;
+      font-family: var(--font-body);
+      color: var(--charcoal);
+      background:
+        radial-gradient(60% 55% at 62% 50%, rgba(255, 255, 255, .95) 0%, rgba(255, 255, 255, .55) 45%, rgba(255, 255, 255, 0) 80%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, .5) 0 1px, rgba(255, 255, 255, 0) 1px 7px),
+        repeating-linear-gradient(-45deg, rgba(120, 108, 90, .05) 0 1px, rgba(120, 108, 90, 0) 1px 7px),
+        linear-gradient(135deg, #ece7de 0%, #f5f2ec 45%, #efeae2 70%, #e6e0d5 100%);
+      background-attachment: fixed;
+    }
+    body::before { content: ""; position: fixed; inset: 0; background: var(--paper-noise); opacity: .7; pointer-events: none; }
+
+    /* ---------- Decorative pearl net flowers ---------- */
+    .decor { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+    .decor img {
+      position: absolute;
+      width: clamp(240px, 30vw, 520px);
+      height: auto;
+      filter: drop-shadow(0 0 .7px rgba(80, 68, 50, .5)) drop-shadow(0 8px 12px rgba(80, 68, 50, .18));
+      opacity: .95;
+    }
+    .decor .d1 { left: -8%; top: -10%; transform: rotate(28deg); }
+    .decor .d2 { right: -9%; bottom: -12%; transform: rotate(205deg); }
+    .decor .d3 { left: -10%; bottom: -14%; transform: rotate(-35deg) scaleX(-1); width: clamp(200px, 22vw, 380px); opacity: .8; }
+    .decor .d4 { right: -6%; top: -9%; transform: rotate(150deg) scaleX(-1); width: clamp(180px, 18vw, 320px); opacity: .75; }
+    .pearl-line {
+      position: absolute;
+      height: 16px;
+      background: url("assets/images/lace-pearl-trim.webp?v=20261020f") repeat-x 0 50% / auto 100%;
+      opacity: .85;
+      filter: drop-shadow(0 2px 3px rgba(80, 68, 50, .18));
+    }
+    .pearl-line.p1 { left: -4%; top: 22%; width: 34vw; transform: rotate(-18deg); }
+    .pearl-line.p2 { right: -4%; bottom: 20%; width: 30vw; transform: rotate(-18deg); }
+
+    /* ---------- Layout ---------- */
+    .stage {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: center;
+      justify-items: center;
+      gap: 1.5rem;
+      padding: clamp(1rem, 3vh, 2.5rem) 1rem;
+    }
+    @media (min-width: 980px) {
+      .stage { grid-template-columns: minmax(300px, 420px) auto; justify-content: center; gap: clamp(3rem, 7vw, 7rem); }
+    }
+
+    /* ---------- Info panel ---------- */
+    .info { max-width: 420px; text-align: center; }
+    @media (min-width: 980px) { .info { text-align: left; } }
+    .info__kicker { margin: 0 0 1rem; font: 500 .72rem/1.4 var(--font-body); letter-spacing: .32em; text-transform: uppercase; color: var(--muted); }
+    .info__names { margin: 0; font-family: var(--font-script); font-weight: 400; font-size: clamp(3.4rem, 2.6rem + 3vw, 5.4rem); line-height: 1; color: var(--ink); }
+    .info__names .amp { font-family: var(--font-display); font-style: italic; font-size: .42em; color: var(--muted); padding: 0 .1em; }
+    .info__date { margin: .9rem 0 0; font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; letter-spacing: .3em; color: var(--charcoal); font-variant-numeric: lining-nums; }
+    .info__rule { display: block; width: 180px; height: 14px; margin: 1.4rem auto; background: url("assets/images/lace-pearl-trim.webp?v=20261020f") repeat-x 0 50% / auto 100%; }
+    @media (min-width: 980px) { .info__rule { margin-left: 0; } }
+    .info__text { margin: 0 0 1.4rem; font-family: var(--font-display); font-style: italic; font-size: 1.25rem; line-height: 1.5; color: var(--charcoal); }
+    .info__steps { list-style: none; margin: 0 0 1.6rem; padding: 0; display: grid; gap: .5rem; font-size: .95rem; text-align: left; }
+    .info__steps li { display: flex; gap: .7rem; align-items: baseline; }
+    .info__steps b {
+      flex: none;
+      width: 1.6rem; height: 1.6rem;
+      display: inline-grid; place-items: center;
+      border-radius: 50%;
+      font: 500 .75rem/1 var(--font-body);
+      color: var(--ink);
+      background: radial-gradient(circle at 34% 28%, #fff 0 16%, #f8f6f1 36%, #ece6dc 70%, #dad1c3 100%);
+      box-shadow: 0 3px 8px -5px rgba(60, 50, 35, .6);
+    }
+    @media (max-width: 979px) { .info__steps, .info__text, .info__rule { display: none; } .info { order: 0; } }
+
+    .controls { display: flex; flex-wrap: wrap; gap: .6rem; justify-content: center; }
+    @media (min-width: 980px) { .controls { justify-content: flex-start; } }
+    .seg { display: inline-flex; padding: 4px; border-radius: 999px; background: rgba(255, 255, 255, .75); box-shadow: inset 0 0 0 1px var(--hairline), 0 6px 18px -12px rgba(60, 50, 35, .5); }
+    .seg button {
+      min-height: 40px;
+      padding: 0 1rem;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      font: 500 .78rem/1 var(--font-body);
+      letter-spacing: .06em;
+      color: var(--charcoal);
+      cursor: pointer;
+    }
+    .seg button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+    .btn {
+      display: inline-flex; align-items: center; gap: .5rem;
+      min-height: 48px;
+      padding: 0 1.3rem;
+      border-radius: 999px;
+      border: 1px solid var(--charcoal);
+      background: #fff;
+      color: var(--ink);
+      font: 500 .78rem/1 var(--font-body);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .btn--dark { background: var(--ink); color: #fff; border-color: var(--ink); }
+    .btn svg { width: 16px; height: 16px; }
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+    /* ---------- iPhone Pro Max ----------
+       Screen sizes in CSS px: 17 Pro Max 440 × 956, 14 Pro Max 430 × 932. */
+    .device-wrap { position: relative; }
+    .device {
+      --sw: 440px; --sh: 956px; --sr: 62px;  /* screen width / height / corner */
+      --bezel: 11px; --band: 5px;
+      --island-w: 126px; --island-h: 37px; --island-top: 12px; --status-h: 58px;
+      position: absolute;
+      left: 0; top: 0;
+      width: calc(var(--sw) + 2 * (var(--bezel) + var(--band)));
+      height: calc(var(--sh) + 2 * (var(--bezel) + var(--band)));
+      padding: var(--band);
+      border-radius: calc(var(--sr) + var(--bezel) + var(--band));
+      transform-origin: 0 0;
+      transform: scale(.4);   /* until the script fits it to the window */
+      /* White titanium band */
+      background: linear-gradient(145deg, #f3f1ed 0%, #cfcbc4 18%, #f7f5f2 34%, #bdb8b0 52%, #ebe8e3 70%, #c7c2ba 86%, #f1efeb 100%);
+      box-shadow:
+        0 0 0 1px rgba(120, 112, 100, .35),
+        inset 0 0 0 1px rgba(255, 255, 255, .7),
+        0 50px 90px -40px rgba(55, 45, 30, .55),
+        0 18px 40px -20px rgba(55, 45, 30, .35);
+    }
+    .device[data-model="14"] { --sw: 430px; --sh: 932px; --sr: 55px; --island-top: 11px; --status-h: 54px; }
+    .device__bezel {
+      position: relative;
+      height: 100%;
+      padding: var(--bezel);
+      border-radius: calc(var(--sr) + var(--bezel));
+      background: #070708;
+      box-shadow: inset 0 0 0 1.5px #1c1c1e;
+    }
+    .device__screen {
+      position: relative;
+      width: var(--sw);
+      height: var(--sh);
+      border-radius: var(--sr);
+      overflow: hidden;
+      background: #f4f1ec;
+      isolation: isolate;
+    }
+    .statusbar {
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: var(--status-h);
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 32px 0 46px;
+      background: #f4f1ec;
+      font: 600 17px/1 -apple-system, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+      letter-spacing: -.01em;
+      color: #111;
+      pointer-events: none;
+    }
+    .statusbar__icons { display: flex; align-items: center; gap: 6px; }
+    .statusbar__icons svg { display: block; height: 12px; width: auto; }
+    .island {
+      position: absolute;
+      left: 50%;
+      top: var(--island-top);
+      z-index: 3;
+      width: var(--island-w);
+      height: var(--island-h);
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: #000;
+      pointer-events: none;
+    }
+    .island::after { content: ""; position: absolute; right: 22px; top: 50%; width: 11px; height: 11px; margin-top: -5.5px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #2b3242 0 25%, #0a0c12 60%); box-shadow: 0 0 0 1.5px #121318; }
+    .screen-frame {
+      position: absolute;
+      left: 0; right: 0;
+      top: var(--status-h);
+      bottom: 0;
+      z-index: 1;
+      width: 100%;
+      height: calc(100% - var(--status-h));
+      border: 0;
+      background: #f4f1ec;
+    }
+    .home-indicator { position: absolute; left: 50%; bottom: 8px; z-index: 3; width: 140px; height: 5px; margin-left: -70px; border-radius: 3px; background: rgba(17, 17, 17, .82); pointer-events: none; }
+    .glare { position: absolute; inset: 0; z-index: 4; border-radius: inherit; pointer-events: none; background: linear-gradient(118deg, rgba(255, 255, 255, .1) 0%, rgba(255, 255, 255, 0) 32%); }
+    /* Side buttons */
+    .btn-side { position: absolute; width: 4px; border-radius: 2px; background: linear-gradient(90deg, #b9b4ac, #e9e6e1 60%, #c9c4bc); box-shadow: 0 0 0 .5px rgba(110, 100, 88, .45); }
+    .btn-side--action { left: -3px; top: 190px; height: 34px; }
+    .btn-side--vol-up { left: -3px; top: 252px; height: 64px; }
+    .btn-side--vol-dn { left: -3px; top: 330px; height: 64px; }
+    .btn-side--power { right: -3px; top: 278px; height: 104px; }
+    .btn-side--camera { right: -2px; top: 600px; height: 62px; width: 3px; background: linear-gradient(90deg, #8f8a83, #d7d3cd); }
+    .device[data-model="14"] .btn-side--camera { display: none; }
+
+    .caption { margin: .9rem 0 0; text-align: center; font-family: var(--font-display); font-style: italic; font-size: 1.05rem; color: var(--muted); }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <div class="decor" aria-hidden="true">
+    <img class="d1" src="assets/images/net-flower.webp?v=20261020f" alt="">
+    <img class="d2" src="assets/images/net-flower.webp?v=20261020f" alt="">
+    <img class="d3" src="assets/images/net-flower.webp?v=20261020f" alt="">
+    <img class="d4" src="assets/images/net-flower.webp?v=20261020f" alt="">
+    <span class="pearl-line p1"></span>
+    <span class="pearl-line p2"></span>
+  </div>
+
+  <main class="stage">
+    <section class="info" aria-labelledby="info-title">
+      <p class="info__kicker">Pearl White Christian Wedding Invitation</p>
+      <h1 class="info__names" id="info-title">Angel <span class="amp">&amp;</span> David</h1>
+      <p class="info__date">27 · 01 · 2027</p>
+      <span class="info__rule" aria-hidden="true"></span>
+      <p class="info__text">The complete invitation, running live on iPhone. Every section and animation works inside the phone.</p>
+      <ol class="info__steps">
+        <li><b>1</b><span>Tap the dove seal on the lace envelope.</span></li>
+        <li><b>2</b><span>Watch the envelope open and the wedding car drive in.</span></li>
+        <li><b>3</b><span>Scroll inside the screen through all fourteen sections.</span></li>
+      </ol>
+      <div class="controls">
+        <div class="seg" role="group" aria-label="iPhone model">
+          <button type="button" data-model="17" aria-pressed="true">iPhone 17 Pro Max</button>
+          <button type="button" data-model="14" aria-pressed="false">iPhone 14 Pro Max</button>
+        </div>
+        <button class="btn btn--dark" type="button" id="replay">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4v4.5h4.5"/></svg>
+          Replay opening
+        </button>
+        <a class="btn" href="index.html" target="_blank" rel="noopener">Open full site</a>
+      </div>
+    </section>
+
+    <div>
+      <div class="device-wrap" id="device-wrap">
+        <div class="device" id="device" data-model="17">
+          <span class="btn-side btn-side--action" aria-hidden="true"></span>
+          <span class="btn-side btn-side--vol-up" aria-hidden="true"></span>
+          <span class="btn-side btn-side--vol-dn" aria-hidden="true"></span>
+          <span class="btn-side btn-side--power" aria-hidden="true"></span>
+          <span class="btn-side btn-side--camera" aria-hidden="true"></span>
+          <div class="device__bezel">
+            <div class="device__screen">
+              <div class="statusbar" aria-hidden="true">
+                <span>9:41</span>
+                <span class="statusbar__icons">
+                  <svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="#111"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="#111"/><rect x="10" y="3" width="3" height="9" rx="1" fill="#111"/><rect x="15" y="0" width="3" height="12" rx="1" fill="#111"/></svg>
+                  <svg viewBox="0 0 16 12"><path d="M8 11.2l2.3-2.6a3.3 3.3 0 0 0-4.6 0z" fill="#111"/><path d="M3.6 6.3a6.2 6.2 0 0 1 8.8 0l1.4-1.6a8.3 8.3 0 0 0-11.6 0z" fill="#111"/><path d="M.6 3a10.6 10.6 0 0 1 14.8 0L16 2.3l-.1-.1a11.7 11.7 0 0 0-15.8 0L0 2.3z" fill="#111"/></svg>
+                  <svg viewBox="0 0 27 13"><rect x=".5" y=".5" width="23" height="12" rx="3.6" fill="none" stroke="#111" stroke-opacity=".4"/><rect x="2" y="2" width="20" height="9" rx="2.2" fill="#111"/><path d="M25 4.5v4c.8-.3 1.4-1.1 1.4-2s-.6-1.7-1.4-2z" fill="#111" fill-opacity=".4"/></svg>
+                </span>
+              </div>
+              <span class="island" aria-hidden="true"></span>
+              <iframe class="screen-frame" id="screen-frame" src="index.html" title="Angel and David's wedding invitation on iPhone"></iframe>
+              <span class="home-indicator" aria-hidden="true"></span>
+              <span class="glare" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="caption" id="caption">iPhone 17 Pro Max · 6.9-inch display</p>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var device = document.getElementById('device');
+      var wrap = document.getElementById('device-wrap');
+      var frame = document.getElementById('screen-frame');
+      var caption = document.getElementById('caption');
+      var MODELS = {
+        '17': { w: 440, h: 956, label: 'iPhone 17 Pro Max · 6.9-inch display' },
+        '14': { w: 430, h: 932, label: 'iPhone 14 Pro Max · 6.7-inch display' }
+      };
+
+      // Scale the phone to fit the window while the screen keeps its real
+      // CSS size, so the invitation lays out exactly as it would on the device.
+      function fit() {
+        var m = MODELS[device.getAttribute('data-model')];
+        var dw = m.w + 32, dh = m.h + 32;
+        var vw = document.documentElement.clientWidth, vh = window.innerHeight;
+        var wide = vw >= 980;
+        // Side-by-side: phone beside the title. Stacked (narrow windows): the
+        // phone fills the window height and the title scrolls above it.
+        var availH = vh - (wide ? 90 : 70);
+        var availW = wide ? vw - 560 : vw - 32;
+        var s = Math.max(0.3, Math.min(1, availH / dh, availW / dw));
+        device.style.transform = 'scale(' + s + ')';
+        wrap.style.width = Math.round(dw * s) + 'px';
+        wrap.style.height = Math.round(dh * s) + 'px';
+      }
+
+      document.querySelectorAll('.seg button').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var model = b.getAttribute('data-model');
+          device.setAttribute('data-model', model);
+          document.querySelectorAll('.seg button').forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+          caption.textContent = MODELS[model].label;
+          fit();
+          frame.contentWindow.location.reload();
+        });
+      });
+      document.getElementById('replay').addEventListener('click', function () {
+        frame.contentWindow.location.reload();
+      });
+      window.addEventListener('resize', fit);
+      fit();
+    })();
+  </script>
+</body>
+</html>
