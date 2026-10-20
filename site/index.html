@@ -15,11 +15,12 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@400;500&family=Pinyon+Script&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@400;500&family=Pinyon+Script&display=swap">
 
-  <link rel="stylesheet" href="css/base.css?v=20261020f">
-  <link rel="stylesheet" href="css/components.css?v=20261020f">
-  <link rel="stylesheet" href="css/sections.css?v=20261020f">
+  <link rel="stylesheet" href="css/base.css?v=20261020o">
+  <link rel="stylesheet" href="css/components.css?v=20261020o">
+  <link rel="stylesheet" href="css/sections.css?v=20261020o">
+  <link rel="stylesheet" href="css/page.css?v=20261020o">
 
   <script>
     (function (d) {
@@ -40,7 +41,8 @@
            pearl embroidery, closed with the pearl dove seal; tapping the seal
            lights it up and the flaps open (sides, then top and bottom);
        (b) the couple's white wedding car (seen from above) then glides down
-           the card between pearl net flowers, uncovering the names.
+           a narrow path between dense columns of pearl flowers, uncovering
+           the names.
        js/sections/01-splash.js runs it.
        =================================================================== -->
   <div class="splash" id="splash" role="region" aria-label="Opening of the wedding invitation">
@@ -67,50 +69,39 @@
       </div>
     </div>
 
-    <img class="op-car" id="op-car" src="assets/images/wedding-car.webp?v=20261020f" width="720" height="1219"
+    <img class="op-car" id="op-car" src="assets/images/wedding-car.webp?v=20261020o" width="720" height="1219"
          alt="A bride and groom waving from a white vintage wedding car" fetchpriority="high" decoding="async">
 
-    <!-- Pearl net-flower columns down both sides (in front of the car) -->
-    <div class="op-florals op-florals--left" aria-hidden="true">
-      <img class="op-flower op-flower--1" src="assets/images/net-flower.webp?v=20261020f" alt="" width="720" height="449">
-      <img class="op-flower op-flower--2" src="assets/images/net-flower.webp?v=20261020f" alt="" width="720" height="449">
-      <img class="op-flower op-flower--3" src="assets/images/net-flower.webp?v=20261020f" alt="" width="720" height="449">
-      <img class="op-flower op-flower--4" src="assets/images/net-flower.webp?v=20261020f" alt="" width="720" height="449">
-      <img class="op-flower op-flower--5" src="assets/images/net-flower.webp?v=20261020f" alt="" width="720" height="449">
-    </div>
-    <div class="op-florals op-florals--right" aria-hidden="true">
-      <img class="op-flower op-flower--1" src="assets/images/net-flower.webp?v=20261020f" alt="" width="720" height="449">
-      <img class="op-flower op-flower--2" src="assets/images/net-flower.webp?v=20261020f" alt="" width="720" height="449">
-      <img class="op-flower op-flower--3" src="assets/images/net-flower.webp?v=20261020f" alt="" width="720" height="449">
-      <img class="op-flower op-flower--4" src="assets/images/net-flower.webp?v=20261020f" alt="" width="720" height="449">
-      <img class="op-flower op-flower--5" src="assets/images/net-flower.webp?v=20261020f" alt="" width="720" height="449">
-    </div>
+    <!-- Dense pearl-flower columns down both sides, leaving a narrow path
+         for the car (filled by 01-splash.js; in front of the car) -->
+    <div class="op-florals op-florals--left" aria-hidden="true"></div>
+    <div class="op-florals op-florals--right" aria-hidden="true"></div>
 
     <!-- Full-screen lace-and-pearl envelope (as in the reference video): four
          flaps of white tulle dressed with the real pearl embroidery and beaded
          trim from the couple's envelope, closed with the pearl dove seal. -->
     <div class="op-envelope" id="op-envelope">
       <div class="ef ef--bottom" data-flap="bottom" aria-hidden="true">
-        <div class="ef__fill"><img class="ef__motif ef__motif--bottom" src="assets/images/lace-motif.webp?v=20261020f" alt="" decoding="async"></div>
+        <div class="ef__fill"><img class="ef__motif ef__motif--bottom" src="assets/images/lace-motif.webp?v=20261020o" alt="" decoding="async"></div>
         <i class="ef__trim"></i><i class="ef__trim"></i>
       </div>
       <div class="ef ef--top" data-flap="top" aria-hidden="true">
-        <div class="ef__fill"><img class="ef__motif ef__motif--top" src="assets/images/lace-motif.webp?v=20261020f" alt="" decoding="async"></div>
+        <div class="ef__fill"><img class="ef__motif ef__motif--top" src="assets/images/lace-motif.webp?v=20261020o" alt="" decoding="async"></div>
         <i class="ef__trim"></i><i class="ef__trim"></i>
       </div>
       <div class="ef ef--left" data-flap="left" aria-hidden="true">
-        <div class="ef__fill"><img class="ef__motif ef__motif--left" src="assets/images/lace-spray-left.webp?v=20261020f" alt="" decoding="async"></div>
+        <div class="ef__fill"><img class="ef__motif ef__motif--left" src="assets/images/lace-spray-left.webp?v=20261020o" alt="" decoding="async"></div>
         <i class="ef__trim"></i><i class="ef__trim"></i>
       </div>
       <div class="ef ef--right" data-flap="right" aria-hidden="true">
-        <div class="ef__fill"><img class="ef__motif ef__motif--right" src="assets/images/lace-spray-right.webp?v=20261020f" alt="" decoding="async"></div>
+        <div class="ef__fill"><img class="ef__motif ef__motif--right" src="assets/images/lace-spray-right.webp?v=20261020o" alt="" decoding="async"></div>
         <i class="ef__trim"></i><i class="ef__trim"></i>
       </div>
       <div class="env__shine" aria-hidden="true"></div>
       <div class="env__sparkles" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       <div class="env__glow" aria-hidden="true"></div>
       <button class="op-seal" id="splash-open" type="button" aria-label="Open the wedding invitation of Angel and David">
-        <img src="assets/images/dove-seal.webp?v=20261020f" width="360" height="360" alt="" fetchpriority="high" decoding="async">
+        <img src="assets/images/dove-seal.webp?v=20261020o" width="360" height="360" alt="" fetchpriority="high" decoding="async">
       </button>
       <p class="op-hint" aria-hidden="true">Tap the seal to open</p>
     </div>
@@ -175,24 +166,27 @@
     </div>
   </noscript>
 
-  <script src="content.js?v=20261020f" defer></script>
-  <script src="js/core.js?v=20261020f" defer></script>
-  <script src="js/ornaments.js?v=20261020f" defer></script>
-  <script src="js/sections/01-splash.js?v=20261020f" defer></script>
-  <script src="js/sections/02-welcome.js?v=20261020f" defer></script>
-  <script src="js/sections/03-save-the-date.js?v=20261020f" defer></script>
-  <script src="js/sections/04-countdown.js?v=20261020f" defer></script>
-  <script src="js/sections/05-family.js?v=20261020f" defer></script>
-  <script src="js/sections/06-events.js?v=20261020f" defer></script>
-  <script src="js/sections/07-dress-code.js?v=20261020f" defer></script>
-  <script src="js/sections/08-gifting.js?v=20261020f" defer></script>
-  <script src="js/sections/09-venues.js?v=20261020f" defer></script>
-  <script src="js/sections/10-wishes.js?v=20261020f" defer></script>
-  <script src="js/sections/11-rsvp.js?v=20261020f" defer></script>
-  <script src="js/sections/12-travel.js?v=20261020f" defer></script>
-  <script src="js/sections/13-contact.js?v=20261020f" defer></script>
-  <script src="js/sections/14-thank-you.js?v=20261020f" defer></script>
-  <script src="js/main.js?v=20261020f" defer></script>
+  <script src="content.js?v=20261020o" defer></script>
+  <script src="js/core.js?v=20261020o" defer></script>
+  <script src="js/ornaments.js?v=20261020o" defer></script>
+  <script src="js/florals.js?v=20261020o" defer></script>
+  <script src="js/decor.js?v=20261020p" defer></script>
+  <script src="js/journey.js?v=20261020o" defer></script>
+  <script src="js/sections/01-splash.js?v=20261020o" defer></script>
+  <script src="js/sections/02-welcome.js?v=20261020o" defer></script>
+  <script src="js/sections/03-save-the-date.js?v=20261020o" defer></script>
+  <script src="js/sections/04-countdown.js?v=20261020o" defer></script>
+  <script src="js/sections/05-family.js?v=20261020o" defer></script>
+  <script src="js/sections/06-events.js?v=20261020o" defer></script>
+  <script src="js/sections/07-dress-code.js?v=20261020o" defer></script>
+  <script src="js/sections/08-gifting.js?v=20261020o" defer></script>
+  <script src="js/sections/09-venues.js?v=20261020o" defer></script>
+  <script src="js/sections/10-wishes.js?v=20261020o" defer></script>
+  <script src="js/sections/11-rsvp.js?v=20261020o" defer></script>
+  <script src="js/sections/12-travel.js?v=20261020o" defer></script>
+  <script src="js/sections/13-contact.js?v=20261020o" defer></script>
+  <script src="js/sections/14-thank-you.js?v=20261020o" defer></script>
+  <script src="js/main.js?v=20261020o" defer></script>
 
   <!-- Safety net: if the app has not started after 4 s, remove the splash
        and show a static summary so guests are never stuck. -->

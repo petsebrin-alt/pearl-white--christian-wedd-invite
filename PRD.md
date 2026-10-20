@@ -109,7 +109,7 @@ Family and friends of both families, many on mid-range Android phones and iPhone
 ### 3.2 Guest journey
 
 1. **Arrive** from a WhatsApp or SMS link → a full-screen white lace-and-pearl envelope with a pearl dove seal and "Tap the seal to open".
-2. **Open** → light sweeps the envelope and its four flaps fold away to reveal the card; the wedding car drives slowly down it and reveals "The Wedding of Angel & David" and the date; guests scroll on into the welcome.
+2. **Open** → light sweeps the envelope and its four flaps fold away to reveal the card; the wedding car drives slowly down it and reveals "The Wedding of Angel & David" and the date; guests scroll on into the welcome while the small wedding car travels down the left edge with them, all the way to its parking place at the end.
 3. **Read** the invitation, verse and date → **Add to Calendar** from Save the Date.
 4. **Feel the anticipation** in the countdown.
 5. **Meet the families** → optionally open either family tree.
@@ -145,7 +145,7 @@ Shared rules for all sections:
 | 1.25–2.4 s | The left and right flaps fold away. |
 | 1.95–3.45 s | The top flap (carrying the seal) and the bottom flap fold away, revealing the card. |
 
-**Card:** pearl-white linen backdrop; tall columns of realistic **white net flowers with pearls** down the left and right edges; an "A & D" monogram with "Angel & David" and "27 · 01 · 2027" in the centre; the front of the car peeking in from the top edge.
+**Card:** pearl-white linen backdrop; down the left and right edges, **fine champagne stems with many small pearl-and-satin flowers**, buds, pearl sprigs and tiny pearls (small, delicate and plentiful, as in the couple's reference image with the car), leaving a clear path in the middle; an "A & D" monogram with "Angel & David" and "27 · 01 · 2027" in the centre; the front of the car peeking in from the top edge. Lettering stays in the original typography (Pinyon Script names, black ink).
 
 **Car drive (≈ 9.5 s, begins automatically ½ s after the envelope opens):**
 
@@ -160,7 +160,18 @@ Shared rules for all sections:
 - **Reduced motion:** the envelope fades away and the final names screen appears without the car moving.
 - **Failure safety:** if the car image fails to load, the final names screen appears without it; the opening always completes within ~15 s of the tap; if the main script fails, the opening is removed after 4 s and a static summary is shown; without JavaScript a `<noscript>` summary is shown.
 - The rest of the page is `inert` while the animation plays. Afterwards focus moves to the "View the invitation" cue, or the page scrolls to a section link (e.g. `#rsvp`) if the guest arrived with one.
-- Artwork: `site/assets/images/lace-spray-left.webp`, `lace-spray-right.webp`, `lace-motif.webp`, `lace-pearl-trim.webp` (cut from the supplied envelope, whitened), `dove-seal.webp` (supplied seal, background removed), `wedding-car.webp` (the supplied car with the couple, already transparent) and `site/assets/images/net-flower.webp`. The couple shown in the car image is illustrative, not a photo of Angel & David.
+- Artwork: `site/assets/images/lace-spray-left.webp`, `lace-spray-right.webp`, `lace-motif.webp`, `lace-pearl-trim.webp` (cut from the supplied envelope, whitened), `dove-seal.webp` (supplied seal, background removed), `wedding-car.webp` (the supplied car with the couple, already transparent) and the pearl-flower pieces `pearl-bloom.webp`, `pearl-bud.webp`, `pearl-spray.webp`, `pearl-drops.webp`, `pearl-sprig.webp` (cut from the supplied flower image, gold softened). The couple shown in the car image is illustrative, not a photo of Angel & David.
+
+### 4.1b The journey and the page look (whole invitation)
+
+Modelled on the couple's reference videos (a scrolling invitation website, and a photo slideshow invitation). Content of every section is unchanged; only the look and motion follow the videos.
+
+- **Paper:** one continuous pearl-white linen paper behind all sections (no alternating bands).
+- **Typography and colour:** unchanged from §5 (black ink; Pinyon Script, Cormorant Garamond, Jost). The small heading lines spell themselves out letter by letter out of a soft blur as they scroll in (from the couple's slideshow reference video).
+- **Flowers:** small pearl flowers peek in at the section edges and drift slowly as guests scroll; pearl flowers dress the welcome card and the thank-you.
+- **Reveals:** content rises slightly and comes into focus (soft blur → sharp) as it scrolls in.
+- **The car's journey:** once the opening has finished, the wedding car (seen from above, small) travels down the **left edge** of the screen in step with the scroll — always showing how far down the invitation the guest is — at one steady rate (no easing). On phones the side margins are widened so the car never covers text. In the last section it **pulls into its parking place** at the bottom left, beside the pressed "A & D" monogram and pearl flowers, and stays parked there (as in the last frame of the reference video). Scrolling back up drives it back up the lane.
+- **Reduced motion:** no drifting flowers or travelling car; the car is shown parked at the end.
 
 ### 4.2 Welcome invitation
 
@@ -178,7 +189,12 @@ Shared rules for all sections:
 
 ### 4.3 Save the Date
 
-- **27** dominates (very large serif), with "January" in calligraphy and "2027" beneath; weekday "Wednesday" as an eyebrow.
+- **A slow black-and-white photo slideshow** modelled on the couple's slideshow reference video: a tall panel (edge to edge on phones, a centred portrait card on larger screens).
+  - **Slide 1 — Save the Date:** the couple photograph, in black and white under a soft white haze, drifts slowly up from the lace to the couple's faces (one steady speed). Over the lighter lower half the text appears as in the video: "SAVE THE DATE" and "The wedding of" spell themselves out letter by letter out of a soft blur; **Angel & David** (Pinyon Script, black) come slowly into focus; then the date block — "JANUARY" above, **WEDNESDAY | 27 | 2027** between fine rules that draw outward — and "Ceremony time: To be provided".
+  - **Slide 2 — Order of the Day:** crossfades to a soft close-up of the lace; "ORDER *of the* DAY" appears, then the five events (Haldi, Mehendi, Sangeet, Christian Marriage Ceremony, Reception) one by one on a pearl-dot timeline, each with its kind (Pre-wedding, The Wedding, Celebration) or its time once confirmed; "Times: To be provided".
+  - Slides change about every 9–10 s with a 1.8 s crossfade, only while the slideshow is on screen; dots choose a slide and a button pauses or plays it. Reduced motion: no movement or auto-advance; the first slide is shown complete and the dots switch slides.
+  - Photograph: `site/assets/images/couple-bw.webp` (set in `content.js → couplePhotos`). The current photo is the **sample supplied for the design** (it carries a photographer's "Maab Road" tag); replace it with Angel & David's own photograph before sharing.
+- **Add to Calendar** sits below the slideshow.
 - **Add to Calendar** button → a small sheet with two choices: **Google Calendar** and **Apple / Outlook (.ics file)**.
 
 **Calendar behaviour rules:**
@@ -322,10 +338,11 @@ Placeholder cards for: **Travel guidance, Parking, Pickup and shuttle arrangemen
 
 ### 4.14 Thank you
 
-- Pearl-white section with restrained florals.
+- Pearl flowers above the line.
 - "Thank you for blessing our journey." — **Proposal:** gentle handwriting reveal (SVG stroke draw ≈ 2.4 s, then the fill fades in). Static readable text is always present for screen readers and reduced-motion users.
 - "Angel & David" and the date.
 - **Return to Top** button → smooth scroll to the welcome (instant for reduced motion) and focus moves to the top.
+- **Parking place** (decorative): the wedding car parked at the bottom left beside the "A & D" monogram, with pearl flowers and pearl drops — the end of the car's journey (§4.1b).
 
 ---
 
@@ -334,7 +351,7 @@ Placeholder cards for: **Travel guidance, Parking, Pickup and shuttle arrangemen
 Full details in [THEME.md](THEME.md). Summary:
 
 - **Palette:** pearl `#F8F6F1`, white `#FFFFFF`, ivory `#F3EEE3`, ink `#121212`, charcoal `#2B2A28`; olive `#6B7445` only within florals.
-- **Type:** Cormorant Garamond (display), Pinyon Script (selective calligraphy), Jost (body/UI).
+- **Type:** Cormorant Garamond (display), Pinyon Script (selective calligraphy), Jost (body/UI). Small heading lines appear letter by letter (§4.1b).
 - **Layout:** single column on mobile (16–20 px gutters), 2-column grids from 768 px, max content width 1120 px; section padding 5–8 rem.
 - **Components:** pill buttons (primary = black fill with white text; secondary = white with charcoal hairline), paper cards with lace edge, pearl dividers, "To be provided" chips (dashed pearl border, italic), "Proposal" banners (ivory with a small leaf icon).
 
@@ -345,7 +362,11 @@ Full details in [THEME.md](THEME.md). Summary:
 | # | Interaction | Trigger | Duration / easing | Reduced motion | Fallback |
 |---|---|---|---|---|---|
 | A1 | Light effect and four-flap envelope opening (≈ 3.5 s), then the car drive | Tap the seal / Enter / Space | ≈ 9.5 s; one constant, smooth speed top to bottom (no easing); text uncovered from the top down behind the car | Final screen appears instantly | Completes within ~12.5 s; no car image → final screen; script-failure removal at 4 s |
-| A2 | Section reveal | Scroll into view (IntersectionObserver) | 600 ms fade-up 16 px | Instant | Content visible if observer unsupported |
+| A2 | Section reveal | Scroll into view (IntersectionObserver) | 1 s fade-up 22 px with a soft focus-pull (blur 5 px → 0) | Instant | Content visible if observer unsupported |
+| A2b | The car's journey and parking | Scroll (after the opening) | Linked to the scroll, one steady rate; parks over the last ≈ ½ screen of scrolling | Car shown parked, no movement | No car image → no car is shown; content is unaffected |
+| A2c | Edge flowers drift | Scroll | Linked to the scroll (5–16 % of the scroll distance) | None | Static flowers |
+| A2d | Letter-by-letter heading lines | Scroll into view | 55 ms per letter, each fading in out of a 6 px blur | Text shown at once | Plain text for screen readers |
+| A2e | Save the Date slideshow | On screen (≥ 35 % visible) | Photo drift 12–13 s linear; slides every 9–10 s; 1.8 s crossfade; names focus in over ≈ 2 s | Static first slide; dots switch | Pause/play button; stops when off screen |
 | A3 | Countdown tick | Every second | Number change, no motion | Same | Pending/ended states |
 | A4 | Family-tree floral reveal | Open overlay | 700 ms branch draw + 60 ms staggered nodes | None | Static tree |
 | A5 | Pearl timeline sheen | Event card enters view | 500 ms | None | Static pearls |
@@ -365,7 +386,7 @@ Full checklist with sizes and status in [THEME.md §6](THEME.md#6-asset-checklis
 
 | Should be **SVG** | Should be **realistic transparent PNG/WebP** | Should be **video** |
 |---|---|---|
-| Cross, monogram, icons, pearl dividers, lace edge pattern, event illustrations, dress-code illustrations, family-tree connectors and branch, handwriting stroke | Floral corners (white flowers + olive leaves + pearls), pearl strands, **wedding car with couple (done)**, **net flower with pearls (done)**, envelope (front/back/flap), paper texture, lace strip | None required (the opening animates the car image in code) |
+| Cross, monogram, icons, pearl dividers, lace edge pattern, event illustrations, dress-code illustrations, family-tree connectors and branch, handwriting stroke | Floral corners (white flowers + olive leaves + pearls), pearl strands, **wedding car with couple (done)**, **pearl-and-satin flower pieces (done)**, **black-and-white couple photograph (sample supplied; to be replaced)**, **net flower with pearls (done, showcase page)**, envelope (front/back/flap), paper texture, lace strip | None required (the opening animates the car image in code) |
 | **Photographs (WebP/AVIF):** family ×2, venues ×2+, dress references, share image (JPG 1200 × 630) | | |
 
 v1 ships SVG/CSS versions of every decoration so the site is complete; realistic raster/video assets are drop-in upgrades configured in `content.js → assets`.

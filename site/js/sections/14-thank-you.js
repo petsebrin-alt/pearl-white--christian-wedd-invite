@@ -17,16 +17,31 @@
     render: function (C) {
       var T = C.thankYou || {};
       var date = AD.weddingDate();
+      var c = C.couple || {};
       return '<div class="container container--text thanks">' +
-        AD.orn.garland('thanks__garland reveal') +
+        '<div class="thanks__flowers reveal" aria-hidden="true">' +
+          AD.florals.img('sprig', 'thanks__fl thanks__fl--l') + AD.florals.img('bloom', 'thanks__fl thanks__fl--c') + AD.florals.img('bud', 'thanks__fl thanks__fl--r') +
+        '</div>' +
         '<h2 class="thanks__line" id="thank-you-title">' +
           lines(T.line).map(function (l, i) { return '<span class="hw" style="--i:' + i + '">' + AD.esc(l) + '</span>'; }).join('') +
         '</h2>' +
         AD.orn.divider('reveal') +
-        '<p class="thanks__names script reveal">' + AD.esc(C.couple.bride) + ' <span class="amp">&amp;</span> ' + AD.esc(C.couple.groom) + '</p>' +
+        '<p class="thanks__names script reveal">' + AD.esc(c.bride) + ' <span class="amp">&amp;</span> ' + AD.esc(c.groom) + '</p>' +
         (AD.has(date) ? '<p class="thanks__date reveal">' + AD.esc(AD.formatDateShort(date)) + '</p>' : '') +
         '<div class="btn-row reveal"><a class="btn btn--secondary" href="#welcome" data-top>' + AD.icon('up') + 'Return to Top</a></div>' +
         '<div class="thanks__cross reveal">' + AD.orn.cross() + '</div>' +
+      '</div>' +
+      // The end of the journey: the wedding car parks here beside the
+      // couple's monogram (js/journey.js drives it in as guests scroll).
+      '<div class="parking" aria-hidden="true">' +
+        '<div class="parking__bay">' +
+          AD.florals.img('spray', 'parking__spray') +
+          '<img class="parking__car" data-parking-car src="assets/images/wedding-car.webp?v=20261020o" width="720" height="1219" alt="" decoding="async">' +
+        '</div>' +
+        '<div class="parking__mark">' +
+          '<span class="parking__mono">' + AD.esc((c.bride || '').charAt(0)) + '<i>&amp;</i>' + AD.esc((c.groom || '').charAt(0)) + '</span>' +
+          AD.florals.img('drops', 'parking__drops') +
+        '</div>' +
       '</div>';
     },
     init: function (el) {

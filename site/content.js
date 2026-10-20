@@ -31,6 +31,17 @@ window.WEDDING = {
     date: "2027-01-27" // Confirmed
   },
 
+  // Black-and-white photographs for the Save the Date slideshow (section 3).
+  // The first drifts slowly up to the couple's faces; the second (or a close-up
+  // of the first) sits behind the "Order of the Day". Photos are shown in
+  // black and white automatically.
+  // NOTE: the current photo is the sample supplied for the design (it carries a
+  // photographer's "Maab Road" tag) — replace it with Angel & David's own
+  // photograph before sharing the invitation.
+  couplePhotos: [
+    { src: "assets/images/couple-bw.webp", alt: "A bride in white lace and a groom in a black suit, cheek to cheek (sample photograph)" }
+  ],
+
   // Timezone for every event time. Needed before any timed calendar entry or
   // the live countdown is produced.
   // Proposal (please confirm): iana "Asia/Kolkata", utcOffset "+05:30", label "IST".
@@ -255,7 +266,7 @@ window.WEDDING = {
     endpoint: ""
   },
 
-  // The opening screen uses assets/images/wedding-car.webp and
-  // assets/images/net-flower.webp (replace the files to change the artwork).
+  // The opening uses assets/images/wedding-car.webp and the pearl-flower pieces
+  // assets/images/pearl-*.webp (replace the files to change the artwork).
   assets: {}
 };

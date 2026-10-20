@@ -13,8 +13,8 @@
 
       return '<div class="container">' +
         '<article class="invite-card paper paper--embossed lace-edge">' +
-          '<div class="invite-card__floral invite-card__floral--tl" aria-hidden="true">' + AD.orn.corner() + '</div>' +
-          '<div class="invite-card__floral invite-card__floral--br" aria-hidden="true">' + AD.orn.corner() + '</div>' +
+          '<div class="invite-card__floral invite-card__floral--tl" aria-hidden="true">' + AD.florals.img('spray') + '</div>' +
+          '<div class="invite-card__floral invite-card__floral--br" aria-hidden="true">' + AD.florals.img('bloom') + AD.florals.img('sprig') + '</div>' +
           '<div class="invite-card__inner">' +
             '<div class="reveal">' + AD.orn.cross('invite-card__cross') + '</div>' +
             '<p class="eyebrow reveal" data-delay="1">' + AD.esc(inv.eyebrow) + '</p>' +

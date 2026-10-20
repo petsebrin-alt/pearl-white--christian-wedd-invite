@@ -158,6 +158,80 @@
     });
   }
 
+  /* ---------- Pearl-flower columns (as in the couple's reference image) ----------
+     Fine champagne stems run down each side; many small pearl flowers, buds,
+     pearl sprigs and tiny pearls grow along them, leaving a clear path in the
+     middle for the car. Units are column widths (--col); x is measured from
+     the screen edge. The layout is generated from a fixed seed, so it is the
+     same on every visit; the left column is a mirrored, different arrangement. */
+  var STEMS = [0.24, 0.6, 0.94];   // where the three stems run (distance from the edge)
+  var built = 0;                   // rows (in column widths) already filled
+
+  function seeded(seed) {
+    return function () {
+      seed = (seed + 0x6D2B79F5) | 0;
+      var t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function column(rows, seed) {
+    var rnd = seeded(seed), W = 130;   // the SVG is 1.3 columns wide (100 units = 1 column)
+    var stems = STEMS.map(function (base, k) {
+      return { base: base, amp: 0.07 + rnd() * 0.06, len: 2.4 + rnd() * 1.2, ph: rnd() * 6.28, k: k };
+    });
+    function sx(st, y) { return st.base + st.amp * Math.sin(y / st.len * 6.283 + st.ph); }
+    function X(x) { return (W - x * 100).toFixed(1); }
+
+    var paths = '', dots = '', imgs = [];
+    stems.forEach(function (st) {
+      var d = '';
+      for (var y = -0.6; y <= rows + 0.6; y += 0.2) d += (d ? 'L' : 'M') + X(sx(st, y)) + ' ' + (y * 100).toFixed(1);
+      paths += '<path d="' + d + '"/>';
+      // Flowers, buds and pearls along the stem
+      var y2 = -0.3 + rnd() * 0.5;
+      while (y2 < rows + 0.4) {
+        var x = sx(st, y2) + (rnd() - 0.5) * 0.12, r = rnd();
+        var piece = r < 0.5 ? 'bloom' : r < 0.82 ? 'bud' : r < 0.92 ? 'sprig' : 'drops';
+        var w = piece === 'bloom' ? 0.38 + rnd() * 0.3 : piece === 'bud' ? 0.26 + rnd() * 0.1 : piece === 'sprig' ? 0.42 : 0.18;
+        var turn = piece === 'drops' ? (rnd() - 0.5) * 16 : piece === 'sprig' ? -30 + rnd() * 60 : rnd() * 360;
+        imgs.push([piece, y2, x, w, turn]);
+        // A short twig with a few tiny pearls beside every other flower
+        if (rnd() < 0.6) {
+          var side = rnd() < 0.5 ? -1 : 1, tx = x + side * (0.14 + rnd() * 0.1), ty = y2 + 0.22 + rnd() * 0.15;
+          paths += '<path d="M' + X(x) + ' ' + (y2 * 100 + 8).toFixed(1) + 'Q' + X((x + tx) / 2 + side * 0.04) + ' ' + ((y2 + ty) * 50).toFixed(1) + ' ' + X(tx) + ' ' + (ty * 100).toFixed(1) + '"/>';
+          for (var p = 0; p < 3; p++) {
+            dots += '<circle cx="' + X(tx + (rnd() - 0.5) * 0.09) + '" cy="' + (ty * 100 + (rnd() - 0.5) * 9).toFixed(1) + '" r="' + (1.3 + rnd() * 1.3).toFixed(1) + '"/>';
+          }
+        }
+        y2 += 0.46 + rnd() * 0.3;
+      }
+    });
+    var svg = '<svg class="op-stems" viewBox="0 0 ' + W + ' ' + (rows * 100) + '" preserveAspectRatio="none" style="--rows:' + rows + '">' +
+      '<defs><radialGradient id="op-pearl-' + seed + '" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#f1ece3"/><stop offset="1" stop-color="#cfc5b3"/></radialGradient></defs>' +
+      '<g class="op-stems__lines">' + paths + '</g><g fill="url(#op-pearl-' + seed + ')">' + dots + '</g></svg>';
+    // Smaller pieces on top of larger ones reads more natural.
+    imgs.sort(function (a, b) { return b[3] - a[3]; });
+    return svg + imgs.map(function (it, i) {
+      return AD.florals.img(it[0], 'op-pf' + (it[0] === 'bloom' && i % 3 === 0 ? ' op-pf--sway' : ''),
+        '--y:' + it[1].toFixed(2) + ';--x:' + it[2].toFixed(3) + ';--w:' + it[3].toFixed(2) + ';--r:' + it[4].toFixed(0) + 'deg;--d:' + ((i * 37) % 23 / 10).toFixed(1) + 's');
+    }).join('');
+  }
+
+  function buildFlorals() {
+    var c = splash.querySelector('.op-florals--right');
+    if (!c) return;
+    var colW = c.offsetWidth || 100;
+    var rows = Math.ceil(splash.offsetHeight / colW) + 1;
+    if (rows <= built) return;
+    built = rows;
+    ['left', 'right'].forEach(function (side, s) {
+      var el = splash.querySelector('.op-florals--' + side);
+      if (el) el.innerHTML = column(rows, s ? 20270127 : 7271020);
+    });
+  }
+
   function drive() {
     if (finished) return;
     measure();
@@ -227,6 +301,7 @@
       if (!splash || !env || !btn || !car || !mono || !names) { if (splash) splash.remove(); root.classList.remove('splash-active'); return; }
 
       fillContent();
+      buildFlorals();
       layoutEnvelope();
       ['main', 'site-header'].forEach(function (id) {
         var el = $(id);
@@ -246,6 +321,7 @@
       }
       // Re-measure once the script fonts arrive and on resize.
       function remeasure() {
+        buildFlorals();   // a taller screen (e.g. turned upright) needs longer columns
         if (finished) return;
         if (phase === 'idle') layoutEnvelope();
         if (!geo) return;

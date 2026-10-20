@@ -48,6 +48,25 @@
       '<span class="ph-media__label">' + AD.esc(label) + '</span>' + AD.tbp() + '</div></div>';
   };
 
+  /* ---------- Letter-by-letter reveal (as in the reference video) ----------
+     Each letter fades in out of a soft blur, one after another, when its
+     container is revealed (.is-in) or played (.is-play). Screen readers get
+     the plain words. `start` is the delay in seconds before the first letter. */
+  AD.letters = function (text, start) {
+    var i = 0;
+    var words = String(text).split(' ').map(function (w) {
+      return '<span class="lt-word">' + w.split('').map(function (ch) {
+        return '<span class="lt" style="--i:' + (i++) + '">' + AD.esc(ch) + '</span>';
+      }).join('') + '</span>';
+    }).join(' ');
+    return '<span class="sr-only">' + AD.esc(text) + '</span><span class="lt-line" aria-hidden="true" style="--d0:' + (start || 0) + 's">' + words + '</span>';
+  };
+  // Converts an element's plain text in place.
+  AD.splitLetters = function (el, start) {
+    if (!el || el.querySelector('.lt-line') || el.children.length) return;
+    el.innerHTML = AD.letters(el.textContent.trim(), start);
+  };
+
   AD.sectionHead = function (o) {
     return '<header class="section-head reveal">' +
       (o.eyebrow ? '<p class="eyebrow">' + AD.esc(o.eyebrow) + '</p>' : '') +
@@ -135,6 +154,8 @@
     heart: '<path d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.4-7.5 10-7.5 10z"/>',
     external: '<path d="M14 4.5h5.5V10M19.5 4.5L11 13M17 13.5V19a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8.5a1 1 0 0 1 1-1H11"/>',
     download: '<path d="M12 4.5v10M7.5 10.5L12 15l4.5-4.5M5 19.5h14"/>',
+    pause: '<path d="M9 6.5v11M15 6.5v11"/>',
+    play: '<path d="M8.5 6.2v11.6L18 12z"/>',
     tree: '<circle cx="12" cy="5.5" r="2"/><circle cx="6" cy="17.5" r="2"/><circle cx="18" cy="17.5" r="2"/><path d="M12 7.5v4M6 15.5v-2h12v2"/>'
   };
   AD.icon = function (name, cls) {
