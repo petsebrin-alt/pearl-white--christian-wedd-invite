@@ -31,16 +31,18 @@
         '<div class="btn-row reveal"><a class="btn btn--secondary" href="#welcome" data-top>' + AD.icon('up') + 'Return to Top</a></div>' +
         '<div class="thanks__cross reveal">' + AD.orn.cross() + '</div>' +
       '</div>' +
-      // The end of the journey: the wedding car parks here beside the
-      // couple's monogram (js/journey.js drives it in as guests scroll).
+      // The end of the invitation (as in the reference video's last frame):
+      // the wedding car drives in and parks on a slant at the bottom left,
+      // the couple waving, beside the monogram and pearl flowers.
       '<div class="parking" aria-hidden="true">' +
-        '<div class="parking__bay">' +
-          AD.florals.img('spray', 'parking__spray') +
-          '<img class="parking__car" data-parking-car src="assets/images/wedding-car.webp?v=20261020o" width="720" height="1219" alt="" decoding="async">' +
-        '</div>' +
         '<div class="parking__mark">' +
+          AD.florals.img('spray', 'parking__spray') +
           '<span class="parking__mono">' + AD.esc((c.bride || '').charAt(0)) + '<i>&amp;</i>' + AD.esc((c.groom || '').charAt(0)) + '</span>' +
           AD.florals.img('drops', 'parking__drops') +
+        '</div>' +
+        '<div class="parking__car">' +
+          '<img src="assets/images/wedding-car.webp?v=20261020w" width="720" height="1219" alt="" decoding="async" loading="lazy">' +
+          '<span class="parking__glint parking__glint--1"></span><span class="parking__glint parking__glint--2"></span><span class="parking__glint parking__glint--3"></span>' +
         '</div>' +
       '</div>';
     },
@@ -53,6 +55,23 @@
           if (entries[0].isIntersecting) { line.classList.add('is-writing'); io.disconnect(); }
         }, { threshold: 0.5 });
         io.observe(line);
+      }
+      // The car drives in and parks once the parking place comes into view
+      // (once per visit). Reduced motion: it is simply shown parked.
+      var lot = el.querySelector('.parking');
+      if (lot) {
+        if (AD.reducedMotion() || !('IntersectionObserver' in window)) lot.classList.add('is-parked');
+        else {
+          lot.classList.add('is-waiting');
+          var pio = new IntersectionObserver(function (entries) {
+            if (!entries[0].isIntersecting) return;
+            pio.disconnect();
+            lot.classList.remove('is-waiting');
+            lot.classList.add('is-arriving');
+            setTimeout(function () { lot.classList.add('is-parked'); }, 3400);
+          }, { threshold: 0.45 });
+          pio.observe(lot);
+        }
       }
       el.querySelector('[data-top]').addEventListener('click', function (e) {
         e.preventDefault();

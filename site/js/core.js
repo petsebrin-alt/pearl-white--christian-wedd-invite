@@ -154,8 +154,6 @@
     heart: '<path d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.4-7.5 10-7.5 10z"/>',
     external: '<path d="M14 4.5h5.5V10M19.5 4.5L11 13M17 13.5V19a1 1 0 0 1-1 1H5.5a1 1 0 0 1-1-1V8.5a1 1 0 0 1 1-1H11"/>',
     download: '<path d="M12 4.5v10M7.5 10.5L12 15l4.5-4.5M5 19.5h14"/>',
-    pause: '<path d="M9 6.5v11M15 6.5v11"/>',
-    play: '<path d="M8.5 6.2v11.6L18 12z"/>',
     tree: '<circle cx="12" cy="5.5" r="2"/><circle cx="6" cy="17.5" r="2"/><circle cx="18" cy="17.5" r="2"/><path d="M12 7.5v4M6 15.5v-2h12v2"/>'
   };
   AD.icon = function (name, cls) {

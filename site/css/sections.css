@@ -242,7 +242,7 @@
   height: var(--trim);
   margin-top: calc(var(--trim) / -2);
   transform-origin: 0 50%;
-  background: url("../assets/images/lace-pearl-trim.webp?v=20261020o") repeat-x 0 50% / auto 100%;
+  background: url("../assets/images/lace-pearl-trim.webp?v=20261020w") repeat-x 0 50% / auto 100%;
 }
 
 /* Light: a glow from the seal, a sheen sweeping the lace, pearls sparkling. */
@@ -395,21 +395,89 @@
 .preview-note:not([hidden]) + .section--welcome { padding-top: clamp(3rem, 7vw, 4.5rem); }
 .section--welcome { padding-top: calc(var(--header-h) + clamp(3rem, 7vw, 4.5rem)); }
 
-.invite-card {
-  max-width: 36rem;
-  margin: 0 auto;
-  padding: clamp(4.25rem, 11vw, 5.75rem) clamp(1.5rem, 6vw, 3.5rem) clamp(3.5rem, 9vw, 4.75rem);
-  text-align: center;
+/* The couple photograph (as in the reference video): black and white,
+   drifting slowly and moving with a gentle parallax, fading into the paper,
+   with the invitation over its lighter lower part. */
+.wel { position: relative; width: min(100%, 36rem); margin: 0 auto; text-align: center; }
+@media (max-width: 599px) {
+  /* Edge to edge on phones */
+  .section--welcome { padding-top: 1rem; }
+  .wel--photo { width: auto; margin-inline: calc(var(--gutter) * -1); }
 }
-/* Pearl flowers on two corners of the card (the couple's pearl flower) */
-.invite-card__floral { position: absolute; pointer-events: none; z-index: 1; }
-.invite-card__floral img { position: absolute; max-width: none; height: auto; }
-.invite-card__floral--tl { top: -34px; left: -26px; width: clamp(120px, 34vw, 200px); transform: scaleX(-1); }
-.invite-card__floral--tl img { position: relative; width: 100%; }
-.invite-card__floral--br { right: -22px; bottom: -30px; width: clamp(96px, 27vw, 160px); aspect-ratio: 1; }
-.invite-card__floral--br .pf--bloom { right: 0; bottom: 0; width: 100%; transform: rotate(-18deg); }
-.invite-card__floral--br .pf--sprig { right: 78%; bottom: 46%; width: 52%; transform: rotate(-24deg); }
-.invite-card__inner { position: relative; z-index: 2; }
+.wel-photo {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  aspect-ratio: 2 / 3;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, .55) 74%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, .55) 74%, transparent 100%);
+}
+@media (min-width: 600px) {
+  /* Wider screens: the sides fade softly into the paper too */
+  .wel-photo {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, .55) 74%, transparent 100%), linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, .55) 74%, transparent 100%), linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    mask-composite: intersect;
+  }
+}
+.wel-photo__par { position: absolute; left: 0; right: 0; top: -12%; height: 124%; will-change: transform; }
+.wel-shot { position: absolute; inset: 0; opacity: 0; transition: opacity 1.8s ease-in-out; }
+.wel-shot.is-active { opacity: 1; }
+.wel-shot img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: 50% 30%;
+  filter: grayscale(1) contrast(.94) brightness(1.05);
+  transform: scale(1.04);
+}
+/* Slow drift at one steady speed, as in the video */
+.motion-ok .wel-shot.is-drift img { animation: wel-drift 16s linear both; }
+.wel-photo.is-offscreen .wel-shot img { animation-play-state: paused; }
+@keyframes wel-drift { from { transform: scale(1.16) translateY(3%); } to { transform: scale(1.04) translateY(0); } }
+/* Soft white haze over the lower part, where the text sits */
+.wel-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(247, 245, 241, .06) 0%, rgba(247, 245, 241, .14) 34%, rgba(247, 245, 241, .78) 54%, rgba(247, 245, 241, .92) 100%);
+}
+
+.wel-body { position: relative; z-index: 1; padding: clamp(3rem, 8vw, 4rem) var(--gutter) clamp(2.5rem, 7vw, 3.5rem); }
+.wel--photo .wel-body { padding-top: 76%; }   /* % of the width: text starts on the lighter lower part of the photo */
+.wel-names .wel-name { display: block; }
+/* The names come slowly into focus, as in the video */
+.motion-ok .wel-names .wel-name { opacity: 0; filter: blur(10px); transform: scale(1.06); transition: opacity 1.4s ease, filter 1.6s ease, transform 2.2s ease; }
+.motion-ok .wel-names.is-in .wel-name { opacity: 1; filter: none; transform: none; }
+.motion-ok .wel-names.is-in .wel-name--1 { transition-delay: .3s; }
+.motion-ok .wel-names.is-in .wel-name--amp { transition-delay: .8s; }
+.motion-ok .wel-names.is-in .wel-name--2 { transition-delay: 1.1s; }
+
+/* Date block: month above, weekday | day | year between fine rules */
+.wel-db { width: min(100%, 21rem); margin: 1.5rem auto .6rem; }
+.wel-db__month { margin: 0 -.3em .2rem 0; font: 600 .875rem/1 var(--font-display); letter-spacing: .3em; text-transform: uppercase; color: var(--ink); }
+.wel-db__row { display: grid; grid-template-columns: 1fr auto auto auto 1fr; align-items: center; gap: .55rem; }
+.wel-db__rule { height: 1px; background: #a59d91; }
+.wel-db__rule:first-child { transform-origin: right; }
+.wel-db__rule:last-child { transform-origin: left; }
+.motion-ok .wel-db__rule { transform: scaleX(0); transition: transform 1.2s ease .6s; }
+.motion-ok .wel-db.is-in .wel-db__rule { transform: none; }
+.wel-db__side { padding-block: .35rem; border-block: 1px solid #a59d91; font: 600 .75rem/1 var(--font-display); letter-spacing: .2em; text-transform: uppercase; color: var(--ink); }
+.wel-db__day { padding: 0 .1rem; font-family: var(--font-display); font-weight: 500; font-size: 3.1rem; line-height: .9; color: var(--ink); }
+.wel-time { display: flex; gap: .5rem; align-items: center; justify-content: center; flex-wrap: wrap; margin: .6rem 0 1.75rem; font-size: .95rem; color: var(--charcoal); }
+
+/* Pearl flowers at two corners of the text */
+.wel-floral { pointer-events: none; z-index: 2; }
+.wel-floral img { position: absolute; max-width: none; height: auto; }
+/* Top-left spray: a zero-height anchor at the start of the text */
+.wel-floral--tl { position: relative; height: 0; }
+.wel-floral--tl img { top: -2.5rem; left: calc(var(--gutter) * -1 - 4px); width: clamp(110px, 30vw, 190px); transform: scaleX(-1); }
+.wel--photo .wel-floral--tl img { top: -6rem; }
+.wel-floral--br { position: absolute; right: -10px; bottom: -8.6rem; width: clamp(90px, 25vw, 150px); aspect-ratio: 1; }
+.wel-floral--br .pf--bloom { right: 0; bottom: 0; width: 100%; transform: rotate(-18deg); }
+.wel-floral--br .pf--sprig { right: 78%; bottom: 46%; width: 52%; transform: rotate(-24deg); }
 .invite-card__cross { width: 22px; height: 33px; margin: 0 auto 1.4rem; color: #4a4741; }
 
 .invite-names {
@@ -478,138 +546,39 @@
    3. SAVE THE DATE
    ========================================================================== */
 .std { text-align: center; }
-.std-pending { text-align: center; }
-
-/* ---------- The slideshow (as in the reference video) ----------
-   A tall black-and-white photograph that drifts slowly upward under a white
-   haze, with the invitation text over the lighter lower half. */
-.std-show {
-  position: relative;
-  width: min(100%, 30rem);
-  aspect-ratio: 9 / 16;
-  max-height: 94svh;
-  min-height: 34rem;
-  margin: 0 auto;
-  overflow: hidden;
-  border-radius: 6px;
-  background: #ece8e1;
-  box-shadow: 0 30px 60px -36px rgba(30, 26, 20, .55), 0 2px 8px rgba(30, 26, 20, .08);
-  isolation: isolate;
-  text-align: center;
-  color: var(--ink);
-}
-@media (max-width: 599px) {
-  /* Edge to edge on phones, like a full screen of the video */
-  .std-show { width: auto; margin-inline: calc(var(--gutter) * -1); border-radius: 0; box-shadow: none; }
-}
-.std-show__photos { position: absolute; inset: 0; z-index: 0; }
-.std-shot { position: absolute; inset: 0; opacity: 0; transition: opacity 1.8s ease-in-out; }
-.std-shot.is-active { opacity: 1; }
-.std-shot img {
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-  object-position: 50% 30%;
-  filter: grayscale(1) contrast(.94) brightness(1.06);
-  transform: scale(1.28) translateY(-9%);
-  will-change: transform;
-}
-/* The first photo starts low on the couple and drifts up to their faces;
-   the second is a soft close-up of the lace. One steady speed, no easing. */
-.motion-ok .std-shot--1.is-drift img { animation: std-drift-up 13s linear both; }
-.std-shot--2 img { object-position: 50% 50%; transform: scale(1.75) translate(-8%, -15%); opacity: .55; }
-.motion-ok .std-shot--2.is-drift img { animation: std-drift-lace 12s linear both; }
-@keyframes std-drift-up { from { transform: scale(1.28) translateY(-9%); } to { transform: scale(1.2) translateY(7%); } }
-@keyframes std-drift-lace { from { transform: scale(1.75) translate(-8%, -15%); } to { transform: scale(1.62) translate(-8%, -17.5%); } }
-.std-show.is-still .std-shot img, .std-show.is-paused .std-shot img { animation-play-state: paused; }
-.std-show.is-still .std-shot--1 img { transform: scale(1.2) translateY(7%); }
-.std-show.is-offscreen .std-shot img { animation-play-state: paused; }
-
-/* White haze: the faces stay clear at the top, the text area is light */
-.std-show::after {
-  content: "";
+.std > .eyebrow { margin-bottom: 1.5rem; }
+.std-ring { position: relative; width: min(88vw, 410px); margin: 0 auto 1.6rem; }
+.std-ring .pearl-ring { width: 100%; height: auto; }
+.std-ring__date {
   position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background:
-    linear-gradient(to bottom, rgba(247, 245, 241, .08) 0%, rgba(247, 245, 241, .18) 26%, rgba(247, 245, 241, .8) 46%, rgba(247, 245, 241, .9) 100%);
-  transition: background .8s;
-}
-.std-show:has(.std-slide--2.is-active)::after { background: rgba(247, 245, 241, .62); }
-
-/* Slides */
-.std-slide {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
+  left: 0; right: 0;
+  top: 48.5%;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: center;
-  padding: 1.5rem clamp(1.5rem, 7vw, 2.5rem) 4.6rem;
-  opacity: 0;
-  visibility: hidden;
-  filter: blur(6px);
-  transition: opacity .9s ease, filter .9s ease, visibility 0s .9s;
 }
-.std-slide.is-active { opacity: 1; visibility: visible; filter: none; transition: opacity 1s ease .5s, filter 1s ease .5s, visibility 0s; }
-
-/* (Letters appear one by one: see the shared rules in page.css.) */
-
-.std-cap { margin: 0 -.34em .6rem 0; font: 600 .8125rem/1.3 var(--font-display); letter-spacing: .34em; text-transform: uppercase; color: var(--charcoal); }
-.std-of { margin: 0 0 .1rem; font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 1.2rem; color: var(--muted); }
-.std-names { display: flex; flex-direction: column; align-items: center; margin: 0; font-size: clamp(3.6rem, 2.6rem + 4.6vw, 4.8rem); line-height: 1.02; color: var(--ink); }
-.std-and { font-family: var(--font-display); font-style: italic; font-size: .38em; color: var(--muted); margin: .05em 0; }
-/* The names come into focus slowly, as in the video */
-.motion-ok .std-name, .motion-ok .std-and { opacity: 0; filter: blur(10px); transform: scale(1.06); transition: opacity 1.4s ease, filter 1.6s ease, transform 2.2s ease; }
-.motion-ok .is-play .std-name, .motion-ok .is-play .std-and { opacity: 1; filter: none; transform: none; }
-.motion-ok .is-play .std-name--1 { transition-delay: 1.4s; }
-.motion-ok .is-play .std-and { transition-delay: 1.9s; }
-.motion-ok .is-play .std-name--2 { transition-delay: 2.2s; }
-
-/* Date block: month above, weekday | day | year between fine rules */
-.std-db { width: min(100%, 21rem); margin: 1.1rem 0 .7rem; }
-.std-db__month { margin: 0 -.3em .15rem 0; font: 600 .875rem/1 var(--font-display); letter-spacing: .3em; text-transform: uppercase; }
-.std-db__row { display: grid; grid-template-columns: 1fr auto auto auto 1fr; align-items: center; gap: .55rem; }
-.std-db__rule { height: 1px; background: #a59d91; transform-origin: center; }
-.std-db__rule:first-child { transform-origin: right; }
-.std-db__rule:last-child { transform-origin: left; }
-.motion-ok .std-db__rule { transform: scaleX(0); transition: transform 1.2s ease 2.6s; }
-.motion-ok .is-play .std-db__rule { transform: none; }
-.std-db__side { padding-block: .35rem; border-block: 1px solid #a59d91; font: 600 .75rem/1 var(--font-display); letter-spacing: .2em; text-transform: uppercase; }
-.std-db__day { font-family: var(--font-display); font-weight: 500; font-size: 3.1rem; line-height: .9; padding: 0 .1rem; }
-.motion-ok .std-db__day { opacity: 0; filter: blur(8px); transition: opacity 1.2s ease 3s, filter 1.4s ease 3s; }
-.motion-ok .is-play .std-db__day { opacity: 1; filter: none; }
-.std-time { display: flex; gap: .5rem; align-items: center; justify-content: center; flex-wrap: wrap; margin: .4rem 0 0; font-size: .95rem; color: var(--charcoal); }
-.motion-ok .std-time { opacity: 0; transition: opacity 1.2s ease 4s; }
-.motion-ok .is-play .std-time { opacity: 1; }
-
-/* Slide 2: Order of the Day */
-.std-slide--2 { justify-content: center; padding-bottom: 5rem; }
-.std-order-title { display: flex; flex-direction: column; align-items: center; margin: 0 0 1.6rem; font-family: var(--font-display); font-weight: 500; font-size: 2.6rem; line-height: .95; letter-spacing: .06em; text-transform: uppercase; color: var(--ink); }
-.std-order-title__of { margin: -.1em 0 -.05em 2.4em; font-size: .85em; text-transform: none; letter-spacing: 0; color: var(--muted); }
-.motion-ok .std-order-title__of { opacity: 0; transition: opacity 1.2s ease .7s; }
-.motion-ok .is-play .std-order-title__of { opacity: 1; }
-.std-order { position: relative; list-style: none; display: grid; gap: 1.1rem; width: min(100%, 20rem); margin: 0 auto; text-align: left; }
-.std-order::before { content: ""; position: absolute; left: calc(7.2rem + .7rem + 5px); top: .4rem; bottom: .4rem; width: 1px; background: #b8b0a4; }
-.std-order__item { display: grid; grid-template-columns: 7.2rem 11px 1fr; gap: .7rem; align-items: center; }
-.std-order__when { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; text-align: right; color: var(--muted); }
-.std-order__dot { position: relative; width: 11px; height: 11px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff 0 18%, #ece6db 52%, #c8bfaf 100%); box-shadow: 0 1px 2px rgba(60, 50, 35, .35); }
-.std-order__name { font: 600 .8125rem/1.3 var(--font-display); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
-.motion-ok .std-order__item { opacity: 0; filter: blur(5px); transform: translateY(8px); transition: opacity .9s ease, filter .9s ease, transform .9s ease; }
-.motion-ok .is-play .std-order__item { opacity: 1; filter: none; transform: none; transition-delay: calc(1.3s + var(--k) * .35s); }
-.std-order__note { display: flex; gap: .5rem; align-items: center; justify-content: center; margin: 1.4rem 0 0; font-size: .9rem; color: var(--charcoal); }
-
-/* Controls */
-.std-show__controls { position: absolute; left: 0; right: 0; bottom: 1rem; z-index: 3; display: flex; align-items: center; justify-content: center; gap: .35rem; }
-.std-dot { width: 32px; height: 32px; padding: 0; border: 0; background: none; display: grid; place-items: center; }
-.std-dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1px solid #8f877b; transition: background .3s, transform .3s; }
-.std-dot.is-active::before { background: var(--ink); border-color: var(--ink); transform: scale(1.15); }
-.std-pause { width: 36px; height: 36px; margin-left: .35rem; padding: 0; display: grid; place-items: center; border: 1px solid #b3ab9f; border-radius: 50%; background: rgba(255, 255, 255, .7); color: var(--ink); }
-.std-pause svg { width: 15px; height: 15px; }
-.std-actions { margin-top: 1.75rem; }
+.std-ring__weekday { font: 500 .75rem/1 var(--font-body); letter-spacing: .3em; text-transform: uppercase; color: var(--muted); margin-bottom: .35rem; }
+.std-ring__day {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(6rem, 4rem + 10vw, 9rem);
+  line-height: .86;
+  color: var(--ink);
+}
+.std-ring__month { font-size: clamp(2.4rem, 1.9rem + 2.4vw, 3.4rem); color: var(--ink); margin-top: -.12em; }
+.std-ring__year {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.05rem, .95rem + .5vw, 1.35rem);
+  letter-spacing: .55em;
+  margin-right: -.55em;
+  color: var(--ink);
+}
+.std-line { font-size: 1.05rem; margin-bottom: .4rem; }
+.std-line .script { font-size: 1.9em; color: var(--ink); vertical-align: -.12em; margin-left: .15em; }
+.std-note { color: var(--muted); margin-bottom: 1.75rem; display: flex; gap: .5rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+.std-pending { text-align: center; }
 
 /* =============================================================================
    4. COUNTDOWN
@@ -1092,7 +1061,7 @@
 /* =============================================================================
    14. THANK YOU
    ========================================================================== */
-.section--thanks { padding-bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
+.section--thanks { padding-bottom: 0; overflow: clip; }   /* the parked car ends the page: nothing scrolls below it */
 .thanks { text-align: center; }
 /* Pearl flowers above the line */
 .thanks__flowers { position: relative; width: min(300px, 80%); height: clamp(96px, 26vw, 130px); margin: 0 auto 1.25rem; }
@@ -1127,60 +1096,76 @@
 .thanks__cross { margin-top: 3rem; color: var(--muted); }
 .thanks__cross svg { width: 16px; height: 24px; margin: 0 auto; }
 
-/* ---------- The parking place at the end of the journey ----------
-   As in the last frame of the reference: the wedding car parked at the
-   bottom left, the couple's monogram beside it. */
+/* ---------- The parking place: the end of the invitation ----------
+   As in the last frame of the reference video: the wedding car parked on a
+   slant at the bottom left, partly beyond the bottom edge, the couple waving
+   to the guests; the monogram with pearl flowers beside it. The car drives
+   in from the left, swings round and stops (14-thank-you.js). */
 .parking {
   position: relative;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  align-items: end;
-  gap: 1rem;
-  width: min(100% - 2 * var(--gutter), 34rem);
-  margin: clamp(2rem, 6vw, 3.5rem) auto 0;
+  width: min(100%, 30rem);
+  aspect-ratio: 11 / 12;
+  margin: clamp(1.5rem, 5vw, 2.5rem) auto 0;
+  /* Only the bottom edge clips: the car is partly parked beyond it */
+  clip-path: inset(-300% -100% 0 -100%);
 }
-.parking__bay { position: relative; width: clamp(150px, 42vw, 230px); }
 .parking__car {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  height: auto;
-  visibility: hidden;   /* the travelling car takes its place until it arrives */
-  filter: drop-shadow(0 14px 12px rgba(70, 58, 40, .2)) drop-shadow(0 2px 3px rgba(70, 58, 40, .16));
+  position: absolute;
+  left: 9%;
+  top: 33%;
+  width: 46%;
+  transform: rotate(-32deg);
+  transform-origin: 50% 50%;
+  filter: drop-shadow(0 16px 14px rgba(70, 58, 40, .22)) drop-shadow(0 2px 3px rgba(70, 58, 40, .16));
 }
-.parking__car.is-parked { visibility: visible; }
-.parking__spray { position: absolute; z-index: 0; left: 58%; top: 30%; width: 92%; max-width: none; height: auto; transform: rotate(8deg); pointer-events: none; }
-.parking__mark { position: relative; display: flex; flex-direction: column; align-items: center; padding-bottom: 18%; }
+.parking__car img { display: block; width: 100%; height: auto; }
+.parking__mark { position: absolute; right: 2%; top: 4%; width: 52%; display: flex; flex-direction: column; align-items: center; }
+.parking__spray { position: absolute; left: 30%; top: -6%; width: 86%; max-width: none; height: auto; transform: rotate(12deg); pointer-events: none; }
 .parking__mono {
+  position: relative;
   display: flex;
   align-items: center;
+  margin-top: 26%;
   font-family: var(--font-script);
-  font-size: clamp(4.4rem, 3.2rem + 6vw, 6.6rem);
+  font-size: clamp(3.8rem, 2.8rem + 5vw, 5.6rem);
   line-height: .9;
   color: var(--ink);
 }
 .parking__mono i { margin: .5em .1em 0; font-family: var(--font-display); font-size: .3em; color: var(--muted); }
-.parking__drops { width: clamp(30px, 8vw, 46px); height: auto; margin-top: .5rem; transform: rotate(4deg); }
+.parking__drops { position: relative; width: 16%; height: auto; margin: .4rem 0 0 30%; transform: rotate(4deg); }
 
-/* The travelling car (js/journey.js): fixed to the screen, moved by the scroll */
-.road-car {
-  --rc-w: clamp(26px, 8vw, 46px);
-  position: fixed;
-  left: 0; top: 0;
-  z-index: 40;
-  width: var(--rc-w);
-  max-width: none;
-  height: auto;
-  transform-origin: 0 0;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  /* 1/5 of the parked car's shadow: the car is scaled up about 5x as it parks */
-  filter: drop-shadow(0 2.7px 2.3px rgba(70, 58, 40, .2)) drop-shadow(0 .4px .6px rgba(70, 58, 40, .16));
-  will-change: transform;
-  transition: opacity .3s, visibility 0s .3s;
+/* Arrival: in from the left along its heading, turning into the slant, and stopping */
+.motion-ok .parking.is-waiting .parking__car { opacity: 0; }
+.motion-ok .parking.is-arriving .parking__car { animation: park-in 3.2s cubic-bezier(.33, .55, .3, 1) both; }
+@keyframes park-in {
+  0%   { opacity: 0; transform: translate(-150%, -42%) rotate(-80deg); }
+  10%  { opacity: 1; }
+  58%  { transform: translate(-34%, -12%) rotate(-55deg); }
+  100% { opacity: 1; transform: translate(0, 0) rotate(-32deg); }
 }
-.road-car.is-on { opacity: 1; visibility: visible; transition: opacity .3s; }
+/* The monogram and flowers settle in once the car has stopped */
+.motion-ok .parking.is-waiting .parking__mark,
+.motion-ok .parking.is-arriving:not(.is-parked) .parking__mark { opacity: 0; transform: translateY(10px); filter: blur(4px); }
+.motion-ok .parking__mark { transition: opacity 1.2s ease, transform 1.2s ease, filter 1.2s ease; }
+
+/* A few pearl glints around the waving couple once parked (as a thank-you) */
+.parking__glint {
+  position: absolute;
+  width: 14px; height: 14px;
+  opacity: 0;
+  background:
+    radial-gradient(circle, #fff 0 18%, rgba(255, 255, 255, 0) 58%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0) 0 46%, #fff 50%, rgba(255, 255, 255, 0) 54% 100%),
+    linear-gradient(0deg, rgba(255, 255, 255, 0) 0 46%, #fff 50%, rgba(255, 255, 255, 0) 54% 100%);
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, .9));
+}
+.parking__glint--1 { left: 24%; top: 26%; }
+.parking__glint--2 { left: 70%; top: 24%; }
+.parking__glint--3 { left: 50%; top: 36%; }
+.motion-ok .parking.is-parked .parking__glint { animation: park-glint 1.4s ease-in-out 3; }
+.motion-ok .parking.is-parked .parking__glint--2 { animation-delay: .35s; }
+.motion-ok .parking.is-parked .parking__glint--3 { animation-delay: .7s; }
+@keyframes park-glint { 0%, 100% { opacity: 0; transform: scale(.3) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
 
 /* ---------- Menu dialog ---------- */
 .menu-title { font-size: 2.1rem; line-height: 1; }

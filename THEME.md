@@ -24,7 +24,7 @@ Companion to [PRD.md](PRD.md). This file defines the visual direction, colour pa
 
 **Opening:** a full-screen envelope in the couple's white lace and pearl embroidery, closed with a pearl dove seal, lights up and its four flaps open onto the card; then the couple's white wedding car, seen from above, drives down a clear path between fine stems of small pearl-and-satin flowers (modelled on the couple's reference video and image).
 
-**Whole page (modelled on the couple's reference videos):** one continuous pearl-white linen paper; small pearl flowers peeking in at the section edges and drifting slowly as guests scroll; content arriving with a soft focus-pull and small heading lines spelling themselves out letter by letter; Save the Date as a slow black-and-white photo slideshow. After the opening, the wedding car travels down the left edge of the page in step with the scroll and parks beside the "A & D" monogram at the very end. Typography and colours stay as below (black ink).
+**Whole page (modelled on the couple's reference videos):** one continuous pearl-white linen paper; small pearl flowers peeking in at the section edges and drifting slowly as guests scroll; content arriving with a soft focus-pull and small heading lines spelling themselves out letter by letter; the Welcome opens on the couple photograph in black and white, drifting slowly with a gentle parallax. At the very end, after the thank-you, the wedding car drives in and parks on a slant at the bottom left, the couple waving, beside the "A & D" monogram. Typography and colours stay as below (black ink).
 
 ---
 
@@ -127,9 +127,10 @@ Shadows: soft and low — `0 1px 2px rgba(18,18,18,.06), 0 12px 32px -12px rgba(
 - Feels physical: satin slides and settles, paper lifts, envelope flap hinges.
 - Durations: micro 150–250 ms, reveals 400–700 ms, splash total ≈ 2.2 s.
 - Easing: `cubic-bezier(.22,.61,.36,1)` for settling; `cubic-bezier(.65,0,.35,1)` for cloth pulling.
-- Scroll-linked, at one steady rate (no easing): the wedding car's journey down the left edge, its parking at the end, and the gentle drift of the edge flowers.
+- Scroll-linked, at one steady rate (no easing): the gentle drift of the edge flowers.
+- Parking at the end: the car drives in from the left over 3.2 s, turning into a 32° slant and slowing to a stop (once per visit).
 - Reveals: content rises slightly and comes into focus (blur → sharp) over about 1 s; small heading lines appear letter by letter (55 ms per letter) out of a soft blur, as in the couple's slideshow video.
-- Save the Date slideshow: the black-and-white couple photo drifts at one steady speed (12–13 s), slides crossfade over 1.8 s, the names come into focus over about 2 s; it plays only while on screen and has a pause button.
+- Welcome photo: the black-and-white couple photo drifts at one steady speed (16 s) and moves at 22 % of the scroll (parallax); the names come into focus over about 2 s. Several photos crossfade every 7 s (1.8 s fade).
 - `prefers-reduced-motion: reduce` replaces every movement with a short cross-fade or an instant state change; the car is simply shown parked at the end.
 - No auto-playing sound.
 
@@ -159,8 +160,8 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 |---|---|---|---|---|
 | R1 | Wedding car with couple, seen from above (supplied, transparent) | Opening | WebP with alpha, 720 × 1219, 180 KB — `wedding-car.webp` | Done |
 | R1b | White net flower with pearls (supplied, background removed) | iPhone showcase page corners | WebP with alpha, 720 × 449, 137 KB — `net-flower.webp` | Done |
-| R1c | Pearl-and-satin flower (supplied, background removed, gold softened to champagne, soft shadow baked in), cut into five pieces: bloom, bud, spray, pearl drops, pearl sprig | Opening flower columns (small flowers on generated SVG stems), section edges, welcome card, thank-you, parking place |
-| R1d | Couple photograph, black and white (sample supplied for the design; carries a photographer's "Maab Road" tag) | Save the Date slideshow | WebP, 736 × 1104, 72 KB — `couple-bw.webp` | To be replaced with Angel & David's own photograph | WebP with alpha — `pearl-bloom.webp` (463 × 509), `pearl-bud.webp`, `pearl-spray.webp` (640 × 890), `pearl-drops.webp`, `pearl-sprig.webp`; 13–90 KB each | Done |
+| R1c | Pearl-and-satin flower (supplied, background removed, gold softened to champagne, soft shadow baked in), cut into five pieces: bloom, bud, spray, pearl drops, pearl sprig | Opening flower columns (small flowers on generated SVG stems), section edges, welcome, thank-you, parking place | WebP with alpha — `pearl-bloom.webp` (463 × 509), `pearl-bud.webp`, `pearl-spray.webp` (640 × 890), `pearl-drops.webp`, `pearl-sprig.webp`; 13–90 KB each | Done |
+| R1d | Couple photograph, black and white (sample supplied for the design; carries a photographer's "Maab Road" tag) | Welcome | WebP, 736 × 1104, 72 KB — `couple-bw.webp` | To be replaced with Angel & David's own photograph |
 | R2 | Floral corner — white flowers, olive leaves, pearls | Welcome, thank-you | WebP with alpha, 900 × 900, ≤ 120 KB | Recommended |
 | R3 | Pearl strand (draped) | Countdown, dividers | WebP with alpha, 1600 × 300, ≤ 60 KB | Recommended |
 | R4 | White gift envelope (front, back, flap) | Gifting | WebP with alpha, 1200 × 900 each, ≤ 100 KB | Recommended (v1 uses CSS/SVG envelope) |
@@ -188,9 +189,9 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | R2b | Real lace pieces from the supplied envelope (gold reduced to white): two pearl flower sprays, embroidered motif, seamless pearl-bead trim | Opening flaps | WebP with alpha — `lace-spray-left.webp`, `lace-spray-right.webp`, `lace-motif.webp`, `lace-pearl-trim.webp` | Done |
 | R2c | Pearl dove wax seal (supplied, background removed) | Opening | WebP with alpha, 360 × 360 — `dove-seal.webp` | Done |
 | M2b | Full-screen four-flap envelope opening: light bloom + sheen + sparkles, then sides, top (with seal) and bottom flaps fold away | Opening | CSS 3D + keyframes | Built |
-| M4 | The journey: the wedding car travels down the left edge with the scroll and parks beside the monogram at the end | Whole page, thank-you | Scroll-linked, from R1 (`js/journey.js`) | Built |
+| M4 | The wedding car drives in and parks on a slant beside the monogram, couple waving | Thank you (end of page) | CSS keyframes from R1, started by `js/sections/14-thank-you.js` | Built |
 | M5 | Edge flowers drifting with the scroll; focus-pull reveals; letter-by-letter heading lines | Whole page | `js/decor.js`, `AD.letters` in `js/core.js`, CSS | Built |
-| M6 | Black-and-white photo slideshow (photo drift, letter reveal, crossfade to "Order of the Day") | Save the Date | CSS + `js/sections/03-save-the-date.js` | Built |
+| M6 | Black-and-white couple photo with slow drift and parallax, names focusing in, letter-by-letter date block | Welcome | CSS + `js/sections/02-welcome.js` | Built |
 | M2 | Handwriting reveal "Thank you for blessing our journey." | Thank you | SVG stroke animation | Built |
 | M3 | Floral branch reveal | Family-tree overlay | SVG stroke + fade | Built |
 

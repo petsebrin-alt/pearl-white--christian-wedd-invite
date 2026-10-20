@@ -103,9 +103,8 @@
   initHeader();
   initPreviewNote();
   // Small heading lines spell themselves out as they scroll in (as in the reference video).
-  AD.$$('#main .section-head .eyebrow, #welcome .invite-card .eyebrow').forEach(function (el) { AD.splitLetters(el, 0.15); });
+  AD.$$('#main .section-head .eyebrow, #welcome .eyebrow').forEach(function (el) { AD.splitLetters(el, 0.15); });
   if (AD.decor) AD.decor.init();
   window.__AD_READY = true;
   AD.splash.init();
-  if (AD.journey) AD.journey.init();
 })();

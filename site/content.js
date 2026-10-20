@@ -31,10 +31,10 @@ window.WEDDING = {
     date: "2027-01-27" // Confirmed
   },
 
-  // Black-and-white photographs for the Save the Date slideshow (section 3).
-  // The first drifts slowly up to the couple's faces; the second (or a close-up
-  // of the first) sits behind the "Order of the Day". Photos are shown in
-  // black and white automatically.
+  // Black-and-white couple photographs for the Welcome section (section 2).
+  // The photo drifts slowly with a gentle parallax; add more entries and they
+  // crossfade one after another. Photos are shown in black and white
+  // automatically.
   // NOTE: the current photo is the sample supplied for the design (it carries a
   // photographer's "Maab Road" tag) — replace it with Angel & David's own
   // photograph before sharing the invitation.

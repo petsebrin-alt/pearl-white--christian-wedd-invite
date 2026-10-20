@@ -26,7 +26,7 @@ Every name, date, time, venue, contact and message lives in **`site/content.js`*
 - Dates use `"YYYY-MM-DD"` and times use 24-hour `"HH:MM"`.
 - Set `timezone.utcOffset` (for example `"+05:30"`) and the ceremony `startTime` to switch on the live countdown and timed calendar entries.
 - Before sharing with guests, set `site.previewNotice` to `false`. When the dress code is confirmed, set `dressCode.isProposal` to `false`.
-- The Save the Date slideshow uses the photos in `couplePhotos` (shown in black and white automatically). The current photo is a sample supplied for the design: replace it with Angel & David's own photograph before sharing.
+- The Welcome section shows the photos in `couplePhotos` (in black and white automatically, with a slow drift and parallax; several photos crossfade). The current photo is a sample supplied for the design: replace it with Angel & David's own photograph before sharing.
 
 Two things are not in `content.js` because they must load before any script runs. If the names or date ever change, update them in `site/index.html` too:
 
@@ -35,7 +35,7 @@ Two things are not in `content.js` because they must load before any script runs
 
 ## Add photographs and artwork
 
-Put files in `site/assets/images/` (or `site/assets/video/`) and reference them from `content.js`, for example `families.bride.photo: "assets/images/family-bride.webp"`. Sizes and formats are listed in [THEME.md §6](THEME.md#6-asset-checklist). The opening uses `site/assets/images/lace-spray-left.webp`, `lace-spray-right.webp`, `lace-motif.webp`, `lace-pearl-trim.webp`, `dove-seal.webp` and `wedding-car.webp`. The pearl flowers (opening columns, section edges, welcome card, thank-you and the car's parking place) use `pearl-bloom.webp`, `pearl-bud.webp`, `pearl-spray.webp`, `pearl-drops.webp` and `pearl-sprig.webp`. Replace those files (same names, transparent WebP) to change the artwork. After changing any file, bump the `?v=` tag in `site/index.html` so phones load the new version.
+Put files in `site/assets/images/` (or `site/assets/video/`) and reference them from `content.js`, for example `families.bride.photo: "assets/images/family-bride.webp"`. Sizes and formats are listed in [THEME.md §6](THEME.md#6-asset-checklist). The opening uses `site/assets/images/lace-spray-left.webp`, `lace-spray-right.webp`, `lace-motif.webp`, `lace-pearl-trim.webp`, `dove-seal.webp` and `wedding-car.webp`. The pearl flowers (opening columns, section edges, welcome, thank-you and the car's parking place at the end) use `pearl-bloom.webp`, `pearl-bud.webp`, `pearl-spray.webp`, `pearl-drops.webp` and `pearl-sprig.webp`. Replace those files (same names, transparent WebP) to change the artwork. After changing any file, bump the `?v=` tag in `site/index.html` so phones load the new version.
 
 ## Connect RSVP and wishes
 
@@ -66,7 +66,6 @@ site/
   js/ornaments.js         generated SVG pearls, florals, illustrations
   js/florals.js           the pearl-flower pieces (shared by every section)
   js/decor.js             pearl flowers at the section edges, drifting with the scroll
-  js/journey.js           the wedding car travelling down the page and parking at the end
   js/sections/01–14       one file per section
   js/main.js              renders sections, header and menu
 backend/google-apps-script.gs   optional RSVP + wishes storage

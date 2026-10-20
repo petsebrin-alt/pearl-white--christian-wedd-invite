@@ -109,7 +109,7 @@ Family and friends of both families, many on mid-range Android phones and iPhone
 ### 3.2 Guest journey
 
 1. **Arrive** from a WhatsApp or SMS link → a full-screen white lace-and-pearl envelope with a pearl dove seal and "Tap the seal to open".
-2. **Open** → light sweeps the envelope and its four flaps fold away to reveal the card; the wedding car drives slowly down it and reveals "The Wedding of Angel & David" and the date; guests scroll on into the welcome while the small wedding car travels down the left edge with them, all the way to its parking place at the end.
+2. **Open** → light sweeps the envelope and its four flaps fold away to reveal the card; the wedding car drives slowly down it and reveals "The Wedding of Angel & David" and the date; guests scroll on into the welcome. At the very end, after the thank-you, the wedding car drives in and parks on a slant with the couple waving.
 3. **Read** the invitation, verse and date → **Add to Calendar** from Save the Date.
 4. **Feel the anticipation** in the countdown.
 5. **Meet the families** → optionally open either family tree.
@@ -162,15 +162,14 @@ Shared rules for all sections:
 - The rest of the page is `inert` while the animation plays. Afterwards focus moves to the "View the invitation" cue, or the page scrolls to a section link (e.g. `#rsvp`) if the guest arrived with one.
 - Artwork: `site/assets/images/lace-spray-left.webp`, `lace-spray-right.webp`, `lace-motif.webp`, `lace-pearl-trim.webp` (cut from the supplied envelope, whitened), `dove-seal.webp` (supplied seal, background removed), `wedding-car.webp` (the supplied car with the couple, already transparent) and the pearl-flower pieces `pearl-bloom.webp`, `pearl-bud.webp`, `pearl-spray.webp`, `pearl-drops.webp`, `pearl-sprig.webp` (cut from the supplied flower image, gold softened). The couple shown in the car image is illustrative, not a photo of Angel & David.
 
-### 4.1b The journey and the page look (whole invitation)
+### 4.1b The page look (whole invitation)
 
-Modelled on the couple's reference videos (a scrolling invitation website, and a photo slideshow invitation). Content of every section is unchanged; only the look and motion follow the videos.
+Modelled on the couple's reference videos (a scrolling invitation website, and a photo invitation video). Content of every section is unchanged; only the look and motion follow the videos.
 
 - **Paper:** one continuous pearl-white linen paper behind all sections (no alternating bands).
-- **Typography and colour:** unchanged from §5 (black ink; Pinyon Script, Cormorant Garamond, Jost). The small heading lines spell themselves out letter by letter out of a soft blur as they scroll in (from the couple's slideshow reference video).
-- **Flowers:** small pearl flowers peek in at the section edges and drift slowly as guests scroll; pearl flowers dress the welcome card and the thank-you.
+- **Typography and colour:** unchanged from §5 (black ink; Pinyon Script, Cormorant Garamond, Jost). The small heading lines spell themselves out letter by letter out of a soft blur as they scroll in (from the couple's photo invitation video).
+- **Flowers:** small pearl flowers peek in at the section edges and drift slowly as guests scroll; pearl flowers dress the welcome and the thank-you.
 - **Reveals:** content rises slightly and comes into focus (soft blur → sharp) as it scrolls in.
-- **The car's journey:** once the opening has finished, the wedding car (seen from above, small) travels down the **left edge** of the screen in step with the scroll — always showing how far down the invitation the guest is — at one steady rate (no easing). On phones the side margins are widened so the car never covers text. In the last section it **pulls into its parking place** at the bottom left, beside the pressed "A & D" monogram and pearl flowers, and stays parked there (as in the last frame of the reference video). Scrolling back up drives it back up the lane.
 - **Reduced motion:** no drifting flowers or travelling car; the car is shown parked at the end.
 
 ### 4.2 Welcome invitation
@@ -185,16 +184,13 @@ Modelled on the couple's reference videos (a scrolling invitation website, and a
 - Bible verse (**Proposal**): "…and a threefold cord is not quickly broken." — **Ecclesiastes 4:12, King James Version (KJV)**. The "threefold cord" stands for husband, wife and God. KJV is in the public domain.
   - Alternatives for review: "What therefore God hath joined together, let not man put asunder." — Mark 10:9 (KJV); "And above all these things put on charity, which is the bond of perfectness." — Colossians 3:14 (KJV).
 
-**Design:** framed card with lace edge; restrained floral corners (white flowers, olive leaves, pearls) at top-left and bottom-right only; generous white space.
+- Ceremony time: "To be provided" until confirmed.
+
+**Design (modelled on the couple's slideshow reference video):** the couple photograph in **black and white** fills the top of the section (edge to edge on phones), drifting slowly at one steady speed and moving with a gentle **parallax** as guests scroll; it fades into the paper under a soft white haze. The invitation sits over its lighter lower part: the cross, "Together with their families" spelling itself out letter by letter, **Angel & David** (Pinyon Script, black) coming slowly into focus, the message, then the date block as in the video — "JANUARY" above, **WEDNESDAY | 27 | 2027** between fine rules that draw outward — the ceremony time and the verse. Pearl flowers at the top-left and bottom-right of the text. If more photos are added to `content.js → couplePhotos`, they crossfade one after another. Reduced motion: the photo stays still. Photograph: `site/assets/images/couple-bw.webp` — the **sample supplied for the design** (it carries a photographer's "Maab Road" tag); replace it with Angel & David's own photograph before sharing.
 
 ### 4.3 Save the Date
 
-- **A slow black-and-white photo slideshow** modelled on the couple's slideshow reference video: a tall panel (edge to edge on phones, a centred portrait card on larger screens).
-  - **Slide 1 — Save the Date:** the couple photograph, in black and white under a soft white haze, drifts slowly up from the lace to the couple's faces (one steady speed). Over the lighter lower half the text appears as in the video: "SAVE THE DATE" and "The wedding of" spell themselves out letter by letter out of a soft blur; **Angel & David** (Pinyon Script, black) come slowly into focus; then the date block — "JANUARY" above, **WEDNESDAY | 27 | 2027** between fine rules that draw outward — and "Ceremony time: To be provided".
-  - **Slide 2 — Order of the Day:** crossfades to a soft close-up of the lace; "ORDER *of the* DAY" appears, then the five events (Haldi, Mehendi, Sangeet, Christian Marriage Ceremony, Reception) one by one on a pearl-dot timeline, each with its kind (Pre-wedding, The Wedding, Celebration) or its time once confirmed; "Times: To be provided".
-  - Slides change about every 9–10 s with a 1.8 s crossfade, only while the slideshow is on screen; dots choose a slide and a button pauses or plays it. Reduced motion: no movement or auto-advance; the first slide is shown complete and the dots switch slides.
-  - Photograph: `site/assets/images/couple-bw.webp` (set in `content.js → couplePhotos`). The current photo is the **sample supplied for the design** (it carries a photographer's "Maab Road" tag); replace it with Angel & David's own photograph before sharing.
-- **Add to Calendar** sits below the slideshow.
+- **27** dominates (very large serif), with "January" in calligraphy and "2027" beneath; weekday "Wednesday" as an eyebrow.
 - **Add to Calendar** button → a small sheet with two choices: **Google Calendar** and **Apple / Outlook (.ics file)**.
 
 **Calendar behaviour rules:**
@@ -342,7 +338,7 @@ Placeholder cards for: **Travel guidance, Parking, Pickup and shuttle arrangemen
 - "Thank you for blessing our journey." — **Proposal:** gentle handwriting reveal (SVG stroke draw ≈ 2.4 s, then the fill fades in). Static readable text is always present for screen readers and reduced-motion users.
 - "Angel & David" and the date.
 - **Return to Top** button → smooth scroll to the welcome (instant for reduced motion) and focus moves to the top.
-- **Parking place** (decorative): the wedding car parked at the bottom left beside the "A & D" monogram, with pearl flowers and pearl drops — the end of the car's journey (§4.1b).
+- **Parking place** (decorative), at the very end of the page as in the last frame of the reference video: once it comes into view, the wedding car drives in from the left, swings round and stops **on a slant** (about 32°) at the bottom left, partly beyond the page edge, with the couple waving to the guests; then the "A & D" monogram and pearl flowers settle in beside it and a few pearl glints twinkle around the couple. It plays once per visit; reduced motion shows it parked.
 
 ---
 
@@ -363,10 +359,10 @@ Full details in [THEME.md](THEME.md). Summary:
 |---|---|---|---|---|---|
 | A1 | Light effect and four-flap envelope opening (≈ 3.5 s), then the car drive | Tap the seal / Enter / Space | ≈ 9.5 s; one constant, smooth speed top to bottom (no easing); text uncovered from the top down behind the car | Final screen appears instantly | Completes within ~12.5 s; no car image → final screen; script-failure removal at 4 s |
 | A2 | Section reveal | Scroll into view (IntersectionObserver) | 1 s fade-up 22 px with a soft focus-pull (blur 5 px → 0) | Instant | Content visible if observer unsupported |
-| A2b | The car's journey and parking | Scroll (after the opening) | Linked to the scroll, one steady rate; parks over the last ≈ ½ screen of scrolling | Car shown parked, no movement | No car image → no car is shown; content is unaffected |
+| A2b | Car parks at the end | Parking place 45 % in view (once) | 3.2 s drive-in from the left, turning from 80° to a 32° slant and slowing to a stop; monogram fades in after; glints 3 × 1.4 s | Car shown parked | No car image → monogram and flowers only |
 | A2c | Edge flowers drift | Scroll | Linked to the scroll (5–16 % of the scroll distance) | None | Static flowers |
 | A2d | Letter-by-letter heading lines | Scroll into view | 55 ms per letter, each fading in out of a 6 px blur | Text shown at once | Plain text for screen readers |
-| A2e | Save the Date slideshow | On screen (≥ 35 % visible) | Photo drift 12–13 s linear; slides every 9–10 s; 1.8 s crossfade; names focus in over ≈ 2 s | Static first slide; dots switch | Pause/play button; stops when off screen |
+| A2e | Welcome couple photo | Scroll / on screen | Drift 16 s linear; parallax at 22 % of the scroll; names focus in over ≈ 2 s; several photos crossfade every 7 s | Photo still | No photo → the welcome shows text only |
 | A3 | Countdown tick | Every second | Number change, no motion | Same | Pending/ended states |
 | A4 | Family-tree floral reveal | Open overlay | 700 ms branch draw + 60 ms staggered nodes | None | Static tree |
 | A5 | Pearl timeline sheen | Event card enters view | 500 ms | None | Static pearls |

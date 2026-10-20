@@ -1,8 +1,7 @@
 /* =============================================================================
    PAGE — page-wide look and motion: one continuous linen paper, small pearl
-   flowers drifting at the section edges, soft focus-pull reveals, and the
-   wedding car that travels down the page as guests scroll and parks at the
-   very end. Typography and colours stay as in THEME.md (black ink).
+   flowers drifting at the section edges and soft focus-pull reveals.
+   Typography and colours stay as in THEME.md (black ink).
    Section-specific styles stay in sections.css.
    ========================================================================== */
 
@@ -16,9 +15,6 @@ body {
 }
 .section--white, .section--ivory { background: transparent; }
 .section > .container { position: relative; z-index: 1; }
-/* Wider side margins on phones: room for the pearl flowers at the edges and
-   a clear lane on the left for the travelling wedding car. */
-@media (max-width: 599px) { :root { --gutter: clamp(1.9rem, 10.5vw, 2.6rem); } }
 
 /* The hero's flower columns fade softly into the paper below */
 .splash.is-hero::after {
@@ -61,7 +57,7 @@ body {
 .motion-ok .reveal.is-in { opacity: 1; transform: none; filter: none; }
 
 /* ---------- Letters appear one by one out of a soft blur (AD.letters) ----------
-   Used for the small heading lines and in the Save the Date slideshow. */
+   Used for the small heading lines and the Welcome date block. */
 .lt-word { display: inline-block; white-space: nowrap; }
 .lt { display: inline-block; }
 .motion-ok .lt-line .lt {
@@ -77,5 +73,3 @@ body {
   transform: none;
   transition-delay: calc(var(--d0, 0s) + var(--i) * 55ms);
 }
-/* Slideshow letters wait for their slide to play */
-.motion-ok .std-slide:not(.is-play) .lt-line .lt { opacity: 0; filter: blur(6px); transform: translateY(.18em); transition-delay: 0s; }
