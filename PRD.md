@@ -60,14 +60,15 @@ Family and friends of both families, many on mid-range Android phones and iPhone
 | Groom's mother | Angelo Mary |
 | Requested events (in order) | Haldi, Mehendi, Sangeet, Christian marriage ceremony, Reception |
 | Christian marriage ceremony date | 27 January 2027 |
+| Christian marriage ceremony start time | 10:30 in the morning |
 | Gifting wording | "Your presence and blessings are our greatest gift. If you wish to give, an envelope gift is warmly welcome." |
 
 ### 2.2 Missing — To be provided
 
 | Area | Missing item |
 |---|---|
-| Ceremony | Start time, end time, church name, full address, map link, photograph |
-| Timezone | Official timezone for all event times (Proposal: Asia/Kolkata, IST, UTC+05:30 — please confirm) |
+| Ceremony | End time, church name, full address, map link, photograph |
+| Timezone | Set to India Standard Time (Asia/Kolkata, UTC+05:30) for the South Indian wedding — please confirm |
 | Haldi | Date, time, venue, address |
 | Mehendi | Date, time, venue, address |
 | Sangeet | Date, time, venue, address |
@@ -95,6 +96,7 @@ Family and friends of both families, many on mid-range Android phones and iPhone
 | 2 | Welcome invitation | `#welcome` |
 | 3 | Save the Date | `#save-the-date` |
 | 4 | Countdown | `#countdown` |
+| 4b | Couple gallery — "Moments Together" (added at the couple's request) | `#gallery` |
 | 5 | Parents and family | `#family` |
 | 6 | Wedding events | `#events` |
 | 7 | Dress code | `#dress-code` |
@@ -111,7 +113,7 @@ Family and friends of both families, many on mid-range Android phones and iPhone
 1. **Arrive** from a WhatsApp or SMS link → a full-screen white lace-and-pearl envelope with a pearl dove seal and "Tap the seal to open".
 2. **Open** → light sweeps the envelope and its four flaps fold away to reveal the card; the wedding car drives slowly down it and reveals "The Wedding of Angel & David" and the date; guests scroll on into the welcome. At the very end, after the thank-you, the wedding car drives in and parks on a slant with the couple waving.
 3. **Read** the invitation, verse and date → **Add to Calendar** from Save the Date.
-4. **Feel the anticipation** in the countdown.
+4. **Feel the anticipation** in the countdown, then **see the couple's moments together** in the gallery.
 5. **Meet the families** → optionally open either family tree.
 6. **Plan** using the events timeline → per-event calendar and location actions → venues section with directions.
 7. **Prepare** with dress-code guidance and the gifting note.
@@ -184,13 +186,13 @@ Modelled on the couple's reference videos (a scrolling invitation website, and a
 - Bible verse (**Proposal**): "…and a threefold cord is not quickly broken." — **Ecclesiastes 4:12, King James Version (KJV)**. The "threefold cord" stands for husband, wife and God. KJV is in the public domain.
   - Alternatives for review: "What therefore God hath joined together, let not man put asunder." — Mark 10:9 (KJV); "And above all these things put on charity, which is the bond of perfectness." — Colossians 3:14 (KJV).
 
-- Ceremony time: "To be provided" until confirmed.
+- Ceremony time: **10:30 am IST**.
 
 **Design (modelled on the couple's slideshow reference video):** the couple photograph in **black and white** fills the top of the section (edge to edge on phones). As in the video, when guests scroll down to it after the opening, the photo **slides down from the top into its place**, and only then does the invitation text appear, letter by letter. It then drifts slowly at one steady speed and moving with a gentle **parallax** as guests scroll; it fades into the paper under a soft white haze. The invitation sits over its lighter lower part: the cross, "Together with their families" spelling itself out letter by letter, **Angel & David** (Pinyon Script, black) coming slowly into focus, the message, then the date block as in the video — "JANUARY" above, **WEDNESDAY | 27 | 2027** between fine rules that draw outward — the ceremony time and the verse. Pearl flowers at the top-left and bottom-right of the text. If more photos are added to `content.js → couplePhotos`, they crossfade one after another. Reduced motion: the photo stays still. Photograph: `site/assets/images/couple-bw.webp` — the **sample supplied for the design** (it carries a photographer's "Maab Road" tag); replace it with Angel & David's own photograph before sharing.
 
 ### 4.3 Save the Date
 
-- **"Save the Date"** in tall brush lettering (Comforter) as in the couple's reference: filled with a champagne-bronze glitter texture, raised off the paper with a fine shadow, "the" tucked inside a hand-drawn loop, a small pearl flower beside "Save".
+- **"Save the Date"** in tall brush lettering (Comforter) as in the couple's reference: in the same black ink as the couple's names, "the" tucked inside a hand-drawn loop, a small pearl flower beside "Save".
 - A **ring of real pearls and crystals** (cut from the couple's pearl image): a chain of large, medium and small pearls over sparkling crystals, with a cluster of pearls at the bottom.
 - Inside it, **27** dominates (very large serif), with "January" in calligraphy and "2027" beneath; weekday "Wednesday" above.
 - **Tap to reveal** (modelled on the couple's petal video): at first the date is covered by a pile of satin pearl-white petals with a "Tap the petals" hint. One tap and the petals burst away from the finger, swirl round the centre and settle into a wreath tucked inside the pearl ring (≈ 2.5 s) while the date comes into focus; then real white rose petals shower down over the whole screen for about 8 s. Tapping again sends another shower. Reduced motion: the wreath and date are shown at once, no shower. The date is always available to screen readers.
@@ -200,8 +202,8 @@ Modelled on the couple's reference videos (a scrolling invitation website, and a
 
 | Condition | Calendar entry created |
 |---|---|
-| Date confirmed, ceremony time **not** confirmed (current state) | All-day event on 27 January 2027 titled "Save the Date — Angel & David's Wedding"; description says "Ceremony time and venue to be announced." No time is invented. |
-| Date + start time + timezone confirmed | Timed event using the confirmed start (and end if supplied; otherwise start + 2 hours, labelled in the description as "end time approximate") converted to UTC. |
+| Date confirmed, ceremony time **not** confirmed | All-day event on 27 January 2027 titled "Save the Date — Angel & David's Wedding"; description says "Ceremony time and venue to be announced." No time is invented. |
+| Date + start time + timezone confirmed (current state: 10:30 am IST) | Timed event using the confirmed start (and end if supplied; otherwise start + 2 hours, labelled in the description as "end time approximate") converted to UTC. |
 | Venue confirmed | Location field filled with venue name and full address. |
 | Venue not confirmed | Location field left empty. |
 
@@ -214,17 +216,28 @@ Modelled on the couple's reference videos (a scrolling invitation website, and a
 
 | State | Condition | Display |
 |---|---|---|
-| Pending | Ceremony time or timezone not confirmed (current state) | Days tile shows calendar days remaining until 27 January 2027 (guest's local date). Hours, minutes and seconds tiles show a pearl placeholder. Note: "The exact countdown will begin once the ceremony time is confirmed." |
-| Live | Time and timezone confirmed | Full ticking countdown to the confirmed ceremony start (computed in UTC). |
+| Pending | Ceremony time or timezone not confirmed | Days tile shows calendar days remaining until 27 January 2027 (guest's local date). Hours, minutes and seconds tiles show a pearl placeholder. Note: "The exact countdown will begin once the ceremony time is confirmed." |
+| Live | Time and timezone confirmed (current state) | Full ticking countdown to the confirmed ceremony start (computed in UTC). |
 | Wedding day | Pending state and today is 27 January 2027 | "Today is the day — Angel & David are getting married." |
 | Ended | Live countdown reaches zero, or the date has passed | "Angel & David are now joined in Holy Matrimony. Thank you for your prayers and blessings." Tiles are hidden. |
+
+### 4.4b Couple gallery ("Moments Together")
+
+Modelled on the couple's "glass gallery cube" reference video. Placed between the countdown and the families.
+
+- **Cube:** a glass cube whose four sides are made of 16 square tiles (2 × 2 per side) — 14 photographs plus a pearl "A & D" tile and a pearl date tile ("27 January 2027"); a frosted glass lid with the "A & D" monogram on top and a soft shadow beneath. It turns slowly by itself. "Scroll to open our gallery" beneath.
+- **Scroll-driven (sticky stage, ≈ 2.7 screens of scrolling):** as guests scroll, the cube turns further, the lid fades, the tiles fly apart on curved paths and wrap into a two-row curved band that turns like a carousel; the band then settles into a **flat photo wall** (4 × 4 on phones, 8 × 2 on wider screens). Scrolling back up reverses it and rebuilds the cube.
+- **Photos:** tapping a photo on the wall opens it full size in a viewer (all photos, Previous / Next, arrow keys, swipe on phones, counter "3 / 14"). Tapping the cube, or tabbing to a photo with the keyboard, first scrolls to the wall.
+- **Reduced motion / showcase view:** the wall is shown straight away, without the long scroll.
+- **Content:** `content.js → gallery` (eyebrow "Our Journey", title "Moments Together", `photos` with a square `tile` crop and the full `src`). The first 14 fill the wall; all can be opened. The current 14 are **samples supplied for the design** (watermarks painted out, one screenshot trimmed) — replace them with Angel & David's own photographs before sharing.
 
 ### 4.5 Parents and family
 
 - Two family cards side by side on tablet/desktop, stacked on mobile.
   - **Bride's family:** "Angel, daughter of Rajthurai and Jansi Rani."
   - **Groom's family:** "David, son of David Raj and Angelo Mary."
-- Each card has a family-photo frame (4:5) with a "Family photograph — To be provided" placeholder.
+- Each card has a pearl-edged photo frame (4:5) with **two black-and-white photographs**: the parents first, then the family with siblings. Modelled on the couple's reference video: when the cursor rests on the photo it breaks into a grid of square tiles (9 across) that flash grey and flip, in random order, to the second photo in about 0.7 s, with a faint grid over it; moving away flips them back. Tap or Enter/Space toggles it; on touch screens (no cursor) the two photos take turns every ≈ 4 s while the photo is on screen, until the guest taps it. Reduced motion: a quick fade instead. With no photos, a "Family photograph — To be provided" placeholder is shown.
+- Photographs are set in `content.js → families.bride.photos` / `families.groom.photos`. The current four are **samples supplied for the design** (`family-bride-1/2.webp`, `family-groom-1/2.webp`; the group photo's app arrows and page dots were painted out) — replace them with Angel's and David's own family photographs before sharing.
 - Each card has a **View Our Family Tree** button.
 
 **Family-tree overlay:**
@@ -366,6 +379,7 @@ Full details in [THEME.md](THEME.md). Summary:
 | A2c | Edge flowers drift | Scroll | Linked to the scroll (5–16 % of the scroll distance) | None | Static flowers |
 | A2d | Letter-by-letter heading lines | Scroll into view | 55 ms per letter, each fading in out of a 6 px blur | Text shown at once | Plain text for screen readers |
 | A2f | Save the Date petals | Tap / Enter on the petal pile | Burst 0.7 s, swirl and settle ≈ 2.4 s (each petal 2.3–2.6 s, staggered from the tap point); date fades in from 0.8 s; rose-petal shower from 1.5 s, 30–46 petals, 5–8 s each | Wreath and date shown at once | Date in the heading for screen readers |
+| A2g | Gallery cube → band → wall | Scroll through the gallery (sticky) | Linked to the scroll: cube 0–16 %, burst to band 16–42 % (staggered per tile), band to wall 50–76 % (staggered per column); cube idles at ≈ 12°/s | Wall shown at once | No photos → section hidden |
 | A2e | Welcome couple photo | Photo 40 % in view, after the opening has finished; plays again each time guests scroll back down to it | Slides down from the top into place (2.4 s, slowing to a stop); the text starts 1.7 s in, letter by letter; then drift 16 s linear; parallax at 22 % of the scroll; several photos crossfade every 7 s | Photo and text shown at once | No photo → the welcome shows text only |
 | A3 | Countdown tick | Every second | Number change, no motion | Same | Pending/ended states |
 | A4 | Family-tree floral reveal | Open overlay | 700 ms branch draw + 60 ms staggered nodes | None | Static tree |
@@ -539,7 +553,7 @@ v1 ships SVG/CSS versions of every decoration so the site is complete; realistic
 
 ## 12. Questions to answer before development is finalised
 
-1. What time does the Christian marriage ceremony start (and end), and which timezone should be used — is it Asia/Kolkata (IST)?
+1. The ceremony starts at 10:30 am (confirmed). When does it end, and is India Standard Time (Asia/Kolkata) correct?
 2. What are the church and reception venue names, full addresses and map links? Are Haldi, Mehendi and Sangeet at different venues?
 3. What are the dates and times for Haldi, Mehendi, Sangeet and the Reception?
 4. Which grandparents and siblings should appear in each family tree, with exact spellings (and should late relatives be marked, e.g. "Late")?

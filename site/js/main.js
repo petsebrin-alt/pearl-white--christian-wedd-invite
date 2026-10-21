@@ -9,7 +9,7 @@
   var root = document.documentElement;
 
   var NAV = [
-    ['welcome', 'Welcome'], ['save-the-date', 'Save the Date'], ['countdown', 'Countdown'],
+    ['welcome', 'Welcome'], ['save-the-date', 'Save the Date'], ['countdown', 'Countdown'], ['gallery', 'Our Journey'],
     ['family', 'Our Families'], ['events', 'Wedding Events'], ['dress-code', 'Dress Code'],
     ['gifting', 'Gifting'], ['venues', 'Venues & Directions'], ['wishes', 'Wishing Wall'],
     ['rsvp', 'RSVP'], ['travel', 'Travel & Stay'], ['contact', 'Contact'], ['thank-you', 'Thank You']

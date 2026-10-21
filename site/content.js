@@ -44,13 +44,13 @@ window.WEDDING = {
     { src: "assets/images/couple-bw.webp", alt: "A bride in white lace and a groom in a black suit, cheek to cheek (sample photograph)" }
   ],
 
-  // Timezone for every event time. Needed before any timed calendar entry or
-  // the live countdown is produced.
-  // Proposal (please confirm): iana "Asia/Kolkata", utcOffset "+05:30", label "IST".
+  // Timezone for every event time (used by the live countdown and timed
+  // calendar entries). India Standard Time, as the wedding is in South India —
+  // please confirm.
   timezone: {
-    iana: null,
-    utcOffset: null,
-    label: null
+    iana: "Asia/Kolkata",
+    utcOffset: "+05:30",
+    label: "IST"
   },
 
   invitation: {
@@ -66,6 +66,33 @@ window.WEDDING = {
     }
   },
 
+  // Couple gallery (section 4b, before the families): the photos make up a
+  // glass cube that opens into a photo wall as guests scroll. The first 14
+  // fill the wall (with an "A & D" tile and a date tile); every photo can be
+  // opened full size. "tile" is the square crop, "src" the full photo.
+  // SAMPLE photographs supplied for the design (watermarks painted out) —
+  // replace them with Angel & David's own photographs before sharing.
+  gallery: {
+    eyebrow: "Our Journey",
+    title: "Moments Together",
+    photos: [
+      { tile: "assets/images/gallery/g01-tile.webp", src: "assets/images/gallery/g01.webp", alt: "A couple, forehead to forehead, in black and white" },
+      { tile: "assets/images/gallery/g02-tile.webp", src: "assets/images/gallery/g02.webp", alt: "A couple touching noses in the sunlight" },
+      { tile: "assets/images/gallery/g03-tile.webp", src: "assets/images/gallery/g03.webp", alt: "A couple smiling through a heart made with their hands" },
+      { tile: "assets/images/gallery/g04-tile.webp", src: "assets/images/gallery/g04.webp", alt: "He holds a camera while she smiles against his cheek" },
+      { tile: "assets/images/gallery/g05-tile.webp", src: "assets/images/gallery/g05.webp", alt: "A couple embracing on the beach at sunset" },
+      { tile: "assets/images/gallery/g06-tile.webp", src: "assets/images/gallery/g06.webp", alt: "A bride and groom walking hand in hand along the shore" },
+      { tile: "assets/images/gallery/g07-tile.webp", src: "assets/images/gallery/g07.webp", alt: "A couple dancing under a burst of sparkling water at night" },
+      { tile: "assets/images/gallery/g08-tile.webp", src: "assets/images/gallery/g08.webp", alt: "A bride and groom, backlit, forehead to forehead" },
+      { tile: "assets/images/gallery/g09-tile.webp", src: "assets/images/gallery/g09.webp", alt: "Hands held together, wrapped in fairy lights" },
+      { tile: "assets/images/gallery/g10-tile.webp", src: "assets/images/gallery/g10.webp", alt: "He kisses her hand, showing the engagement ring" },
+      { tile: "assets/images/gallery/g11-tile.webp", src: "assets/images/gallery/g11.webp", alt: "A couple dancing in a field at golden hour" },
+      { tile: "assets/images/gallery/g12-tile.webp", src: "assets/images/gallery/g12.webp", alt: "Holding hands among wild flowers" },
+      { tile: "assets/images/gallery/g13-tile.webp", src: "assets/images/gallery/g13.webp", alt: "A couple's silhouette kissing in the rain" },
+      { tile: "assets/images/gallery/g14-tile.webp", src: "assets/images/gallery/g14.webp", alt: "A couple laughing as they dance in the rain" }
+    ]
+  },
+
   families: {
     bride: {
       heading: "The Bride's Family",
@@ -73,8 +100,14 @@ window.WEDDING = {
       relation: "daughter",
       father: "Rajthurai",
       mother: "Jansi Rani",
-      photo: null, // e.g. "assets/images/family-bride.webp"
-      photoAlt: "Angel with her family",
+      // Two photographs: the first is shown, the second appears with the pixel
+      // effect when guests hover over or tap it. SAMPLE photographs supplied for
+      // the design — replace with Angel's family (parents first, then the
+      // family with siblings).
+      photos: [
+        { src: "assets/images/family-bride-1.webp", alt: "Sample photograph: a bride laughing with her mother and father", posY: 0.42 },
+        { src: "assets/images/family-bride-2.webp", alt: "Sample photograph: a bride embracing her father", posY: 0.3 }
+      ],
       grandparents: {
         paternal: { grandfather: null, grandmother: null },
         maternal: { grandfather: null, grandmother: null }
@@ -88,8 +121,12 @@ window.WEDDING = {
       relation: "son",
       father: "David Raj",
       mother: "Angelo Mary",
-      photo: null, // e.g. "assets/images/family-groom.webp"
-      photoAlt: "David with his family",
+      // SAMPLE photographs supplied for the design — replace with David's
+      // family (parents first, then the family with siblings).
+      photos: [
+        { src: "assets/images/family-groom-1.webp", alt: "Sample photograph: a groom with his mother and father", posY: 0.3 },
+        { src: "assets/images/family-groom-2.webp", alt: "Sample photograph: the couple with both families", posY: 0.5 }
+      ],
       grandparents: {
         paternal: { grandfather: null, grandmother: null },
         maternal: { grandfather: null, grandmother: null }
@@ -140,7 +177,7 @@ window.WEDDING = {
       description:
         "Holy Matrimony, as Angel and David exchange vows before God, family and friends.",
       date: "2027-01-27", // Confirmed
-      startTime: null,
+      startTime: "10:30", // Confirmed: 10:30 in the morning
       endTime: null,
       venueId: "church",
       illustration: "church",

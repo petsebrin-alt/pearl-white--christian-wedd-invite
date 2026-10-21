@@ -60,9 +60,18 @@
   }
 
   function card(f, side, delay) {
-    var photo = AD.has(f.photo)
-      ? '<div class="pearl-frame"><div class="media-frame" style="aspect-ratio:4/5"><img src="' + AD.esc(f.photo) + '" alt="' + AD.esc(f.photoAlt) + '" loading="lazy" decoding="async" width="1200" height="1500"></div></div>'
-      : '<div class="pearl-frame">' + AD.mediaPlaceholder('Family photograph') + '</div>';
+    var ph = (f.photos || []).filter(function (p) { return p && AD.has(p.src); });
+    function img(p, cls) {
+      return '<img class="pix__img ' + cls + '" src="' + AD.esc(p.src) + '" alt="' + AD.esc(p.alt || '') + '" data-pos-y="' + (p.posY == null ? .3 : p.posY) + '"' +
+        ' style="object-position:50% ' + Math.round((p.posY == null ? .3 : p.posY) * 100) + '%" loading="lazy" decoding="async">';
+    }
+    var photo = ph.length > 1
+      // Two photos: the second appears with the pixel effect (js/pixel.js)
+      ? '<div class="pearl-frame"><div class="pix" data-pix tabindex="0" role="button" aria-label="' + AD.esc(f.heading) + ' photographs: show the other photo">' +
+          img(ph[0], 'pix__img--a') + img(ph[1], 'pix__img--b') + '</div></div>'
+      : ph.length
+        ? '<div class="pearl-frame"><div class="pix">' + img(ph[0], 'pix__img--a') + '</div></div>'
+        : '<div class="pearl-frame">' + AD.mediaPlaceholder('Family photograph') + '</div>';
     return '<article class="family-card reveal" data-delay="' + delay + '">' +
       photo +
       '<div class="family-card__body">' +
@@ -89,6 +98,7 @@
       '</div>';
     },
     init: function (el, C) {
+      if (AD.pixel) AD.pixel.init(el);
       var dialogs = {};
       ['bride', 'groom'].forEach(function (side) {
         var f = Object.assign({ key: 'tree-' + side }, C.families[side]);

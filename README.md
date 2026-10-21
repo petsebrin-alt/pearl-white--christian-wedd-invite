@@ -37,8 +37,9 @@ Every name, date, time, venue, contact and message lives in **`site/content.js`*
 
 - `null` or `""` means **To be provided**, and the site shows a placeholder in that spot.
 - Dates use `"YYYY-MM-DD"` and times use 24-hour `"HH:MM"`.
-- Set `timezone.utcOffset` (for example `"+05:30"`) and the ceremony `startTime` to switch on the live countdown and timed calendar entries.
+- The ceremony starts at 10:30 am (`events → ceremony → startTime: "10:30"`) in India Standard Time (`timezone`), which switches on the live countdown and timed calendar entries.
 - The "Preview version" notice at the top of the invitation is switched off (`site.previewNotice: false`); set it to `true` to show it again. When the dress code is confirmed, set `dressCode.isProposal` to `false`.
+- The couple gallery uses `gallery.photos` (a square `tile` and the full `src` for each; the first 14 make the photo cube and wall). The current photos are samples: replace them with the couple's own.
 - The Welcome section shows the photos in `couplePhotos` (in black and white automatically, with a slow drift and parallax; several photos crossfade). The current photo is a sample supplied for the design: replace it with Angel & David's own photograph before sharing.
 
 Two things are not in `content.js` because they must load before any script runs. If the names or date ever change, update them in `site/index.html` too:
@@ -48,7 +49,7 @@ Two things are not in `content.js` because they must load before any script runs
 
 ## Add photographs and artwork
 
-Put files in `site/assets/images/` (or `site/assets/video/`) and reference them from `content.js`, for example `families.bride.photo: "assets/images/family-bride.webp"`. Sizes and formats are listed in [THEME.md §6](THEME.md#6-asset-checklist). The opening uses `site/assets/images/lace-spray-left.webp`, `lace-spray-right.webp`, `lace-motif.webp`, `lace-pearl-trim.webp`, `dove-seal.webp` and `wedding-car.webp`. The pearl flowers (opening columns, section edges, welcome, thank-you and the car's parking place at the end) use `pearl-bloom.webp`, `pearl-bud.webp`, `pearl-spray.webp`, `pearl-drops.webp` and `pearl-sprig.webp`. Save the Date uses `pearl-ring.webp` (real pearls and crystals), `petals/satin-*.webp` and `petals/rose-*.webp` (the wreath and the shower) and `lettering-glitter.webp` (the "Save the Date" lettering). Replace those files (same names, transparent WebP) to change the artwork. After changing any file, bump the `?v=` tag in `site/index.html` so phones load the new version.
+Put files in `site/assets/images/` (or `site/assets/video/`) and reference them from `content.js`, for example `families.bride.photos` (two photos per family: parents first, then the family with siblings; the second appears with the pixel effect). Sizes and formats are listed in [THEME.md §6](THEME.md#6-asset-checklist). The opening uses `site/assets/images/lace-spray-left.webp`, `lace-spray-right.webp`, `lace-motif.webp`, `lace-pearl-trim.webp`, `dove-seal.webp` and `wedding-car.webp`. The pearl flowers (opening columns, section edges, welcome, thank-you and the car's parking place at the end) use `pearl-bloom.webp`, `pearl-bud.webp`, `pearl-spray.webp`, `pearl-drops.webp` and `pearl-sprig.webp`. Save the Date uses `pearl-ring.webp` (real pearls and crystals), `petals/satin-*.webp` and `petals/rose-*.webp` (the wreath and the shower). Replace those files (same names, transparent WebP) to change the artwork. After changing any file, bump the `?v=` tag in `site/index.html` so phones load the new version.
 
 ## Connect RSVP and wishes
 
@@ -80,8 +81,9 @@ site/
   js/core.js              helpers, dialogs, calendar, storage
   js/ornaments.js         generated SVG pearls, florals, illustrations
   js/florals.js           the pearl-flower pieces (shared by every section)
+  js/pixel.js             the pixel photo swap for the family photographs
   js/decor.js             pearl flowers at the section edges, drifting with the scroll
-  js/sections/01–14       one file per section
+  js/sections/01–14       one file per section (plus 04b-gallery.js, the couple gallery)
   js/main.js              renders sections, header and menu
 backend/google-apps-script.gs   optional RSVP + wishes storage
 ```
