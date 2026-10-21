@@ -91,6 +91,12 @@
         '</span></div>';
 
       function esc(t) { return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+      // A one-off marker in the address makes every visit fetch index.html
+      // afresh, even from a host that sends no caching rules.
+      var stamp = Date.now();
+      function live(url) {
+        return url.replace(/(#.*)?$/, function (hash) { return (url.indexOf('?') > -1 ? '&' : '?') + 'live=' + stamp + hash; });
+      }
 
       document.getElementById('phones').innerHTML = SECTIONS.map(function (s, i) {
         return '<li class="phone">' +
@@ -99,7 +105,7 @@
             '<span class="btn-side btn-side--power"></span><span class="btn-side btn-side--camera"></span>' +
             '<div class="device__bezel"><div class="device__screen">' + STATUS +
               '<span class="island" aria-hidden="true"></span>' +
-              '<iframe class="screen-frame" src="' + s[2] + '" title="' + esc(s[1]) + ' — Angel and David\'s wedding invitation"' + (i > 5 ? ' loading="lazy"' : '') + '></iframe>' +
+              '<iframe class="screen-frame" src="' + live(s[2]) + '" title="' + esc(s[1]) + ' — Angel and David\'s wedding invitation"' + (i > 5 ? ' loading="lazy"' : '') + '></iframe>' +
               '<span class="home-indicator" aria-hidden="true"></span><span class="glare" aria-hidden="true"></span>' +
             '</div></div>' +
           '</div></div>' +

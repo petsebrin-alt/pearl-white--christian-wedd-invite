@@ -70,10 +70,13 @@
       // section images): mockup.html?section=rsvp, ?section=end (the parked
       // car) or ?section=names (the names screen after the opening).
       var sec = (location.search.match(/[?&]section=([a-z-]+)/) || [])[1];
-      if (sec) {
-        frame.src = sec === 'names' ? 'index.html?still'
-          : sec === 'end' ? 'index.html?still&end' : 'index.html?still#' + sec;
-      }
+      var page = !sec ? 'index.html' : sec === 'names' ? 'index.html?still'
+        : sec === 'end' ? 'index.html?still&end' : 'index.html?still#' + sec;
+      // A one-off marker in the address makes every visit fetch index.html
+      // afresh, even from a host that sends no caching rules.
+      frame.src = page.replace(/(#.*)?$/, function (hash) {
+        return (page.indexOf('?') > -1 ? '&' : '?') + 'live=' + Date.now() + hash;
+      });
 
       // Coming back with the browser's Back button can restore this page from
       // memory with an old invitation inside; load the latest one instead.

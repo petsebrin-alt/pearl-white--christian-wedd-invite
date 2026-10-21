@@ -21,7 +21,7 @@ The showcase pages use the invitation's own background: the pearl-white linen pa
 - `mockup.html` shows the invitation running live inside a centred iPhone 17 Pro Max (screen 440 × 956). It has no text or buttons. Tap the seal and scroll inside the phone; refresh to replay the opening. Add `?section=rsvp` (any section id, `names` for the names screen, or `end` for the parked car) to open the phone on one section.
 - `showcase.html` shows **every section at once**, each in its own iPhone 17 Pro Max, in page order with a small caption. Each phone is live and can be scrolled.
 - Both open sections with `index.html?still#section-id`: the opening is skipped and everything is shown at rest. Guests never see this view.
-- **Both pages always show the live invitation.** Each phone loads `index.html` from the same deployment (never a copy), and `vercel.json` makes Vercel serve every file with `Cache-Control: public, max-age=0, must-revalidate`, so browsers check for a newer version on every visit. Push a section change to GitHub and, once Vercel has deployed it, it appears inside the same iPhone mockup with no extra step.
+- **Both pages always show the live invitation.** Each phone loads `index.html` from the same deployment (never a copy), and `vercel.json` makes Vercel serve every file with `Cache-Control: public, max-age=0, must-revalidate`, so browsers check for a newer version on every visit; the phones also add a one-off `live=` marker to the address so `index.html` is fetched afresh even from a host without those rules. Push a section change to GitHub and, once Vercel has deployed it, it appears inside the same iPhone mockup with no extra step.
 - `showcase-images/` (outside the website) holds ready-to-share pictures. They are snapshots: make them again after a change (below).
   Files: `00-all-sections.jpg` (the whole board, 2400 × 3345) and one 4:5 picture per section (`01-opening.jpg` … `15-thank-you.jpg`, 2160 × 2700).
 
@@ -38,7 +38,7 @@ Every name, date, time, venue, contact and message lives in **`site/content.js`*
 - `null` or `""` means **To be provided**, and the site shows a placeholder in that spot.
 - Dates use `"YYYY-MM-DD"` and times use 24-hour `"HH:MM"`.
 - Set `timezone.utcOffset` (for example `"+05:30"`) and the ceremony `startTime` to switch on the live countdown and timed calendar entries.
-- Before sharing with guests, set `site.previewNotice` to `false`. When the dress code is confirmed, set `dressCode.isProposal` to `false`.
+- The "Preview version" notice at the top of the invitation is switched off (`site.previewNotice: false`); set it to `true` to show it again. When the dress code is confirmed, set `dressCode.isProposal` to `false`.
 - The Welcome section shows the photos in `couplePhotos` (in black and white automatically, with a slow drift and parallax; several photos crossfade). The current photo is a sample supplied for the design: replace it with Angel & David's own photograph before sharing.
 
 Two things are not in `content.js` because they must load before any script runs. If the names or date ever change, update them in `site/index.html` too:

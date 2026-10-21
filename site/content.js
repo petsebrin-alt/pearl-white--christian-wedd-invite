@@ -15,8 +15,10 @@
 window.WEDDING = {
   site: {
     title: "Angel & David · Wedding Invitation",
-    // Slim notice explaining placeholders. Set to false before sharing with guests.
-    previewNotice: true,
+    // Slim notice explaining placeholders (removed at the couple's request;
+    // set to true to show it again). The RSVP and wishing-wall forms still say
+    // when they are in preview mode.
+    previewNotice: false,
     // Shows "Proposal" labels on suggestions awaiting the couple's review.
     showProposalLabels: true
   },

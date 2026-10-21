@@ -4,7 +4,9 @@
    with a gentle parallax as guests scroll, then fades into the paper, with
    the invitation over its lighter lower part (pearl flowers at the corners).
    With more than one photo in content.js → couplePhotos they crossfade.
-   Reduced motion: the photo stays still.
+   As guests scroll down to it, the photo slides down from the top into its
+   place and then the invitation appears letter by letter.
+   Reduced motion: the photo stays still and everything is shown at once.
    ========================================================================== */
 (function () {
   'use strict';
@@ -79,6 +81,9 @@
     init: function (el) {
       var box = el.querySelector('.wel-photo');
       if (!box || AD.reducedMotion()) return;
+      var wel = el.querySelector('.wel');
+      wel.classList.add('is-waiting');   // photo and text hidden until guests reach it
+      var LAND = 1500;                   // ms into the slide when the text starts to appear
       var par = box.querySelector('.wel-photo__par');
       var shots = AD.$$('.wel-shot', box), cur = 0, timer = 0, ticking = false, inView = false;
 
@@ -114,11 +119,17 @@
         new IntersectionObserver(function (entries) {
           inView = entries[0].isIntersecting;
           box.classList.toggle('is-offscreen', !inView);
-          if (inView && !started) { started = true; show(0); }
+          if (inView && !started) {
+            started = true;
+            // The photo slides down from the top into place, then the text appears.
+            wel.classList.add('is-entering');
+            show(0);
+            setTimeout(function () { wel.classList.remove('is-waiting'); }, LAND);
+          }
           schedule();
-        }, { threshold: 0.15 }).observe(box);
+        }, { threshold: 0.3 }).observe(box);
       } else {
-        inView = true; show(0); schedule();
+        inView = true; wel.classList.remove('is-waiting'); show(0); schedule();
       }
     }
   });

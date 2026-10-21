@@ -191,7 +191,7 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | M2b | Full-screen four-flap envelope opening: light bloom + sheen + sparkles, then sides, top (with seal) and bottom flaps fold away | Opening | CSS 3D + keyframes | Built |
 | M4 | The wedding car drives in and parks on a slant beside the monogram, couple waving | Thank you (end of page) | CSS keyframes from R1, started by `js/sections/14-thank-you.js` | Built |
 | M5 | Edge flowers drifting with the scroll; focus-pull reveals; letter-by-letter heading lines | Whole page | `js/decor.js`, `AD.letters` in `js/core.js`, CSS | Built |
-| M6 | Black-and-white couple photo with slow drift and parallax, names focusing in, letter-by-letter date block | Welcome | CSS + `js/sections/02-welcome.js` | Built |
+| M6 | Black-and-white couple photo: slides down from the top into place when guests reach it, then the text appears letter by letter; slow drift and parallax; names focusing in | Welcome | CSS + `js/sections/02-welcome.js` | Built |
 | M2 | Handwriting reveal "Thank you for blessing our journey." | Thank you | SVG stroke animation | Built |
 | M3 | Floral branch reveal | Family-tree overlay | SVG stroke + fade | Built |
 

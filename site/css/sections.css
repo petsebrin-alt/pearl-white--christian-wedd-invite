@@ -242,7 +242,7 @@
   height: var(--trim);
   margin-top: calc(var(--trim) / -2);
   transform-origin: 0 50%;
-  background: url("../assets/images/lace-pearl-trim.webp?v=20261020y") repeat-x 0 50% / auto 100%;
+  background: url("../assets/images/lace-pearl-trim.webp?v=20261021a") repeat-x 0 50% / auto 100%;
 }
 
 /* Light: a glow from the seal, a sheen sweeping the lace, pearls sparkling. */
@@ -437,6 +437,23 @@
 .motion-ok .wel-shot.is-drift img { animation: wel-drift 16s linear both; }
 .wel-photo.is-offscreen .wel-shot img { animation-play-state: paused; }
 @keyframes wel-drift { from { transform: scale(1.16) translateY(3%); } to { transform: scale(1.04) translateY(0); } }
+
+/* Entrance, as in the reference video: when guests scroll down to it, the
+   couple photograph slides down from the top into its place; only then does
+   the invitation appear, letter by letter (02-welcome.js sets the classes). */
+.motion-ok .wel--photo.is-waiting:not(.is-entering) .wel-shot { opacity: 0; }
+.motion-ok .wel--photo.is-entering .wel-shot:first-child { animation: wel-enter 2s cubic-bezier(.2, .65, .3, 1) both; }
+@keyframes wel-enter {
+  from { opacity: 0; transform: translateY(-40%); }
+  25%  { opacity: 1; }
+  to   { opacity: 1; transform: translateY(0); }
+}
+/* The text waits, hidden, until the photo has landed */
+.motion-ok .wel--photo.is-waiting .wel-body .reveal { opacity: 0; transform: translateY(22px); filter: blur(5px); }
+.motion-ok .wel--photo.is-waiting .wel-body .lt-line .lt { opacity: 0; filter: blur(6px); transform: translateY(.18em); }
+.motion-ok .wel--photo.is-waiting .wel-names .wel-name { opacity: 0; filter: blur(10px); transform: scale(1.06); }
+.motion-ok .wel--photo.is-waiting .wel-floral { opacity: 0; }
+.motion-ok .wel-floral { transition: opacity 1.4s ease .6s; }
 /* Soft white haze over the lower part, where the text sits */
 .wel-photo::after {
   content: "";
