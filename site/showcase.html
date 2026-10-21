@@ -114,6 +114,16 @@
       }
       window.addEventListener('resize', fit);
       fit();
+
+      // Every phone shows the live invitation from this same deployment, so
+      // pushed changes appear here once Vercel has deployed them. Coming back
+      // with the Back button reloads the phones instead of showing old copies.
+      window.addEventListener('pageshow', function (e) {
+        if (!e.persisted) return;
+        Array.prototype.forEach.call(document.querySelectorAll('.screen-frame'), function (f) {
+          try { f.contentWindow.location.reload(); } catch (err) { f.src = f.getAttribute('src'); }
+        });
+      });
     })();
   </script>
 </body>

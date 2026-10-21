@@ -59,15 +59,28 @@
   <script>
     (function () {
       var device = document.getElementById('device');
+      var frame = document.querySelector('.screen-frame');
+
+      // The phone shows the live invitation: index.html from this same
+      // deployment (never a copy), and Vercel serves every file with
+      // "max-age=0, must-revalidate" (vercel.json). So whatever is pushed to
+      // GitHub appears in this phone as soon as Vercel finishes deploying.
 
       // Optional: open the phone on one section, at rest (used for the
       // section images): mockup.html?section=rsvp, ?section=end (the parked
       // car) or ?section=names (the names screen after the opening).
       var sec = (location.search.match(/[?&]section=([a-z-]+)/) || [])[1];
       if (sec) {
-        document.querySelector('.screen-frame').src = sec === 'names' ? 'index.html?still'
+        frame.src = sec === 'names' ? 'index.html?still'
           : sec === 'end' ? 'index.html?still&end' : 'index.html?still#' + sec;
       }
+
+      // Coming back with the browser's Back button can restore this page from
+      // memory with an old invitation inside; load the latest one instead.
+      window.addEventListener('pageshow', function (e) {
+        if (!e.persisted) return;
+        try { frame.contentWindow.location.reload(); } catch (err) { frame.src = frame.getAttribute('src'); }
+      });
       var wrap = document.getElementById('device-wrap');
       var DW = 440 + 32, DH = 956 + 32;   // phone incl. bezel and band
 

@@ -21,7 +21,9 @@ The showcase pages use the invitation's own background: the pearl-white linen pa
 - `mockup.html` shows the invitation running live inside a centred iPhone 17 Pro Max (screen 440 × 956). It has no text or buttons. Tap the seal and scroll inside the phone; refresh to replay the opening. Add `?section=rsvp` (any section id, `names` for the names screen, or `end` for the parked car) to open the phone on one section.
 - `showcase.html` shows **every section at once**, each in its own iPhone 17 Pro Max, in page order with a small caption. Each phone is live and can be scrolled.
 - Both open sections with `index.html?still#section-id`: the opening is skipped and everything is shown at rest. Guests never see this view.
-- `showcase-images/` (outside the website) holds ready-to-share pictures: `00-all-sections.jpg` (the whole board, 2400 × 3345) and one 4:5 picture per section (`01-opening.jpg` … `15-thank-you.jpg`, 2160 × 2700).
+- **Both pages always show the live invitation.** Each phone loads `index.html` from the same deployment (never a copy), and `vercel.json` makes Vercel serve every file with `Cache-Control: public, max-age=0, must-revalidate`, so browsers check for a newer version on every visit. Push a section change to GitHub and, once Vercel has deployed it, it appears inside the same iPhone mockup with no extra step.
+- `showcase-images/` (outside the website) holds ready-to-share pictures. They are snapshots: make them again after a change (below).
+  Files: `00-all-sections.jpg` (the whole board, 2400 × 3345) and one 4:5 picture per section (`01-opening.jpg` … `15-thank-you.jpg`, 2160 × 2700).
 
 To make the pictures again after a change, start the local server and run headless Chrome on each page, for example:
 
@@ -90,5 +92,5 @@ Each section has its own script (`js/sections/NN-name.js`) and its own block in 
 
 The website lives in `site/`, so the host must serve that folder as the site root.
 
-- **Vercel** (connected to this GitHub repo): `vercel.json` sets the output directory to `site`, so every push redeploys automatically and only the website is published. Planning files such as PRD.md stay private. Leave the Vercel project's Root Directory empty and its Framework Preset on "Other".
+- **Vercel** (connected to this GitHub repo): `vercel.json` sets the output directory to `site`, so every push redeploys automatically and only the website is published. It also tells browsers to check for a newer version of every file on each visit, so guests and the iPhone mockup never see an old copy. Planning files such as PRD.md stay private. Leave the Vercel project's Root Directory empty and its Framework Preset on "Other".
 - **Other static hosts** (Netlify, Cloudflare Pages, GitHub Pages): set the publish or output directory to `site`, or upload the contents of `site/`.
