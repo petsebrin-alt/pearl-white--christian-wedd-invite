@@ -190,7 +190,10 @@ Modelled on the couple's reference videos (a scrolling invitation website, and a
 
 ### 4.3 Save the Date
 
-- **27** dominates (very large serif), with "January" in calligraphy and "2027" beneath; weekday "Wednesday" as an eyebrow.
+- **"Save the Date"** in tall brush lettering (Comforter) as in the couple's reference: filled with a champagne-bronze glitter texture, raised off the paper with a fine shadow, "the" tucked inside a hand-drawn loop, a small pearl flower beside "Save".
+- A **ring of real pearls and crystals** (cut from the couple's pearl image): a chain of large, medium and small pearls over sparkling crystals, with a cluster of pearls at the bottom.
+- Inside it, **27** dominates (very large serif), with "January" in calligraphy and "2027" beneath; weekday "Wednesday" above.
+- **Tap to reveal** (modelled on the couple's petal video): at first the date is covered by a pile of satin pearl-white petals with a "Tap the petals" hint. One tap and the petals burst away from the finger, swirl round the centre and settle into a wreath tucked inside the pearl ring (≈ 2.5 s) while the date comes into focus; then real white rose petals shower down over the whole screen for about 8 s. Tapping again sends another shower. Reduced motion: the wreath and date are shown at once, no shower. The date is always available to screen readers.
 - **Add to Calendar** button → a small sheet with two choices: **Google Calendar** and **Apple / Outlook (.ics file)**.
 
 **Calendar behaviour rules:**
@@ -206,7 +209,7 @@ Modelled on the couple's reference videos (a scrolling invitation website, and a
 
 ### 4.4 Countdown
 
-- Four pearl tiles: **Days, Hours, Minutes, Seconds**; numbers in charcoal with tabular figures; tiles carry a pearl-dot edge and a soft sheen.
+- **Days, Hours, Minutes, Seconds**, each number in the frosted centre of a **beaded pearl flower** (modelled on the couple's reference: frosted petals, loops of white pearls and silver seed beads). The four flowers hang as a draped garland, alternately high and low, each linked to the next by a **chain of white pearls and silver seed beads**. As the section scrolls in, the flowers open one after another and the chain is strung between them; each number fades softly as it changes. Numbers in charcoal with tabular figures.
 - `aria-live` is **not** applied to the ticking numbers (avoids constant announcements); a hidden summary updates once per minute.
 
 | State | Condition | Display |
@@ -362,6 +365,7 @@ Full details in [THEME.md](THEME.md). Summary:
 | A2b | Car parks at the end | Parking place 45 % in view (once) | 3.2 s drive-in from the left, turning from 80° to a 32° slant and slowing to a stop; monogram fades in after; glints 3 × 1.4 s | Car shown parked | No car image → monogram and flowers only |
 | A2c | Edge flowers drift | Scroll | Linked to the scroll (5–16 % of the scroll distance) | None | Static flowers |
 | A2d | Letter-by-letter heading lines | Scroll into view | 55 ms per letter, each fading in out of a 6 px blur | Text shown at once | Plain text for screen readers |
+| A2f | Save the Date petals | Tap / Enter on the petal pile | Burst 0.7 s, swirl and settle ≈ 2.4 s (each petal 2.3–2.6 s, staggered from the tap point); date fades in from 0.8 s; rose-petal shower from 1.5 s, 30–46 petals, 5–8 s each | Wreath and date shown at once | Date in the heading for screen readers |
 | A2e | Welcome couple photo | Photo 40 % in view, after the opening has finished; plays again each time guests scroll back down to it | Slides down from the top into place (2.4 s, slowing to a stop); the text starts 1.7 s in, letter by letter; then drift 16 s linear; parallax at 22 % of the scroll; several photos crossfade every 7 s | Photo and text shown at once | No photo → the welcome shows text only |
 | A3 | Countdown tick | Every second | Number change, no motion | Same | Pending/ended states |
 | A4 | Family-tree floral reveal | Open overlay | 700 ms branch draw + 60 ms staggered nodes | None | Static tree |

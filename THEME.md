@@ -161,6 +161,11 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | R1 | Wedding car with couple, seen from above (supplied, transparent) | Opening | WebP with alpha, 720 × 1219, 180 KB — `wedding-car.webp` | Done |
 | R1b | White net flower with pearls (supplied, background removed) | iPhone showcase page corners | WebP with alpha, 720 × 449, 137 KB — `net-flower.webp` | Done |
 | R1c | Pearl-and-satin flower (supplied, background removed, gold softened to champagne, soft shadow baked in), cut into five pieces: bloom, bud, spray, pearl drops, pearl sprig | Opening flower columns (small flowers on generated SVG stems), section edges, welcome, thank-you, parking place | WebP with alpha — `pearl-bloom.webp` (463 × 509), `pearl-bud.webp`, `pearl-spray.webp` (640 × 890), `pearl-drops.webp`, `pearl-sprig.webp`; 13–90 KB each | Done |
+| R1e | Pearls and crystals (cut from the couple's pearl image), composed into the Save the Date ring | Save the Date | WebP with alpha, 1000 × 1000, 225 KB — `pearl-ring.webp` | Done |
+| R1f | Petals: 8 satin pearl-white petals (texture from the couple's satin-petal image) and 6 real white rose petals (from the couple's rose-petal image), shaped as rose petals with a soft shadow | Save the Date wreath and shower | WebP with alpha, ≈ 4–5 KB each — `petals/satin-1…8.webp`, `petals/rose-1…6.webp` | Done |
+| R1g | Champagne-bronze glitter texture for the "Save the Date" lettering | Save the Date | WebP, 320 × 320 tile, 22 KB — `lettering-glitter.webp` | Done |
+| R1h | Beaded pearl flower (modelled on the couple's photo: frosted petals with texture from it, white pearls, silver seed beads), two variations, plus a countdown version with a larger frosted centre | Countdown | WebP with alpha, 640 × 640, ≈ 90 KB each — `beaded-flower-1/2.webp`, `beaded-flower-cd-1/2.webp` | Done |
+| R1i | Chain of white pearls and silver seed beads (repeating tile) | Countdown | WebP with alpha, 60 × 30 — `bead-chain.webp` | Done |
 | R1d | Couple photograph, black and white (sample supplied for the design; carries a photographer's "Maab Road" tag) | Welcome | WebP, 736 × 1104, 72 KB — `couple-bw.webp` | To be replaced with Angel & David's own photograph |
 | R2 | Floral corner — white flowers, olive leaves, pearls | Welcome, thank-you | WebP with alpha, 900 × 900, ≤ 120 KB | Recommended |
 | R3 | Pearl strand (draped) | Countdown, dividers | WebP with alpha, 1600 × 300, ≤ 60 KB | Recommended |
@@ -191,6 +196,8 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | M2b | Full-screen four-flap envelope opening: light bloom + sheen + sparkles, then sides, top (with seal) and bottom flaps fold away | Opening | CSS 3D + keyframes | Built |
 | M4 | The wedding car drives in and parks on a slant beside the monogram, couple waving | Thank you (end of page) | CSS keyframes from R1, started by `js/sections/14-thank-you.js` | Built |
 | M5 | Edge flowers drifting with the scroll; focus-pull reveals; letter-by-letter heading lines | Whole page | `js/decor.js`, `AD.letters` in `js/core.js`, CSS | Built |
+| M8 | Countdown garland: beaded flowers open one after another, the pearl-and-bead chain is strung between them; numbers fade as they change | Countdown | CSS + `js/sections/04-countdown.js` | Built |
+| M7 | Tap the petals: satin petals burst, swirl and settle into a wreath, the date appears, real rose petals shower down | Save the Date | Web Animations API, `js/sections/03-save-the-date.js` | Built |
 | M6 | Black-and-white couple photo: slides down from the top into place when guests reach it, then the text appears letter by letter; slow drift and parallax; names focusing in | Welcome | CSS + `js/sections/02-welcome.js` | Built |
 | M2 | Handwriting reveal "Thank you for blessing our journey." | Thank you | SVG stroke animation | Built |
 | M3 | Floral branch reveal | Family-tree overlay | SVG stroke + fade | Built |

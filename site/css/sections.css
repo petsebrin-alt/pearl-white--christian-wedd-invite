@@ -242,7 +242,7 @@
   height: var(--trim);
   margin-top: calc(var(--trim) / -2);
   transform-origin: 0 50%;
-  background: url("../assets/images/lace-pearl-trim.webp?v=20261021b") repeat-x 0 50% / auto 100%;
+  background: url("../assets/images/lace-pearl-trim.webp?v=20261021g") repeat-x 0 50% / auto 100%;
 }
 
 /* Light: a glow from the seal, a sheen sweeping the lace, pearls sparkling. */
@@ -492,7 +492,7 @@
 .wel-floral--tl { position: relative; height: 0; }
 .wel-floral--tl img { top: -2.5rem; left: calc(var(--gutter) * -1 - 4px); width: clamp(110px, 30vw, 190px); transform: scaleX(-1); }
 .wel--photo .wel-floral--tl img { top: -6rem; }
-.wel-floral--br { position: absolute; right: -10px; bottom: -8.6rem; width: clamp(90px, 25vw, 150px); aspect-ratio: 1; }
+.wel-floral--br { position: absolute; right: -10px; bottom: -6.6rem; width: clamp(90px, 25vw, 150px); aspect-ratio: 1; }
 .wel-floral--br .pf--bloom { right: 0; bottom: 0; width: 100%; transform: rotate(-18deg); }
 .wel-floral--br .pf--sprig { right: 78%; bottom: 46%; width: 52%; transform: rotate(-24deg); }
 .invite-card__cross { width: 22px; height: 33px; margin: 0 auto 1.4rem; color: #4a4741; }
@@ -563,18 +563,117 @@
    3. SAVE THE DATE
    ========================================================================== */
 .std { text-align: center; }
-.std > .eyebrow { margin-bottom: 1.5rem; }
-.std-ring { position: relative; width: min(88vw, 410px); margin: 0 auto 1.6rem; }
-.std-ring .pearl-ring { width: 100%; height: auto; }
+
+/* "Save the Date" in brush lettering, as in the couple's reference: tall
+   calligraphy filled with champagne-bronze glitter, raised off the paper,
+   "the" tucked inside a hand-drawn loop. */
+.std-script {
+  position: relative;
+  width: min(100%, 23rem);
+  margin: 0 auto clamp(.5rem, 2vw, 1rem);
+  padding: .4rem 0 .2rem;
+  font-family: "Comforter", "Pinyon Script", cursive;
+  font-weight: 400;
+  line-height: .78;
+}
+.std-script__save, .std-script__the, .std-script__date {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  background: #9b7a60 url("../assets/images/lettering-glitter.webp?v=20261021g") 0 0 / 150px;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: .7px rgba(88, 60, 40, .55);
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .9)) drop-shadow(1.5px 3px 2px rgba(70, 48, 32, .38));
+  /* room for tall strokes, so the glitter reaches the very tops and tails */
+  padding: .34em .14em .24em;
+  margin: -.34em -.14em -.24em;
+}
+.std-script__save { display: block; padding-right: 16%; font-size: clamp(6.4rem, 4.6rem + 8vw, 8.6rem); }
+.std-script__row { display: flex; align-items: center; justify-content: center; margin-top: -.12em; padding-left: 4%; }
+.std-script__the { margin-right: .05em; padding: .34em .3em .24em; margin-top: -.34em; margin-bottom: -.24em; font-size: clamp(2.4rem, 1.8rem + 2.6vw, 3.3rem); transform: translateY(.2em); }
+.std-script__date { font-size: clamp(6.4rem, 4.6rem + 8vw, 8.6rem); }
+.std-script__swash {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: #9a7a62;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 1px 0 rgba(255, 255, 255, .9)) drop-shadow(1px 2px 1.5px rgba(70, 48, 32, .3));
+}
+.std-script__swash path { vector-effect: non-scaling-stroke; }
+.std-script__bud { position: absolute; z-index: 2; left: 0; top: 26%; width: clamp(48px, 13vw, 68px); transform: rotate(-14deg); }
+.motion-ok .std-script.reveal .std-script__swash path { stroke-dasharray: 600; stroke-dashoffset: 600; }
+.motion-ok .std-script.is-in .std-script__swash path { stroke-dashoffset: 0; transition: stroke-dashoffset 1.8s cubic-bezier(.45, .05, .35, 1) .5s; }
+
+/* The ring: real pearls and crystals, a wreath of satin petals beneath them,
+   and the date in the middle under a pile of petals until it is tapped. */
+.std-ring { position: relative; width: min(88vw, 410px); aspect-ratio: 1; margin: 0 auto 1.6rem; }
+.std-ring__petals, .std-ring__pile { position: absolute; inset: 0; pointer-events: none; }
+.std-ring__petals { z-index: 1; }
+.std-ring__pearls { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; max-width: none; }
+.std-ring__pile { z-index: 4; }
+.std-petal {
+  position: absolute;
+  left: 50%; top: 50%;
+  height: auto;
+  max-width: none;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+}
 .std-ring__date {
   position: absolute;
+  z-index: 3;
   left: 0; right: 0;
   top: 48.5%;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: opacity 1.4s ease .8s, filter 1.6s ease .8s;
 }
+.std-ring:not(.is-open) .std-ring__date { opacity: 0; filter: blur(8px); }
+.std-ring__tap {
+  position: absolute;
+  z-index: 5;
+  inset: 9%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 0 3%;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.std-ring__tap:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
+.std-ring__tap span {
+  padding: .35rem .9rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .86);
+  box-shadow: 0 4px 12px -6px rgba(60, 50, 35, .45);
+  font: 500 .6875rem/1 var(--font-body);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  transition: opacity .4s;
+}
+.motion-ok .std-ring:not(.is-open) .std-ring__tap span { animation: std-hint 2.4s ease-in-out infinite; }
+@keyframes std-hint { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.std-ring.is-open .std-ring__tap span { opacity: 0; }
+
+/* Real white rose petals drifting down over the screen after the reveal */
+.petal-shower { position: fixed; inset: 0; z-index: 60; overflow: hidden; pointer-events: none; perspective: 700px; }
+.petal-shower__petal { position: absolute; top: 0; height: auto; max-width: none; opacity: 0; will-change: transform, opacity; }
+
 .std-ring__weekday { font: 500 .75rem/1 var(--font-body); letter-spacing: .3em; text-transform: uppercase; color: var(--muted); margin-bottom: .35rem; }
 .std-ring__day {
   font-family: var(--font-display);
@@ -600,37 +699,57 @@
 /* =============================================================================
    4. COUNTDOWN
    ========================================================================== */
-.cd { --tile: clamp(70px, 19.5vw, 132px); position: relative; max-width: 44rem; margin: 0 auto; text-align: center; }
-.cd-tiles { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(.4rem, 2.5vw, 1.5rem); }
-.cd-strand {
+/* A draped garland: four beaded pearl flowers (the couple's reference) hung
+   alternately high and low, each linked to the next by a chain of white
+   pearls and silver seed beads (links drawn by 04-countdown.js). */
+.cd { --tile: clamp(92px, 25vw, 150px); --drop: calc(var(--tile) * .8); position: relative; max-width: 44rem; margin: 0 auto; text-align: center; }
+.cd-tiles { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); padding-bottom: var(--drop); }
+.cd-strand { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.cd-link {
   position: absolute;
-  left: 10%; right: 10%;
-  top: calc(var(--tile) / 2 - 3px);
-  height: 7px;
-  background: radial-gradient(circle at 40% 35%, #fff 0 .9px, #ebe5da 1.9px, #cfc6b6 3px, transparent 3.3px) left center / 9px 7px repeat-x;
+  height: 12px;
+  margin-top: -6px;
+  transform-origin: 0 50%;
+  background: url("../assets/images/bead-chain.webp?v=20261021g") repeat-x left center / 24px 12px;
+  filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18));
 }
-.cd-tile { display: flex; flex-direction: column; align-items: center; gap: .75rem; }
+.cd-tile { display: flex; flex-direction: column; align-items: center; gap: .25rem; min-width: 0; }
+.cd-tile:nth-child(even) { transform: translateY(var(--drop)); }
 .cd-tile__pearl {
-  width: var(--tile);
+  position: relative;
+  width: min(var(--tile), 100%);
   aspect-ratio: 1;
-  border-radius: 50%;
   display: grid;
   place-items: center;
-  background: radial-gradient(circle at 34% 28%, #fff 0 16%, #faf8f4 32%, #efeae2 58%, #e0d8cb 82%, #cec4b3 100%);
-  box-shadow:
-    0 12px 24px -14px rgba(60, 50, 35, .5),
-    inset -3px -6px 12px rgba(150, 135, 110, .2),
-    inset 3px 3px 8px rgba(255, 255, 255, .95);
+}
+.cd-tile__flower {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 104%;
+  max-width: none;
+  height: auto;
+  transform: translate(-50%, -50%) rotate(calc(var(--k) * 23deg));
+  filter: drop-shadow(0 6px 8px rgba(60, 50, 35, .16));
+  pointer-events: none;
+  user-select: none;
 }
 .cd-tile__num {
+  position: relative;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(1.85rem, 1.1rem + 3.2vw, 3.3rem);
+  font-size: clamp(1.75rem, 1rem + 3vw, 2.4rem);
   line-height: 1;
   color: var(--ink);
 }
 .cd-tile__pearl.is-empty .cd-tile__num { color: #9d9588; font-weight: 500; }
-.cd-tile__label { font: 500 .6875rem/1 var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.cd-tile__label { position: relative; margin-top: calc(var(--tile) * .04); font: 500 .6875rem/1 var(--font-body); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+/* The flowers open one after another, then the chain is strung between them */
+.motion-ok .cd.reveal .cd-tile__flower { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--k) * 23deg - 40deg)) scale(.7); transition: opacity 1s ease, transform 1.4s cubic-bezier(.2, .7, .25, 1); }
+.motion-ok .cd.reveal.is-in .cd-tile__flower { opacity: 1; transform: translate(-50%, -50%) rotate(calc(var(--k) * 23deg)) scale(1); transition-delay: calc(.2s + var(--k) * .22s); }
+.motion-ok .cd.reveal .cd-link { clip-path: inset(0 100% 0 0); transition: clip-path .7s ease; }
+.motion-ok .cd.reveal.is-in .cd-link { clip-path: inset(0 0 0 0); transition-delay: calc(.45s + var(--k) * .22s); }
+.motion-ok .cd-tile__num.is-tick { animation: cd-tick .5s ease; }
+@keyframes cd-tick { from { opacity: .35; filter: blur(2px); } to { opacity: 1; filter: none; } }
 .cd-note {
   max-width: 28rem;
   margin: 1.75rem auto 0;

@@ -72,9 +72,6 @@
             '<div class="wel-floral wel-floral--br" aria-hidden="true">' + AD.florals.img('bloom') + AD.florals.img('sprig') + '</div>' +
           '</div>' +
         '</article>' +
-        '<a class="scroll-cue" href="#save-the-date"><span>Scroll to continue</span>' +
-          '<svg viewBox="0 0 24 40" aria-hidden="true"><rect x="7" y="2" width="10" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.1"/><circle class="scroll-cue__dot" cx="12" cy="8" r="1.6" fill="currentColor"/><path d="M8 30l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>' +
-        '</a>' +
       '</div>';
     },
 
