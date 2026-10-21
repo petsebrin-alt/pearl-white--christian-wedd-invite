@@ -1,54 +1,41 @@
 /* =============================================================================
-   7. DRESS CODE — black & white shown as a PROPOSAL for the couple's review.
+   7. DRESS CODE — black & white, with outfit photographs chosen by the couple
+   (two for her, two for him) in pearl frames.
    ========================================================================== */
 (function () {
   'use strict';
   var AD = window.AD;
 
+  function outfits(list, label, delay) {
+    var items = (list || []).filter(function (o) { return o && AD.has(o.src); });
+    if (!items.length) return '';
+    return '<figure class="dc-look reveal" data-delay="' + delay + '">' +
+      '<div class="dc-look__photos">' + items.map(function (o, i) {
+        return '<div class="pearl-frame dc-look__frame" style="--k:' + i + '"><div class="dc-look__img">' +
+          '<img src="' + AD.esc(o.src) + '" alt="' + AD.esc(o.alt || '') + '" loading="lazy" decoding="async" width="720" height="900"></div></div>';
+      }).join('') + '</div>' +
+      '<figcaption class="dc-look__cap">' + label + '</figcaption>' +
+    '</figure>';
+  }
+
   AD.register('dress-code', {
     render: function (C) {
       var D = C.dressCode || {};
       var showProposal = D.isProposal && C.site.showProposalLabels;
-      var events = C.events || [];
-
-      var proposal = showProposal
-        ? '<div class="proposal reveal">' + AD.icon('leaf') +
-            '<p><strong>Proposal for the couple’s review.</strong> Black &amp; white is a suggested direction, not yet a guest requirement. Final outfit guidance is to be provided.</p></div>'
-        : '';
-
+      var O = D.outfits || {};
       var swatches = (D.swatches || []).map(function (s) {
         return '<li class="swatch"><span class="swatch__chip" style="--c:' + AD.esc(s.hex) + '"></span><span class="swatch__name">' + AD.esc(s.name) + '</span></li>';
       }).join('');
 
-      var byEvent = events.map(function (ev) {
-        var g = D.byEvent ? D.byEvent[ev.id] : null;
-        return '<li class="dc-event"><h4 class="dc-event__name">' + AD.esc(ev.name) + '</h4>' +
-          '<p class="dc-event__text">' + (AD.has(g) ? AD.esc(g) : AD.tbp(ev.name + ' guidance')) + '</p></li>';
-      }).join('');
-
-      var refs = (D.referenceImages || []).map(function (r) {
-        return '<li class="dc-ref">' + (AD.has(r.src)
-          ? '<div class="pearl-frame"><div class="media-frame" style="aspect-ratio:4/5"><img src="' + AD.esc(r.src) + '" alt="' + AD.esc(r.alt) + '" loading="lazy" decoding="async"></div></div>'
-          : '<div class="pearl-frame">' + AD.mediaPlaceholder(r.alt.replace('Attire reference', 'Reference image')) + '</div>') + '</li>';
-      }).join('');
-
       return '<div class="container">' +
         AD.sectionHead({ id: 'dress-code', eyebrow: 'Attire', title: 'Dress Code' }) +
-        proposal +
-        '<div class="dc-hero reveal" data-delay="1">' +
-          '<div class="dc-figure">' + AD.orn.attire('saree') + '<p class="dc-figure__cap">For her</p></div>' +
-          '<div class="dc-direction">' +
-            (showProposal ? '<span class="proposal-tag">Proposal</span>' : '') +
-            '<h3 class="dc-direction__title">' + AD.esc(D.direction) + '</h3>' +
-            '<p class="dc-direction__text">' + AD.esc(D.summary) + '</p>' +
-            '<ul class="swatches" aria-label="Suggested colours">' + swatches + '</ul>' +
-          '</div>' +
-          '<div class="dc-figure">' + AD.orn.attire('suit') + '<p class="dc-figure__cap">For him</p></div>' +
+        '<div class="dc-direction reveal">' +
+          (showProposal ? '<span class="proposal-tag">Proposal</span>' : '') +
+          '<h3 class="dc-direction__title">' + AD.esc(D.direction) + '</h3>' +
+          '<p class="dc-direction__text">' + AD.esc(D.summary) + '</p>' +
+          '<ul class="swatches" aria-label="Colours">' + swatches + '</ul>' +
         '</div>' +
-        '<h3 class="dc-subtitle reveal">Guidance by event</h3>' +
-        '<ul class="dc-events reveal">' + byEvent + '</ul>' +
-        '<h3 class="dc-subtitle reveal">Reference images</h3>' +
-        '<ul class="dc-refs reveal">' + refs + '</ul>' +
+        '<div class="dc-looks">' + outfits(O.her, 'For her', 1) + outfits(O.him, 'For him', 2) + '</div>' +
       '</div>';
     }
   });

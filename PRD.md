@@ -264,7 +264,7 @@ Each event card includes:
 | Venue name and short address | linked venue record | "Venue — To be provided" |
 | **View Location** | links to the venue card in §4.9 | Button shown but disabled with the text "Location to be announced" |
 | **Add to Calendar** | generated | Disabled "Date to be announced" if no date; all-day entry if date but no time |
-| Illustration | SVG line art | — |
+| Photo (back card) | `events[].photo` | A pearl-and-petal photograph supplied by the couple stands in until an event photo is provided |
 
 Proposal descriptions:
 
@@ -274,24 +274,27 @@ Proposal descriptions:
 - **Christian marriage ceremony** — "Holy Matrimony, as Angel and David exchange vows before God, family and friends."
 - **Reception** — "Dinner and celebration in honour of the newly married couple."
 
-Illustrations (charcoal line art + white bloom + olive sprig, no bright yellow or multicolour): Haldi — brass uruli bowl with floating blooms; Mehendi — henna cone with paisley swirl; Sangeet — dholak drum and notes; Ceremony — church with cross and rings; Reception — tiered cake with pearls.
+**Layout — switching tabs card (modelled on the couple's reference video):**
 
-**Proposal — pearl-strand timeline:** events hang from a single vertical strand of pearls. Each event sits on a larger pearl "station"; small pearls run between. As a card scrolls into view its station pearl gains a soft sheen. On desktop the cards alternate left and right of a central strand; on mobile the strand runs down the left edge.
+- A **menu of the five events** (Haldi · Mehendi · Sangeet · Wedding · Reception) runs along the top of the **detail card**, with a fine underline that slides to the chosen event. The detail card shows the number and kind ("04 · The Wedding"), name, description, Date / Time / Venue, a **View Location** button and an **Add to Calendar** link.
+- Behind it, the **photo card** shows a backdrop photograph for the chosen event (currently the couple's white rose petals, satin petals, pearls and crystals, lace-and-pearl embroidery and beaded pearl flowers — to be replaced with event photos when supplied).
+- Choosing an event — a tab, the ‹ › arrows (with a "04 / 05" counter beneath), a swipe on phones, or the arrow / Home / End keys on the menu — blurs the old details out and blurs the new ones in line by line (≈ 0.5 s), while the new photo fades in over the old with a soft zoom (≈ 1 s).
+- Phones: the photo card on top and the detail card overlapping its lower part, all five menu items fitting on screens from 360 px. Wider screens: the detail card overlaps the left of a wide photo card, as in the video.
+- As the section scrolls in, the photo card slides in from the right and the detail card from the left. Links to `#event-<id>` (from the venues) open that event.
+- Accessible as a tab list (`role="tablist"`, roving focus, `aria-selected`, one tab panel).
 
 **Incomplete actions:** disabled actions remain visible (so guests know they will exist), use `aria-disabled="true"`, and explain why in their label. They never open an empty map or an invented calendar time.
 
 ### 4.7 Dress code
 
 - Separate section; heading "Dress Code".
-- **Proposal banner:** "Proposed direction for the couple's review — not yet a guest requirement."
-- Proposed direction: **Black & White** — "Classic black, white, ivory and pearl tones." Swatches: black, white, ivory, pearl.
-- Event-specific guidance cards (Haldi, Mehendi, Sangeet, Ceremony, Reception) each showing "Guidance — To be provided".
-- Illustrations: saree drape and suit line drawings; reference-image placeholders ("Reference image — To be provided").
-- When the couple confirms guidance, the proposal banner is turned off in `content.js` (`dressCode.isProposal = false`).
+- Direction: **Black & White** — "Classic black, white, ivory and pearl tones." Swatches: black, white, ivory, pearl. Chosen by the couple, so the proposal banner is off (`dressCode.isProposal = false`).
+- **Outfit photographs chosen by the couple** in pearl frames: two for her (a white satin gown with bows and ribbons; an ivory off-shoulder satin gown with a bow and train) and two for him (a black beaded tuxedo; an ivory dinner jacket with black lapels). They rise in one after another as the section scrolls in. Set in `content.js → dressCode.outfits` (a phone number written on one photo was painted out).
+- Removed at the couple's request: the proposal note, the line illustrations, "Guidance by event" and "Reference images".
 
 ### 4.8 Gifting
 
-- Central visual: a realistic white envelope (paper texture, shaded flaps, satin-and-pearl seal). No registry, no product links.
+- Central visual: a pearl-ivory envelope modelled on the couple's reference photo — a row of real pearls along both edges of the flap, a sprig of baby's breath rising from the seal, and the ivory pearl dove wax seal from the opening; paper texture and soft folds (rendered images `envelope-front.webp`, `envelope-flap.webp`). No registry, no product links.
 - Message: "Your presence and blessings are our greatest gift. If you wish to give, an envelope gift is warmly welcome."
 - **Proposal — envelope interaction:** guest taps **Open the envelope** → the seal releases, the flap hinges open (3D rotation), and a lace-edged card slides up revealing the message. **Close** reverses it.
 - The message is also present in the accessible text (screen readers read it without opening). Reduced motion: card shown open, no movement.

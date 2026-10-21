@@ -139,6 +139,10 @@ window.WEDDING = {
   events: [
     {
       id: "haldi",
+      tab: "Haldi",
+      // Backdrop on the photo card (a pearl-and-petal photograph supplied by the
+      // couple) until a photograph of the event is provided.
+      photo: { src: "assets/images/events/haldi.webp", alt: "White rose petals" },
       name: "Haldi",
       kicker: "Pre-wedding",
       description: "A morning of turmeric blessings, laughter and family warmth.",
@@ -150,6 +154,10 @@ window.WEDDING = {
     },
     {
       id: "mehendi",
+      tab: "Mehendi",
+      // Backdrop on the photo card (a pearl-and-petal photograph supplied by the
+      // couple) until a photograph of the event is provided.
+      photo: { src: "assets/images/events/mehendi.webp", alt: "Satin petals" },
       name: "Mehendi",
       kicker: "Pre-wedding",
       description: "An evening of henna artistry, music and togetherness.",
@@ -161,6 +169,10 @@ window.WEDDING = {
     },
     {
       id: "sangeet",
+      tab: "Sangeet",
+      // Backdrop on the photo card (a pearl-and-petal photograph supplied by the
+      // couple) until a photograph of the event is provided.
+      photo: { src: "assets/images/events/sangeet.webp", alt: "Pearls and crystals" },
       name: "Sangeet",
       kicker: "Pre-wedding",
       description: "Songs, dance and celebration as two families become one.",
@@ -172,6 +184,10 @@ window.WEDDING = {
     },
     {
       id: "ceremony",
+      tab: "Wedding",
+      // Backdrop on the photo card (a pearl-and-petal photograph supplied by the
+      // couple) until a photograph of the event is provided.
+      photo: { src: "assets/images/events/ceremony.webp", alt: "Lace and pearl embroidery" },
       name: "Christian Marriage Ceremony",
       kicker: "The Wedding",
       description:
@@ -185,6 +201,10 @@ window.WEDDING = {
     },
     {
       id: "reception",
+      tab: "Reception",
+      // Backdrop on the photo card (a pearl-and-petal photograph supplied by the
+      // couple) until a photograph of the event is provided.
+      photo: { src: "assets/images/events/reception.webp", alt: "Beaded pearl flowers" },
       name: "Reception",
       kicker: "Celebration",
       description: "Dinner and celebration in honour of the newly married couple.",
@@ -234,8 +254,8 @@ window.WEDDING = {
   ],
 
   dressCode: {
-    // true = shown as a proposal for the couple's review, not a guest requirement.
-    isProposal: true,
+    // Black & white, chosen by the couple (no longer a proposal).
+    isProposal: false,
     direction: "Black & White",
     summary: "Classic black, white, ivory and pearl tones, echoing the invitation.",
     swatches: [
@@ -244,18 +264,18 @@ window.WEDDING = {
       { name: "Ivory", hex: "#F3EEE3" },
       { name: "Pearl", hex: "#EEE9E1" }
     ],
-    // Event-specific guidance. null = To be provided.
-    byEvent: {
-      haldi: null,
-      mehendi: null,
-      sangeet: null,
-      ceremony: null,
-      reception: null
-    },
-    referenceImages: [
-      { src: null, alt: "Attire reference for her" },
-      { src: null, alt: "Attire reference for him" }
-    ]
+    // Outfit inspiration chosen by the couple (photographs supplied; a phone
+    // number written on one was painted out).
+    outfits: {
+      her: [
+        { src: "assets/images/dress/her-1.webp", alt: "White satin gown with bows and flowing ribbons" },
+        { src: "assets/images/dress/her-2.webp", alt: "Ivory satin off-shoulder gown with a bow and train" }
+      ],
+      him: [
+        { src: "assets/images/dress/him-1.webp", alt: "Black tuxedo with beaded detail and a black bow tie" },
+        { src: "assets/images/dress/him-2.webp", alt: "Ivory dinner jacket with black lapels, black waistcoat and bow tie" }
+      ]
+    }
   },
 
   gifting: {

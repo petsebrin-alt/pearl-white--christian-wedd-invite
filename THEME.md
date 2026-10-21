@@ -166,6 +166,9 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | R1h | Beaded pearl flower (modelled on the couple's photo: frosted satin-pearl petals with texture from it, the same pearl as the centre of the corner flowers, silver seed beads), two variations, plus a countdown version with a larger frosted centre | Countdown | WebP with alpha, 640 × 640, ≈ 90 KB each — `beaded-flower-1/2.webp`, `beaded-flower-cd-1/2.webp` | Done |
 | R1i | Chain of white pearls and silver seed beads (repeating tile) | Countdown | WebP with alpha, 60 × 30 — `bead-chain.webp` | Done |
 | R1j | Couple gallery photographs ×14 (samples supplied; watermarks painted out) | Couple gallery | WebP — square tiles 420 × 420 (`gallery/gNN-tile.webp`, 7–60 KB) and full photos ≤ 1100 px (`gallery/gNN.webp`, 21–182 KB) | Samples in place — to be replaced with Angel & David's own photographs |
+| R1k | Outfit photographs chosen by the couple (2 for her, 2 for him; phone number on one painted out) | Dress code | WebP, 720 × 900 (4:5), 9–30 KB — `dress/her-1/2.webp`, `dress/him-1/2.webp` | Done |
+| R1l | Envelope (pocket and flap) modelled on the couple's photo: pearl-ivory paper with folds, pearl trim along the flap, baby's breath sprig; the dove wax seal (R2c) on top | Gifting | WebP with alpha, 1280 × 880 and 1280 × 592 — `envelope-front.webp`, `envelope-flap.webp` | Done |
+| R1m | Event backdrops from the couple's own photos (white rose petals, satin petals, pearls and crystals, lace-and-pearl embroidery, beaded pearl flowers) | Wedding events (photo card) | WebP, 1000 × 800, 23–81 KB — `events/<id>.webp` | Stand-ins until event photos are provided |
 | R1d | Couple photograph, black and white (sample supplied for the design; carries a photographer's "Maab Road" tag) | Welcome | WebP, 736 × 1104, 72 KB — `couple-bw.webp` | To be replaced with Angel & David's own photograph |
 | R2 | Floral corner — white flowers, olive leaves, pearls | Welcome, thank-you | WebP with alpha, 900 × 900, ≤ 120 KB | Recommended |
 | R3 | Pearl strand (draped) | Countdown, dividers | WebP with alpha, 1600 × 300, ≤ 60 KB | Recommended |
@@ -199,6 +202,7 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | M8 | Countdown garland: beaded flowers open one after another, the pearl-and-bead chain is strung between them; numbers fade as they change | Countdown | CSS + `js/sections/04-countdown.js` | Built |
 | M9 | Pixel photo swap: square tiles flash and flip to the second family photo on hover / tap (auto on touch screens) | Parents and family | Canvas, `js/pixel.js` | Built |
 | M10 | Glass gallery cube: photo cube opens into a curved band and a flat wall as guests scroll; full-size viewer | Couple gallery | CSS 3D (`matrix3d` per tile from quaternions) + `js/sections/04b-gallery.js` | Built |
+| M11 | Switching tabs card: event menu, details blur out/in, photo cross-fades with a soft zoom; arrows, swipe, keys | Wedding events | CSS + `js/sections/06-events.js` | Built |
 | M7 | Tap the petals: satin petals burst, swirl and settle into a wreath, the date appears, real rose petals shower down | Save the Date | Web Animations API, `js/sections/03-save-the-date.js` | Built |
 | M6 | Black-and-white couple photo: slides down from the top into place when guests reach it, then the text appears letter by letter; slow drift and parallax; names focusing in | Welcome | CSS + `js/sections/02-welcome.js` | Built |
 | M2 | Handwriting reveal "Thank you for blessing our journey." | Thank you | SVG stroke animation | Built |

@@ -1,33 +1,18 @@
 /* =============================================================================
-   8. GIFTING — white envelope that opens to reveal the note. No registry.
+   8. GIFTING — pearl-trimmed ivory envelope (baby's breath, dove wax seal)
+   that opens to reveal the note. No registry.
    The message is always in the page for screen readers, opened or not.
    ========================================================================== */
 (function () {
   'use strict';
   var AD = window.AD;
 
-  var FRONT =
-    '<svg class="envelope__front" viewBox="0 0 320 220" preserveAspectRatio="none" aria-hidden="true">' +
-      '<defs>' +
-        '<linearGradient id="env-side" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#f7f5f0"/><stop offset="1" stop-color="#ffffff"/></linearGradient>' +
-        '<linearGradient id="env-side-r" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#f3f0ea"/><stop offset="1" stop-color="#fdfcfa"/></linearGradient>' +
-        '<linearGradient id="env-bottom" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fbfaf7"/><stop offset="1" stop-color="#ffffff"/></linearGradient>' +
-        '<filter id="env-fold" x="-10%" y="-20%" width="120%" height="140%"><feDropShadow dx="0" dy="-1" stdDeviation="1.4" flood-color="#5a503f" flood-opacity=".14"/></filter>' +
-      '</defs>' +
-      '<path d="M0 88 L160 128 L0 220 Z" fill="url(#env-side)" filter="url(#env-fold)"/>' +
-      '<path d="M320 88 L160 128 L320 220 Z" fill="url(#env-side-r)" filter="url(#env-fold)"/>' +
-      '<path d="M0 220 L152 117 Q160 111 168 117 L320 220 Z" fill="url(#env-bottom)" filter="url(#env-fold)"/>' +
-      '<path d="M0 220 L152 117 Q160 111 168 117 L320 220" fill="none" stroke="#e4dfd5" stroke-width=".8"/>' +
-    '</svg>';
-
-  // Pointed flap whose lower edge overlaps the pocket, so a closed envelope
-  // never shows the letter.
+  // Pearl-trimmed ivory envelope with a sprig of baby's breath, modelled on
+  // the couple's reference photo (rendered images; see THEME.md).
+  var V = '?v=20261021m';
+  var FRONT = '<img class="envelope__front" src="assets/images/envelope-front.webp' + V + '" alt="" aria-hidden="true" width="1280" height="880" decoding="async">';
   var FLAP_D = 'M0 0 H320 V100 L176 141 Q160 147 144 141 L0 100 Z';
-  var FLAP =
-    '<svg viewBox="0 0 320 148" preserveAspectRatio="none" aria-hidden="true">' +
-      '<defs><linearGradient id="env-flap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f9f7f3"/><stop offset="1" stop-color="#ffffff"/></linearGradient></defs>' +
-      '<path d="' + FLAP_D + '" fill="url(#env-flap)" stroke="#e2ddd3" stroke-width=".8"/>' +
-    '</svg>';
+  var FLAP = '<img src="assets/images/envelope-flap.webp' + V + '" alt="" aria-hidden="true" width="1280" height="592" decoding="async">';
 
   var FLAP_INSIDE =
     '<svg viewBox="0 0 320 148" preserveAspectRatio="none" aria-hidden="true">' +
@@ -36,7 +21,7 @@
       '</pattern></defs>' +
       // Mirrored so the opened flap's point faces upward.
       '<g transform="translate(0 148) scale(1 -1)">' +
-        '<path d="' + FLAP_D + '" fill="#f3efe7" stroke="#e2ddd3" stroke-width=".8"/>' +
+        '<path d="' + FLAP_D + '" fill="#efebe2" stroke="#ddd7cb" stroke-width=".8"/>' +
         '<path d="' + FLAP_D + '" fill="url(#env-liner)"/>' +
       '</g>' +
     '</svg>';
@@ -59,7 +44,7 @@
             FRONT +
             '<div class="envelope__flap" aria-hidden="true">' +
               '<div class="envelope__flap-face envelope__flap-face--out">' + FLAP +
-                '<span class="envelope__seal"><span class="envelope__seal-ring"><span class="script">' + AD.esc((C.couple.bride || 'A').charAt(0)) + '&amp;' + AD.esc((C.couple.groom || 'D').charAt(0)) + '</span></span></span>' +
+                '<span class="envelope__seal"><img src="assets/images/dove-seal.webp' + V + '" alt="" width="360" height="360" decoding="async"></span>' +
               '</div>' +
               '<div class="envelope__flap-face envelope__flap-face--in">' + FLAP_INSIDE + '</div>' +
             '</div>' +
