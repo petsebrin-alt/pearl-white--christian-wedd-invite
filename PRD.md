@@ -303,20 +303,25 @@ Proposal descriptions:
 - **Proposal — envelope interaction:** guest taps **Open the envelope** → the seal releases, the flap hinges open (3D rotation), and a lace-edged card slides up revealing the message. **Close** reverses it.
 - The message is also present in the accessible text (screen readers read it without opening). Reduced motion: card shown open, no movement.
 
-### 4.9 Venues and directions
+### 4.9 The venue
 
-- Cards: **Church ceremony venue**, **Reception venue**, and **Other event venues** (Haldi, Mehendi, Sangeet — shown only if different from the above once known; shown as placeholders in v1).
-- Each card: venue photo (16:10) or placeholder, name, full address, directions notes, **Open in Maps** button, optional **Copy address** button.
-- Event cards link here (`#venue-<id>`) instead of repeating full details; venue cards list which events take place there.
-- Map URLs: use `mapUrl` from content when supplied; otherwise generate a Google Maps search URL from the full address; if no address, the button is disabled "Map link to be provided".
-- No auto-loading map iframes (performance). **Proposal (later):** an embedded map that loads only when tapped.
+At the couple's request, **only the church** of the Christian marriage ceremony is shown here, styled after their "Audio Guest Book" reference, all in black and white:
+
+- Heading: **"We are gathered"** in black script over **"HERE TOGETHER"** in outlined (engraved) capitals. The script writes itself in when the heading comes into view, then the capitals settle in.
+- A line illustration of a **Kerala church** between palms on the backwaters, in black lines on white, that **draws itself as guests scroll** (each line in turn, the whole drawing rising slightly); fills appear once it is complete. It is an illustration, not a drawing of the actual cathedral (the couple may send reference illustrations).
+- One small block of details: **Our Lady of Mount Carmel Cathedral**, "Convent Square, Alappuzha, Kerala 688001", "Wednesday, 27 January 2027 · 10:30 am IST", and a **Get Directions** button (Google Maps).
+- The hotel and the family homes (`showInVenues: false`) are not shown here: their events' **View Location** opens Google Maps directly. The Wedding event's View Location links to this section.
+- Reduced motion: the drawing and heading are shown complete.
 
 ### 4.10 Wishing wall
 
-- Form: **Your name** (required, ≤ 60 chars), **Your wish** (required, ≤ 500 chars with live counter), **Send wish** button; hidden honeypot field for spam.
+Modelled on the couple's reference video (floating faces around a featured testimonial), in black and white:
+
+- **The wall (top):** a central card shows one wish — the guest's face in a ring at the top on a fine arc with ‹ › arrows, a counter ("03 / 08"), a black chip with how they know the couple, the wish, and their name in script. The faces of the other guests float gently around the card. **Tapping a face flies it into the middle** (the previous face takes its place) and the new wish appears **word by word** out of a soft blur. Arrows, swipes and an automatic turn every ≈ 6.5 s (while on screen, paused on interaction) step through all wishes.
+- **Faces are always black and white:** a guest's own photo (made black and white in their browser before it is sent) or a black or white monogram of their initials.
+- **The form (below the wall):** **Your name** (required, ≤ 60), **How do you know the couple?** (optional, ≤ 60), **Your wish** (required, ≤ 500 with live counter), **Your photo** (optional: cropped square, black and white, ≤ 45 KB), **Send wish**; hidden honeypot field.
+- **Sample blessings:** six sample wishes (`wishes.samples`, clearly marked in `content.js`, attributed to friends — no relatives) fill the wall in the design preview and are hidden automatically as soon as one real wish is on the wall; `showSamples: false` hides them. **Turn them off before sharing.**
 - States: idle, validating (inline errors), sending (button busy), saved, saved-pending-approval, error (with retry), demo.
-- **View All Wishes** → full-viewport overlay (uses `100dvh`) above the entire page; scrollable list; visible **Close**; Esc closes; focus restored.
-- **Proposal — interaction:** wishes appear as white envelope cards with pearl-dot edges; a newly sent wish slides into the stack like a card being placed on a table.
 
 **Demo vs connected** (see §8 for storage):
 

@@ -203,6 +203,8 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | M9 | Pixel photo swap: square tiles flash and flip to the second family photo on hover / tap (auto on touch screens) | Parents and family | Canvas, `js/pixel.js` | Built |
 | M10 | Glass gallery cube: photo cube opens into a curved band and a flat wall as guests scroll; full-size viewer | Couple gallery | CSS 3D (`matrix3d` per tile from quaternions) + `js/sections/04b-gallery.js` | Built |
 | M11 | Switching tabs card: event menu, details blur out/in, photo cross-fades with a soft zoom; arrows, swipe, keys | Wedding events | CSS + `js/sections/06-events.js` | Built |
+| M12 | Venue: "We are gathered / HERE TOGETHER" written in; the Kerala church line drawing draws itself with the scroll | The venue | CSS (stroke-dashoffset from a scroll variable) + `js/sections/09-venues.js` | Built |
+| M13 | Wishing wall: floating black-and-white faces; tapped face flies to the middle, wish appears word by word; auto-turn | Wishing wall | Web Animations API + `js/sections/10-wishes.js` | Built |
 | M7 | Tap the petals: satin petals burst, swirl and settle into a wreath, the date appears, real rose petals shower down | Save the Date | Web Animations API, `js/sections/03-save-the-date.js` | Built |
 | M6 | Black-and-white couple photo: slides down from the top into place when guests reach it, then the text appears letter by letter; slow drift and parallax; names focusing in | Welcome | CSS + `js/sections/02-welcome.js` | Built |
 | M2 | Handwriting reveal "Thank you for blessing our journey." | Thank you | SVG stroke animation | Built |

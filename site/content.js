@@ -227,6 +227,9 @@ window.WEDDING = {
     },
     {
       id: "hotel",
+      // Not shown in the Venues section (church only, at the couple's request);
+      // the event card's "View Location" opens Google Maps directly.
+      showInVenues: false,
       label: "Sangeet & Reception",
       // Chosen at the couple's request as a grand Alappuzha hotel with large
       // banquet halls (lakeside, Punnamada) — please confirm the booking and hall.
@@ -240,6 +243,9 @@ window.WEDDING = {
     },
     {
       id: "home",
+      // Not shown in the Venues section (church only, at the couple's request);
+      // the event card's "View Location" opens Google Maps directly.
+      showInVenues: false,
       label: "Haldi & Mehendi",
       note: "Celebrated at the bride's and groom's family homes in Alappuzha. Exact addresses will be shared with guests.",
       name: "The Family Homes",
@@ -284,9 +290,22 @@ window.WEDDING = {
 
   wishes: {
     nameMax: 60,
+    relationMax: 60,
     messageMax: 500,
     // true = new wishes appear only after the couple approves them.
-    moderation: true
+    moderation: true,
+    // Sample blessings so the wall is not empty in the design preview. They
+    // are hidden automatically as soon as one real wish is on the wall.
+    // SAMPLES — not real guests; set showSamples to false to hide them.
+    showSamples: true,
+    samples: [
+      { name: "Anu", relation: "College friend", message: "Angel, from hostel nights to this day — I am so happy for you both. May your home always be full of laughter and prayer." },
+      { name: "Joel", relation: "Colleague", message: "David, congratulations! Wishing you both a lifetime of love, patience and adventures together." },
+      { name: "Merin", relation: "Church choir", message: "May the Lord bless your marriage and keep you close to Him and to each other, always." },
+      { name: "Rahul", relation: "School friend", message: "Two wonderful people, one beautiful journey. See you in Alappuzha!" },
+      { name: "Sneha", relation: "Neighbour", message: "Watching you grow up and now getting married — wishing you all the happiness in the world, Angel." },
+      { name: "Kevin", relation: "Friend", message: "Cheers to love, faith and many happy years ahead. God bless you both." }
+    ]
   },
 
   rsvp: {

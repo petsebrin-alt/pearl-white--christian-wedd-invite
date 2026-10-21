@@ -65,7 +65,9 @@ To save entries to a Google Sheet:
 2. Paste in the contents of `backend/google-apps-script.gs`. Optionally set `NOTIFY_EMAIL`.
 3. Choose **Deploy → New deployment → Web app**, with *Execute as: Me* and *Who has access: Anyone*.
 4. Copy the web-app URL into `site/content.js` → `backend.endpoint`.
-5. Test one RSVP and one wish. To approve a wish, tick **Approved** in the *Wishes* sheet. Only approved wishes appear on the site.
+5. Test one RSVP and one wish. To approve a wish, tick **Approved** in the *Wishes* sheet. Only approved wishes appear on the site. The *Wishes* sheet also keeps each guest's **Relation** and optional black-and-white **Photo** (a small image stored as text).
+
+The wishing wall shows six **sample blessings** (`wishes.samples` in `content.js`) until the first real wish appears; set `wishes.showSamples` to `false` to hide them before sharing.
 
 ## Project structure
 

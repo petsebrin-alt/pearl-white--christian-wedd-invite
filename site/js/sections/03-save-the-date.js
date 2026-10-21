@@ -12,7 +12,7 @@
   'use strict';
   var AD = window.AD;
 
-  var V = '?v=20261021r';
+  var V = '?v=20261021w';
   var SATIN = 8, ROSE = 6;          // petal pictures in assets/images/petals/
   var COUNT = 92;                   // satin petals in the pile / wreath
 

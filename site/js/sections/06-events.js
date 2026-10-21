@@ -27,7 +27,10 @@
     var venueText = venue && (AD.has(venue.name) || AD.has(venue.address))
       ? [venue.name, venue.address].filter(AD.has).map(AD.esc).join('<br>')
       : AD.tbp('Venue');
-    var loc = hasLoc
+    // The church has its own card in the Venue section; other venues open Google Maps directly.
+    var loc = hasLoc && venue.showInVenues === false
+      ? '<a class="btn btn--primary ev-btn" href="' + AD.esc(AD.mapUrl(venue)) + '" target="_blank" rel="noopener">' + AD.icon('pin') + 'View Location</a>'
+      : hasLoc
       ? '<a class="btn btn--primary ev-btn" href="#venue-' + AD.esc(venue.id) + '">' + AD.icon('pin') + 'View Location</a>'
       : '<button class="btn btn--primary ev-btn" type="button" aria-disabled="true" title="Location to be announced">' + AD.icon('pin') + 'Location to be announced</button>';
     var cal = AD.has(ev.date)

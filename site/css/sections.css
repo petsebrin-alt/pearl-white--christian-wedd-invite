@@ -242,7 +242,7 @@
   height: var(--trim);
   margin-top: calc(var(--trim) / -2);
   transform-origin: 0 50%;
-  background: url("../assets/images/lace-pearl-trim.webp?v=20261021r") repeat-x 0 50% / auto 100%;
+  background: url("../assets/images/lace-pearl-trim.webp?v=20261021w") repeat-x 0 50% / auto 100%;
 }
 
 /* Light: a glow from the seal, a sheen sweeping the lace, pearls sparkling. */
@@ -702,7 +702,7 @@
   height: 12px;
   margin-top: -6px;
   transform-origin: 0 50%;
-  background: url("../assets/images/bead-chain.webp?v=20261021r") repeat-x left center / 24px 12px;
+  background: url("../assets/images/bead-chain.webp?v=20261021w") repeat-x left center / 24px 12px;
   filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18));
 }
 .cd-tile { display: flex; flex-direction: column; align-items: center; gap: .25rem; min-width: 0; }
@@ -1165,39 +1165,148 @@
 /* =============================================================================
    9. VENUES AND DIRECTIONS
    ========================================================================== */
-.venue-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); max-width: 72rem; margin: 0 auto; }
-.venue-card { display: flex; flex-direction: column; overflow: hidden; scroll-margin-top: calc(var(--header-h) + 16px); }
-.venue-card:focus-visible, .venue-card:target { outline: 2px solid var(--ink); outline-offset: 4px; }
-.venue-card__media { padding: 10px 10px 0; }
-.venue-card__body { padding: 1.4rem 1.4rem 1.6rem; display: flex; flex-direction: column; flex: 1; }
-.venue-card__name { font-size: 1.65rem; margin-bottom: .5rem; }
-.venue-card__note { font-size: .925rem; color: var(--muted); margin-bottom: .75rem; }
-.venue-card__events { list-style: none; display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1rem; }
-.venue-card__events a {
-  display: inline-flex;
-  align-items: center;
-  min-height: 32px;
-  padding: .2rem .75rem;
-  border: 1px solid var(--hairline);
-  border-radius: 999px;
-  font-size: .8125rem;
-  text-decoration: none;
-  background: var(--pearl);
+/* Styled after the couple's "Audio Guest Book" reference, in black and white */
+.venue-x { text-align: center; scroll-margin-top: calc(var(--header-h) + 16px); }
+.venue-x:focus { outline: none; }
+.vx-title { display: flex; flex-direction: column; align-items: center; margin: 0 auto .6rem; line-height: 1; }
+.vx-title__script { position: relative; z-index: 1; margin: 0 0 -.1em; padding: 0 .15em; font-size: clamp(2.6rem, 1.8rem + 4vw, 5rem); color: var(--ink); white-space: nowrap; }
+@media (min-width: 600px) { .vx-title__script { margin-left: -1.2em; } }
+.vx-title__caps {
+  margin-left: 1.2em;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.45rem, 1.1rem + 1.6vw, 2.1rem);
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--ink);
 }
-.venue-rows { display: grid; gap: .7rem; margin: 0 0 1.4rem; padding-top: 1rem; border-top: 1px solid var(--hairline); }
-.venue-row { display: grid; grid-template-columns: 6.4rem 1fr; gap: .6rem; align-items: baseline; }
-.venue-row dt { display: flex; align-items: center; gap: .4rem; font: 500 .6875rem/1.4 var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-.venue-row dt svg { width: 15px; height: 15px; }
-.venue-row dd { margin: 0; color: var(--ink); font-size: .975rem; }
-.venue-row .tbp { font-size: .95rem; }
-.venue-card__actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: .6rem; }
-.venue-card__actions .btn { flex: 1 1 12rem; }
+/* the script line writes itself, the capitals settle in after it */
+.motion-ok .vx-title:not(.is-written) .vx-title__script { clip-path: inset(-30% 100% -30% 0); }
+.motion-ok .vx-title.is-written .vx-title__script { clip-path: inset(-30% 0 -30% 0); transition: clip-path 1.8s cubic-bezier(.45, .05, .35, 1); }
+.motion-ok .vx-title:not(.is-written) .vx-title__caps { opacity: 0; letter-spacing: .5em; }
+.motion-ok .vx-title.is-written .vx-title__caps { opacity: 1; transition: opacity 1.2s ease 1.1s, letter-spacing 1.6s cubic-bezier(.2, .7, .25, 1) 1.1s; }
+
+/* the church line drawing, written by the scroll (--p goes 0 → 1) */
+.vx-art { --p: 0; width: min(100%, 30rem); margin: 0 auto; transform: translateY(calc((1 - var(--p)) * 24px)) scale(calc(.96 + var(--p) * .04)); }
+.church-illus { display: block; width: 100%; height: auto; overflow: visible; }
+.church-illus .cs {
+  stroke: var(--ink);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, (var(--p) - var(--s, 0)) * 2.6, 1));
+  fill-opacity: clamp(0, (var(--p) - .82) * 6, 1);
+}
+.church-illus .cs-palm .cs { stroke-width: 1.1; }
+.church-illus .cf { opacity: clamp(0, (var(--p) - .82) * 6, 1); }
+
+/* one small line of details and the directions */
+.vx-info { margin-top: .4rem; }
+.vx-name { margin: 0 0 .25rem; font-family: var(--font-display); font-weight: 600; font-size: clamp(1.3rem, 1.15rem + .6vw, 1.6rem); color: var(--ink); }
+.vx-line { margin: 0; font: 500 .75rem/1.6 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--charcoal); }
+.vx-when { margin-top: .15rem; color: var(--ink); }
+.vx-btn { margin-top: 1.2rem; }
 
 /* =============================================================================
-   10. WISHING WALL
+   10. WISHING WALL — floating faces around a central wish (couple's reference
+   video); all faces black and white; the form below
    ========================================================================== */
-.wishes-layout { display: grid; gap: 2.75rem; max-width: 66rem; margin: 0 auto; }
-@media (min-width: 900px) { .wishes-layout { grid-template-columns: 1.05fr 1fr; align-items: start; gap: 3rem; } }
+.ww { position: relative; max-width: 54rem; margin: 0 auto 2rem; padding: 3.2rem 0 5rem; min-height: 30rem; }
+.ww-orbit { position: absolute; inset: 0; pointer-events: none; }
+.ww-slot {
+  position: absolute;
+  width: var(--sz); height: var(--sz);
+  margin: calc(var(--sz) / -2) 0 0 calc(var(--sz) / -2);
+  padding: 0; border: 0; background: none; border-radius: 50%;
+  cursor: pointer; pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform .3s var(--ease-settle);
+}
+.ww-slot:hover { transform: scale(1.1); }
+.ww-slot:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.motion-ok .ww-slot > .ww-av { animation: ww-float 6s ease-in-out var(--d) infinite alternate; }
+@keyframes ww-float { from { transform: translateY(-5px); } to { transform: translateY(6px); } }
+/* a face: always black and white */
+.ww-av {
+  position: relative;
+  display: grid; place-items: center;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #d9d3c7, 0 8px 16px -8px rgba(30, 25, 20, .45);
+}
+.ww-av img { width: 100%; height: 100%; max-width: none; object-fit: cover; filter: grayscale(1) contrast(1.04); }
+.ww-av span { font-family: var(--font-display); font-weight: 600; font-size: calc(var(--sz, 48px) * .36); letter-spacing: .04em; line-height: 1; }
+.ww-av--ink { background: radial-gradient(circle at 35% 30%, #3a3936, #121212 70%); color: #fff; }
+.ww-av--pearl { background: radial-gradient(circle at 34% 28%, #fff 0 18%, #f6f3ee 40%, #e6e0d6 85%); color: var(--ink); }
+.ww-av--empty { background: #faf8f4; color: var(--muted); }
+.ww-av--empty svg { width: 40%; height: 40%; }
+/* the card in the middle */
+.ww-card {
+  position: relative;
+  z-index: 1;
+  width: min(74%, 30rem);
+  margin: 0 auto;
+  padding: 3.8rem clamp(1rem, 4vw, 2rem) 1.6rem;
+  text-align: center;
+  background: #fff var(--paper-noise);
+  border-radius: 18px;
+  box-shadow: 0 26px 46px -28px rgba(40, 34, 24, .5), 0 1px 3px rgba(40, 34, 24, .06);
+}
+.ww-head { position: absolute; left: 0; right: 0; top: -2.6rem; height: 5.2rem; display: flex; align-items: center; justify-content: center; }
+.ww-arc { position: absolute; left: 6%; right: 6%; top: .2rem; width: 88%; height: 3rem; overflow: visible; }
+.ww-arc path { fill: none; stroke: #bdb5a8; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.ww-face { position: relative; z-index: 1; display: block; width: 5.2rem; height: 5.2rem; --sz: 5.2rem; }
+.ww-face .ww-av { box-shadow: 0 0 0 3px #fff, 0 0 0 4px #cfc7b8, 0 12px 22px -10px rgba(30, 25, 20, .5); }
+.ww-arrow {
+  position: absolute; top: 1.7rem;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  padding: 0; border: 1px solid #cfc8bb; border-radius: 50%;
+  background: #fff; color: var(--ink); cursor: pointer;
+  transition: transform .2s;
+}
+.ww-arrow svg { width: 18px; height: 18px; }
+.ww-arrow--prev { left: 3%; }
+.ww-arrow--next { right: 3%; }
+.ww-arrow:active { transform: scale(.92); }
+.ww-count { margin: 0 0 .2rem; font: 500 .6875rem/1 var(--font-body); letter-spacing: .14em; color: var(--muted); }
+.ww-quote { position: absolute; left: 1rem; top: 3.4rem; font-family: var(--font-display); font-size: 4.5rem; line-height: 1; color: #ece7de; pointer-events: none; }
+.ww-rel { display: inline-block; margin: .5rem 0 .4rem; padding: .3rem .8rem; border-radius: 999px; background: var(--ink); color: #fff; font: 500 .6875rem/1 var(--font-body); letter-spacing: .12em; text-transform: uppercase; }
+.ww-msg { position: relative; margin: .4rem 0 .9rem; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.25rem, 1.1rem + .7vw, 1.55rem); line-height: 1.38; color: var(--ink); overflow-wrap: anywhere; }
+.ww-msg.is-long { font-size: clamp(1.05rem, 1rem + .4vw, 1.25rem); }
+.ww-name { margin: 0; font-family: var(--font-script); font-size: 2rem; line-height: 1.1; color: var(--ink); overflow-wrap: anywhere; }
+.ww-meta { min-height: 1em; margin: .25rem 0 0; font: 500 .6875rem/1.3 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+/* the new wish appears word by word out of a soft blur */
+.ww-w { display: inline-block; transition: opacity .5s ease, filter .6s ease, transform .6s ease; transition-delay: calc(var(--i) * 35ms); }
+.motion-ok .ww.is-out .ww-w, .motion-ok .ww.is-out .ww-name, .motion-ok .ww.is-out .ww-rel, .motion-ok .ww.is-out .ww-meta { opacity: 0; filter: blur(5px); transition-duration: .25s; transition-delay: 0s; }
+.motion-ok .ww.is-in-start .ww-w, .motion-ok .ww.is-in-start .ww-name, .motion-ok .ww.is-in-start .ww-rel, .motion-ok .ww.is-in-start .ww-meta { opacity: 0; filter: blur(8px); transform: translateY(6px); transition: none; }
+.ww-name, .ww-rel, .ww-meta { transition: opacity .7s ease .35s, filter .7s ease .35s, transform .7s ease .35s; }
+/* faces flying between the orbit and the middle */
+.ww-fly { position: absolute; z-index: 5; pointer-events: none; transform-origin: 0 0; }
+@media (max-width: 599px) {
+  .ww { padding-top: 3.4rem; }
+  .ww-slot { --sz: min(var(--sz), 11vw); }
+  .ww-card { width: 74%; }
+  .ww-arrow { width: 32px; height: 32px; }
+}
+
+/* The form, below the wall */
+.wish-form { display: grid; gap: 1.2rem; max-width: 34rem; margin: 0 auto; padding: 2.25rem 1.5rem 1.9rem; }
+@media (min-width: 600px) { .wish-form { padding: 2.75rem 2.4rem 2.2rem; } }
+.wish-form > *, .wish-form .field { position: relative; z-index: 1; }
+.wish-form__title { margin: 0; text-align: center; font-size: 1.6rem; }
+.ww-pick { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; }
+.ww-pick__preview { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: #faf8f4; color: #a59d8f; box-shadow: 0 0 0 2px #fff, 0 0 0 3px #d9d3c7; }
+.ww-pick__preview svg { width: 24px; height: 24px; }
+.ww-pick__preview img { width: 100%; height: 100%; max-width: none; object-fit: cover; filter: grayscale(1); }
+.ww-pick label { cursor: pointer; }
+.ww-pick:has(input:focus-visible) label { outline: 2px solid var(--focus); outline-offset: 3px; }
+.dlg--wishes .dlg__body > * { max-width: 50rem; margin-inline: auto; }
 
 /* Pearl-edged note card */
 .note {
@@ -1217,64 +1326,6 @@
     radial-gradient(circle at 40% 35%, #fff 0 .9px, #ece6db 1.8px, #cfc6b6 2.9px, transparent 3.2px) top left / 8px 10px repeat-y,
     radial-gradient(circle at 40% 35%, #fff 0 .9px, #ece6db 1.8px, #cfc6b6 2.9px, transparent 3.2px) top right / 8px 10px repeat-y;
 }
-.wish-form { display: grid; gap: 1.2rem; padding: 2.25rem 1.5rem 1.9rem; }
-@media (min-width: 600px) { .wish-form { padding: 2.75rem 2.4rem 2.2rem; } }
-.wish-form > *, .wish-form .field { position: relative; z-index: 1; }
-.wish-preview { text-align: center; }
-.wish-preview__title { font-size: 1.65rem; margin-bottom: 1.1rem; }
-.wish-preview .btn { margin-top: 1.4rem; }
-.wish-list { list-style: none; display: grid; gap: 1rem; text-align: left; }
-.wish-card {
-  position: relative;
-  padding: 2.5rem 1.3rem 1.15rem;
-  background: #fff var(--paper-noise);
-  border: 1px solid #ebe6dd;
-  border-radius: 4px;
-  box-shadow: var(--shadow-soft);
-  overflow: hidden;
-}
-/* Envelope flap lines + pearl seal */
-.wish-card::before {
-  content: "";
-  position: absolute;
-  left: 0; right: 0; top: 0;
-  height: 1.7rem;
-  background:
-    linear-gradient(to bottom left, transparent calc(50% - .6px), #ddd6ca 50%, transparent calc(50% + .6px)) left / 50.2% 100% no-repeat,
-    linear-gradient(to bottom right, transparent calc(50% - .6px), #ddd6ca 50%, transparent calc(50% + .6px)) right / 50.2% 100% no-repeat;
-  transform: scaleY(-1);
-}
-.wish-card::after {
-  content: "";
-  position: absolute;
-  left: 50%; top: 1.7rem;
-  width: 12px; height: 12px;
-  margin: -6px 0 0 -6px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 34% 30%, #fff 0 14%, #f3efe8 40%, #ddd5c7 80%, #c9bfae 100%);
-  box-shadow: 0 1px 2px rgba(60, 50, 35, .25);
-}
-.wish-card__msg {
-  margin: 0 0 .8rem;
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.18rem;
-  line-height: 1.5;
-  color: var(--ink);
-  white-space: pre-line;
-  overflow-wrap: anywhere;
-}
-.wish-card__by { display: flex; flex-wrap: wrap; gap: .2rem .75rem; align-items: baseline; margin: 0; }
-.wish-card__name { font-weight: 500; color: var(--ink); overflow-wrap: anywhere; }
-.wish-card__name::before { content: "— "; color: var(--muted); }
-.wish-card__meta { font-size: .8rem; color: var(--muted); }
-.wish-card.is-new { animation: wish-in .55s var(--ease-settle); }
-@keyframes wish-in { from { opacity: 0; transform: translateY(-14px) rotate(-1.2deg) scale(.98); } }
-.wish-empty, .wish-loading { margin: .5rem 0 0; font-family: var(--font-display); font-style: italic; font-size: 1.15rem; color: var(--muted); text-align: center; }
-.dlg--wishes .dlg__body > * { max-width: 50rem; margin-inline: auto; }
-.dlg--wishes .mode-note { margin-bottom: 1.25rem; }
-@media (min-width: 700px) { .wish-list--all { grid-template-columns: 1fr 1fr; } }
-
 /* =============================================================================
    11. RSVP
    ========================================================================== */

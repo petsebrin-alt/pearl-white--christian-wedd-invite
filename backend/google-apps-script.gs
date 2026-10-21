@@ -20,7 +20,7 @@ var REQUIRE_APPROVAL = true;
 var RSVP_SHEET = 'RSVPs';
 var WISH_SHEET = 'Wishes';
 var RSVP_HEADERS = ['Submitted at', 'Name', 'Attending', 'Guests', 'Events', 'Dietary', 'Message'];
-var WISH_HEADERS = ['Submitted at', 'Name', 'Message', 'Approved'];
+var WISH_HEADERS = ['Submitted at', 'Name', 'Message', 'Approved', 'Relation', 'Photo'];
 
 function doPost(e) {
   var lock = LockService.getScriptLock();
@@ -71,8 +71,12 @@ function saveWish_(d) {
   var name = clean_(d.name, 60);
   var message = clean_(d.message, 500);
   if (!name || !message) return { ok: false, error: 'Name and wish are required.' };
+  var relation = clean_(d.relation, 60);
+  // Optional small black-and-white photo (a JPEG data URL made by the site, ≤ 45 KB).
+  var photo = String(d.photo || '');
+  if (!/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(photo) || photo.length > 45000) photo = '';
   var sh = sheet_(WISH_SHEET, WISH_HEADERS);
-  sh.appendRow([new Date(), name, message, !REQUIRE_APPROVAL]);
+  sh.appendRow([new Date(), name, message, !REQUIRE_APPROVAL, relation, photo]);
   sh.getRange(sh.getLastRow(), 4).insertCheckboxes();
   if (!REQUIRE_APPROVAL) sh.getRange(sh.getLastRow(), 4).check();
   return { ok: true, pending: REQUIRE_APPROVAL };
@@ -83,7 +87,9 @@ function approvedWishes_() {
   var rows = sh.getDataRange().getValues().slice(1);
   return rows
     .filter(function (r) { return r[3] === true; })
-    .map(function (r) { return { submittedAt: new Date(r[0]).toISOString(), name: String(r[1]), message: String(r[2]) }; })
+    .map(function (r) {
+      return { submittedAt: new Date(r[0]).toISOString(), name: String(r[1]), message: String(r[2]), relation: String(r[4] || ''), photo: /^data:image\/jpeg;base64,/.test(String(r[5] || '')) ? String(r[5]) : '' };
+    })
     .reverse(); // newest first
 }
 
