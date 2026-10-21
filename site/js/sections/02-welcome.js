@@ -83,7 +83,7 @@
       if (!box || AD.reducedMotion()) return;
       var wel = el.querySelector('.wel');
       wel.classList.add('is-waiting');   // photo and text hidden until guests reach it
-      var LAND = 1500;                   // ms into the slide when the text starts to appear
+      var LAND = 1700;                   // ms into the slide when the text starts to appear
       var par = box.querySelector('.wel-photo__par');
       var shots = AD.$$('.wel-shot', box), cur = 0, timer = 0, ticking = false, inView = false;
 
@@ -114,22 +114,46 @@
         if (shots.length < 2 || !inView) return;
         timer = setTimeout(function () { show((cur + 1) % shots.length); schedule(); }, EVERY);
       }
-      var started = false;
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (entries) {
-          inView = entries[0].isIntersecting;
-          box.classList.toggle('is-offscreen', !inView);
-          if (inView && !started) {
-            started = true;
-            // The photo slides down from the top into place, then the text appears.
-            wel.classList.add('is-entering');
-            show(0);
-            setTimeout(function () { wel.classList.remove('is-waiting'); }, LAND);
-          }
-          schedule();
-        }, { threshold: 0.3 }).observe(box);
-      } else {
+      if (!('IntersectionObserver' in window)) {
         inView = true; wel.classList.remove('is-waiting'); show(0); schedule();
+        return;
+      }
+
+      // The photo slides down from the top into place, then the text appears.
+      var played = false, landTimer = 0;
+      function enter() {
+        played = true;
+        wel.classList.remove('is-entering');
+        void wel.offsetWidth;                // restart the slide
+        wel.classList.add('is-entering');
+        show(0);
+        clearTimeout(landTimer);
+        landTimer = setTimeout(function () { wel.classList.remove('is-waiting'); }, LAND);
+      }
+      // Once it has gone back below the screen (guest scrolled up past it),
+      // get ready to play it again the next time they scroll down to it.
+      function rewind() {
+        played = false;
+        clearTimeout(landTimer);
+        wel.classList.remove('is-entering');
+        wel.classList.add('is-waiting');
+      }
+      function watch() {
+        new IntersectionObserver(function (entries) {
+          var en = entries[0];
+          inView = en.isIntersecting;
+          box.classList.toggle('is-offscreen', !inView);
+          if (en.intersectionRatio >= 0.4 && !played) enter();
+          else if (!inView && played && en.boundingClientRect.top > 0) rewind();
+          schedule();
+        }, { threshold: [0, 0.4] }).observe(box);
+      }
+      // While the opening plays, this section sits hidden underneath it and
+      // would count as "on screen"; start watching only once it has finished.
+      if (document.documentElement.classList.contains('splash-active')) {
+        document.addEventListener('ad:opened', watch, { once: true });
+      } else {
+        watch();
       }
     }
   });

@@ -242,7 +242,7 @@
   height: var(--trim);
   margin-top: calc(var(--trim) / -2);
   transform-origin: 0 50%;
-  background: url("../assets/images/lace-pearl-trim.webp?v=20261021a") repeat-x 0 50% / auto 100%;
+  background: url("../assets/images/lace-pearl-trim.webp?v=20261021b") repeat-x 0 50% / auto 100%;
 }
 
 /* Light: a glow from the seal, a sheen sweeping the lace, pearls sparkling. */
@@ -442,10 +442,10 @@
    couple photograph slides down from the top into its place; only then does
    the invitation appear, letter by letter (02-welcome.js sets the classes). */
 .motion-ok .wel--photo.is-waiting:not(.is-entering) .wel-shot { opacity: 0; }
-.motion-ok .wel--photo.is-entering .wel-shot:first-child { animation: wel-enter 2s cubic-bezier(.2, .65, .3, 1) both; }
+.motion-ok .wel--photo.is-entering .wel-shot:first-child { animation: wel-enter 2.4s cubic-bezier(.2, .65, .3, 1) both; }
 @keyframes wel-enter {
-  from { opacity: 0; transform: translateY(-40%); }
-  25%  { opacity: 1; }
+  from { opacity: 0; transform: translateY(-55%); }
+  20%  { opacity: 1; }
   to   { opacity: 1; transform: translateY(0); }
 }
 /* The text waits, hidden, until the photo has landed */

@@ -362,7 +362,7 @@ Full details in [THEME.md](THEME.md). Summary:
 | A2b | Car parks at the end | Parking place 45 % in view (once) | 3.2 s drive-in from the left, turning from 80° to a 32° slant and slowing to a stop; monogram fades in after; glints 3 × 1.4 s | Car shown parked | No car image → monogram and flowers only |
 | A2c | Edge flowers drift | Scroll | Linked to the scroll (5–16 % of the scroll distance) | None | Static flowers |
 | A2d | Letter-by-letter heading lines | Scroll into view | 55 ms per letter, each fading in out of a 6 px blur | Text shown at once | Plain text for screen readers |
-| A2e | Welcome couple photo | Photo 30 % in view (once) | Slides down from the top into place (2 s, slowing to a stop); the text starts 1.5 s in, letter by letter; then drift 16 s linear; parallax at 22 % of the scroll; several photos crossfade every 7 s | Photo and text shown at once | No photo → the welcome shows text only |
+| A2e | Welcome couple photo | Photo 40 % in view, after the opening has finished; plays again each time guests scroll back down to it | Slides down from the top into place (2.4 s, slowing to a stop); the text starts 1.7 s in, letter by letter; then drift 16 s linear; parallax at 22 % of the scroll; several photos crossfade every 7 s | Photo and text shown at once | No photo → the welcome shows text only |
 | A3 | Countdown tick | Every second | Number change, no motion | Same | Pending/ended states |
 | A4 | Family-tree floral reveal | Open overlay | 700 ms branch draw + 60 ms staggered nodes | None | Static tree |
 | A5 | Pearl timeline sheen | Event card enters view | 500 ms | None | Static pearls |
