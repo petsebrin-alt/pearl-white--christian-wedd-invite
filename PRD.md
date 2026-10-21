@@ -61,19 +61,23 @@ Family and friends of both families, many on mid-range Android phones and iPhone
 | Requested events (in order) | Haldi, Mehendi, Sangeet, Christian marriage ceremony, Reception |
 | Christian marriage ceremony date | 27 January 2027 |
 | Christian marriage ceremony start time | 10:30 in the morning |
+| Haldi | Sunday 24 January 2027, 11:00 am — the bride's and groom's family homes, Alappuzha, Kerala |
+| Mehendi | Monday 25 January 2027, 4:00 pm — the family homes, Alappuzha |
+| Sangeet | Tuesday 26 January 2027, 8:00 pm — a grand hotel hall in Alappuzha |
+| Christian marriage ceremony | Wednesday 27 January 2027, 10:30 am — the main church of Alappuzha |
+| Reception | 6:00 pm, at the same hotel as the Sangeet (date taken as 27 January 2027, the wedding evening — please confirm) |
+| Hotel and church chosen at the couple's request | Hotel: **Ramada by Wyndham Alleppey**, Nehru Trophy Finishing Point, Punnamada, Alappuzha (lakeside; large banquet halls). Church: **Our Lady of Mount Carmel Cathedral**, Convent Square, Alappuzha, Kerala 688001 (cathedral of the Diocese of Alleppey). Both picked from public listings — **please confirm the bookings** before sharing. |
 | Gifting wording | "Your presence and blessings are our greatest gift. If you wish to give, an envelope gift is warmly welcome." |
 
 ### 2.2 Missing — To be provided
 
 | Area | Missing item |
 |---|---|
-| Ceremony | End time, church name, full address, map link, photograph |
+| Ceremony | End time; confirmation of the church booking; church photograph |
 | Timezone | Set to India Standard Time (Asia/Kolkata, UTC+05:30) for the South Indian wedding — please confirm |
-| Haldi | Date, time, venue, address |
-| Mehendi | Date, time, venue, address |
-| Sangeet | Date, time, venue, address |
-| Reception | Date, time, venue, address, photograph |
-| Venues | All venue names, addresses, photographs, directions, map links, parking details |
+| Haldi & Mehendi | Exact addresses of the bride's and groom's family homes (the map link opens Alappuzha until then) |
+| Sangeet & Reception | Confirmation of the hotel booking and hall; reception date confirmation |
+| Venues | Photographs, directions and parking details for each venue |
 | Family | Grandparents (both sides, paternal and maternal), siblings, family photographs, optional portraits |
 | Dress code | Final attire guidance overall and per event |
 | RSVP | Deadline, guest-limit rules, whether children are included, notification email/phone |
@@ -264,7 +268,7 @@ Each event card includes:
 | Venue name and short address | linked venue record | "Venue — To be provided" |
 | **View Location** | links to the venue card in §4.9 | Button shown but disabled with the text "Location to be announced" |
 | **Add to Calendar** | generated | Disabled "Date to be announced" if no date; all-day entry if date but no time |
-| Photo (back card) | `events[].photo` | A pearl-and-petal photograph supplied by the couple stands in until an event photo is provided |
+| Photo (back card) | `events[].photo` (picture, description, focal point) chosen by the couple | — |
 
 Proposal descriptions:
 
@@ -277,7 +281,7 @@ Proposal descriptions:
 **Layout — switching tabs card (modelled on the couple's reference video):**
 
 - A **menu of the five events** (Haldi · Mehendi · Sangeet · Wedding · Reception) runs along the top of the **detail card**, with a fine underline that slides to the chosen event. The detail card shows the number and kind ("04 · The Wedding"), name, description, Date / Time / Venue, a **View Location** button and an **Add to Calendar** link.
-- Behind it, the **photo card** shows a backdrop photograph for the chosen event (currently the couple's white rose petals, satin petals, pearls and crystals, lace-and-pearl embroidery and beaded pearl flowers — to be replaced with event photos when supplied).
+- Behind it, the **photo card** shows the picture the couple chose for each event, in black and white: Haldi — family showering the couple with petals (illustration); Mehendi — the bride's mehendi hands with pearl bangles and a rosary (illustration); Sangeet — the couple dancing; Wedding — the bride reading her vows; Reception — the couple embracing under chandeliers (illustration). Each is centred on its subject (`photo.position`).
 - Choosing an event — a tab, the ‹ › arrows (with a "04 / 05" counter beneath), a swipe on phones, or the arrow / Home / End keys on the menu — blurs the old details out and blurs the new ones in line by line (≈ 0.5 s), while the new photo fades in over the old with a soft zoom (≈ 1 s).
 - Phones: the photo card on top and the detail card overlapping its lower part, all five menu items fitting on screens from 360 px. Wider screens: the detail card overlaps the left of a wide photo card, as in the video.
 - As the section scrolls in, the photo card slides in from the right and the detail card from the left. Links to `#event-<id>` (from the venues) open that event.

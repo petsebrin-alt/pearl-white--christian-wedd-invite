@@ -15,6 +15,12 @@
     return '<div class="ev-fact"><dt>' + AD.icon(icon) + '<span>' + label + '</span></dt><dd>' + value + '</dd></div>';
   }
 
+  // The event's picture as the photo card background, centred on its focal point.
+  function photoStyle(ev) {
+    var ph = ev.photo || {};
+    return 'background-image:url(\'' + AD.esc(ph.src || '') + '\');background-position:' + AD.esc(ph.position || '50% 50%');
+  }
+
   function panel(ev, i, n) {
     var venue = AD.venue(ev.venueId);
     var hasLoc = AD.venueHasLocation(venue);
@@ -51,8 +57,8 @@
         // anchors so links such as #event-haldi open that event
         events.map(function (e) { return '<span class="ev-anchor" id="event-' + AD.esc(e.id) + '"></span>'; }).join('') +
         '<div class="ev reveal" data-delay="1">' +
-          '<div class="ev-photo" aria-hidden="true">' +
-            '<div class="ev-photo__img is-on" style="background-image:url(\'' + AD.esc(first.photo && first.photo.src || '') + '\')"></div>' +
+          '<div class="ev-photo" role="img" aria-label="' + AD.esc(first.photo && first.photo.alt || '') + '">' +
+            '<div class="ev-photo__img is-on" style="' + photoStyle(first) + '"></div>' +
           '</div>' +
           '<article class="ev-card">' +
             '<div class="ev-tabs" role="tablist" aria-label="Wedding events">' +
@@ -129,11 +135,12 @@
         moveBar();
         count.textContent = String(i + 1).padStart(2, '0');
         pnl.setAttribute('aria-labelledby', tabs[i].id);
+        photo.setAttribute('aria-label', ev.photo && ev.photo.alt || '');
 
         // The photo: the new one fades in over the old with a soft zoom.
         var next = document.createElement('div');
         next.className = 'ev-photo__img';
-        next.style.backgroundImage = 'url("' + (ev.photo && ev.photo.src || '') + '")';
+        next.setAttribute('style', photoStyle(ev));
         photo.appendChild(next);
         void next.offsetWidth;
         next.classList.add('is-on');

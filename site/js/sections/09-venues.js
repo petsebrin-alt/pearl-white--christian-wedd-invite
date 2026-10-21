@@ -48,7 +48,7 @@
       return '<div class="container">' +
         AD.sectionHead({
           id: 'venues', eyebrow: 'Venues & Directions', title: 'Where We Gather',
-          intro: 'Full addresses, photographs and map links will appear here once confirmed.'
+          intro: 'All our celebrations are in Alappuzha, Kerala. Tap “Open in Maps” for directions.'
         }) +
         '<div class="venue-grid">' + (C.venues || []).map(function (v, i) { return venueCard(v, i, C); }).join('') + '</div>' +
       '</div>';

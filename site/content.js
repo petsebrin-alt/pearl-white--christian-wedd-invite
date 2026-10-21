@@ -140,60 +140,56 @@ window.WEDDING = {
     {
       id: "haldi",
       tab: "Haldi",
-      // Backdrop on the photo card (a pearl-and-petal photograph supplied by the
-      // couple) until a photograph of the event is provided.
-      photo: { src: "assets/images/events/haldi.webp", alt: "White rose petals" },
+      // Picture on the photo card, chosen by the couple (position = focal point).
+      photo: { src: "assets/images/events/haldi.webp", alt: "Family showering the couple with petals at the Haldi (illustration)", position: "50% 45%" },
       name: "Haldi",
       kicker: "Pre-wedding",
       description: "A morning of turmeric blessings, laughter and family warmth.",
-      date: null,
-      startTime: null,
+      date: "2027-01-24", // Confirmed
+      startTime: "11:00", // Confirmed
       endTime: null,
-      venueId: "other",
+      venueId: "home",
       illustration: "haldi"
     },
     {
       id: "mehendi",
       tab: "Mehendi",
-      // Backdrop on the photo card (a pearl-and-petal photograph supplied by the
-      // couple) until a photograph of the event is provided.
-      photo: { src: "assets/images/events/mehendi.webp", alt: "Satin petals" },
+      // Picture on the photo card, chosen by the couple (position = focal point).
+      photo: { src: "assets/images/events/mehendi.webp", alt: "A bride's hands with mehendi, pearl bangles and a rosary (illustration)", position: "55% 55%" },
       name: "Mehendi",
       kicker: "Pre-wedding",
       description: "An evening of henna artistry, music and togetherness.",
-      date: null,
-      startTime: null,
+      date: "2027-01-25", // Confirmed
+      startTime: "16:00", // Confirmed
       endTime: null,
-      venueId: "other",
+      venueId: "home",
       illustration: "mehendi"
     },
     {
       id: "sangeet",
       tab: "Sangeet",
-      // Backdrop on the photo card (a pearl-and-petal photograph supplied by the
-      // couple) until a photograph of the event is provided.
-      photo: { src: "assets/images/events/sangeet.webp", alt: "Pearls and crystals" },
+      // Picture on the photo card, chosen by the couple (position = focal point).
+      photo: { src: "assets/images/events/sangeet.webp", alt: "A bride and groom dancing, her gown swirling", position: "50% 20%" },
       name: "Sangeet",
       kicker: "Pre-wedding",
       description: "Songs, dance and celebration as two families become one.",
-      date: null,
-      startTime: null,
+      date: "2027-01-26", // Confirmed
+      startTime: "20:00", // Confirmed
       endTime: null,
-      venueId: "other",
+      venueId: "hotel",
       illustration: "sangeet"
     },
     {
       id: "ceremony",
       tab: "Wedding",
-      // Backdrop on the photo card (a pearl-and-petal photograph supplied by the
-      // couple) until a photograph of the event is provided.
-      photo: { src: "assets/images/events/ceremony.webp", alt: "Lace and pearl embroidery" },
+      // Picture on the photo card, chosen by the couple (position = focal point).
+      photo: { src: "assets/images/events/ceremony.webp", alt: "A bride reading her vows to the groom", position: "50% 28%" },
       name: "Christian Marriage Ceremony",
       kicker: "The Wedding",
       description:
         "Holy Matrimony, as Angel and David exchange vows before God, family and friends.",
       date: "2027-01-27", // Confirmed
-      startTime: "10:30", // Confirmed: 10:30 in the morning
+      startTime: "10:30", // Confirmed
       endTime: null,
       venueId: "church",
       illustration: "church",
@@ -202,16 +198,15 @@ window.WEDDING = {
     {
       id: "reception",
       tab: "Reception",
-      // Backdrop on the photo card (a pearl-and-petal photograph supplied by the
-      // couple) until a photograph of the event is provided.
-      photo: { src: "assets/images/events/reception.webp", alt: "Beaded pearl flowers" },
+      // Picture on the photo card, chosen by the couple (position = focal point).
+      photo: { src: "assets/images/events/reception.webp", alt: "A bride and groom embracing under chandeliers (illustration)", position: "50% 42%" },
       name: "Reception",
       kicker: "Celebration",
       description: "Dinner and celebration in honour of the newly married couple.",
-      date: null,
-      startTime: null,
+      date: "2027-01-27", // Confirmed
+      startTime: "18:00", // Confirmed
       endTime: null,
-      venueId: "reception",
+      venueId: "hotel",
       illustration: "reception"
     }
   ],
@@ -219,37 +214,41 @@ window.WEDDING = {
   venues: [
     {
       id: "church",
-      label: "Church Ceremony Venue",
-      name: null,
-      address: null,
+      label: "Christian Marriage Ceremony",
+      // Chosen at the couple's request as Alappuzha's main church (the
+      // cathedral of the Diocese of Alleppey) — please confirm the booking.
+      name: "Our Lady of Mount Carmel Cathedral",
+      address: "Convent Square, Alappuzha, Kerala 688001",
       directions: null,
       parking: null,
-      mapUrl: null, // optional exact Google/Apple Maps link
+      mapUrl: null, // optional exact Google/Apple Maps link (else a search for the name and address)
       photo: null, // e.g. "assets/images/venue-church.webp"
-      photoAlt: "The church"
+      photoAlt: "Our Lady of Mount Carmel Cathedral, Alappuzha"
     },
     {
-      id: "reception",
-      label: "Reception Venue",
-      name: null,
-      address: null,
+      id: "hotel",
+      label: "Sangeet & Reception",
+      // Chosen at the couple's request as a grand Alappuzha hotel with large
+      // banquet halls (lakeside, Punnamada) — please confirm the booking and hall.
+      name: "Ramada by Wyndham Alleppey",
+      address: "Nehru Trophy Finishing Point, Punnamada, Alappuzha, Kerala",
       directions: null,
       parking: null,
       mapUrl: null,
       photo: null,
-      photoAlt: "The reception venue"
+      photoAlt: "Ramada by Wyndham Alleppey"
     },
     {
-      id: "other",
-      label: "Other Event Venues",
-      note: "Haldi, Mehendi and Sangeet — shown here if different from the venues above.",
-      name: null,
-      address: null,
+      id: "home",
+      label: "Haldi & Mehendi",
+      note: "Celebrated at the bride's and groom's family homes in Alappuzha. Exact addresses will be shared with guests.",
+      name: "The Family Homes",
+      address: "Alappuzha, Kerala",
       directions: null,
       parking: null,
-      mapUrl: null,
+      mapUrl: "https://www.google.com/maps/search/?api=1&query=Alappuzha%2C%20Kerala",
       photo: null,
-      photoAlt: "Pre-wedding event venue"
+      photoAlt: "The family homes in Alappuzha"
     }
   ],
 
