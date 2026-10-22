@@ -344,6 +344,7 @@ The dove brings the invitation, as in the couple's dove pictures:
   - a soft, slow harp-like melody plays (an original arpeggio in F major with a quiet bell melody, made in the browser, no sound file, about 8 s, low volume) and fades as soon as the guest scrolls;
   - the envelope straightens, its top opens, a card marked "Accepted" slides out and it all turns to light.
 - **The thank-you:** satin in the colour of the page sweeps across the whole section from left to right, edge to edge, and keeps waving clearly. The couple's black-and-white photo (the Welcome photo) develops on it, then "Thank you for accepting our invitation" writes itself in a fuller, brighter script (Great Vibes), with "We can't wait to celebrate with you.", Angel & David, the date and time, and the church. Below: **Add to Calendar**, **Get Directions** and "See the invitation again".
+- No intro line and no "Kindly respond by" line are shown (at the couple's request); only the heading and the dove.
 - **Personal links:** `?guest=Anu%20Thomas` greets the guest ("Dear Anu Thomas,") and saves the acceptance under that name. Without it the RSVP sheet records "Guest (name not given)".
 - The acceptance is remembered on the device: a later visit shows the board; "See the invitation again" brings the dove back.
 - There is no decline button. Guests who cannot come use the Contact section. **Proposal:** add a small "Regretfully decline" link if the couple wants one.

@@ -9,7 +9,7 @@
 
   // Pearl-trimmed ivory envelope with a sprig of baby's breath, modelled on
   // the couple's reference photo (rendered images; see THEME.md).
-  var V = '?v=20261022i';
+  var V = '?v=20261022j';
   var FRONT = '<img class="envelope__front" src="assets/images/envelope-front.webp' + V + '" alt="" aria-hidden="true" width="1280" height="880" decoding="async">';
   var FLAP_D = 'M0 0 H320 V100 L176 141 Q160 147 144 141 L0 100 Z';
   var FLAP = '<img src="assets/images/envelope-flap.webp' + V + '" alt="" aria-hidden="true" width="1280" height="592" decoding="async">';

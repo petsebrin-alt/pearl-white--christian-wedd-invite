@@ -32,7 +32,7 @@
   function tile(unit, label, n) {
     return '<div class="cd-tile" data-unit="' + unit + '" style="--k:' + n + '">' +
       '<span class="cd-tile__pearl">' +
-        '<img class="cd-tile__flower" src="assets/images/beaded-flower-cd-' + (n % 2 + 1) + '.webp?v=20261022i" alt="" width="640" height="640" decoding="async">' +
+        '<img class="cd-tile__flower" src="assets/images/beaded-flower-cd-' + (n % 2 + 1) + '.webp?v=20261022j" alt="" width="640" height="640" decoding="async">' +
         '<span class="cd-tile__num numerals" data-num>—</span>' +
       '</span>' +
       '<span class="cd-tile__label">' + label + '</span></div>';

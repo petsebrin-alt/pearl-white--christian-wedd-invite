@@ -11,7 +11,7 @@
 (function () {
   'use strict';
   var AD = window.AD;
-  var V = '?v=20261022i';
+  var V = '?v=20261022j';
 
   function digits(n) { return String(n || '').replace(/[^\d]/g, ''); }
   function initials(s) { return String(s || '').split(/\s+/).filter(Boolean).map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase(); }

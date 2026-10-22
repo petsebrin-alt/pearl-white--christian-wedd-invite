@@ -23,7 +23,7 @@
   'use strict';
   var AD = window.AD;
   var KEY = 'ad-rsvp-accepted';
-  var V = '?v=20261022i';
+  var V = '?v=20261022j';
   var IMG = 'assets/images/dove/';
   // Inside dove-envelope.webp (fractions of its width / height)
   var BODY = { x: .64, y: .61 };       // the sitting dove's body
@@ -182,7 +182,6 @@
 
   AD.register('rsvp', {
     render: function (C) {
-      var R = C.rsvp || {};
       var date = AD.weddingDate();
       var cer = (C.events || []).filter(function (e) { return e.id === 'ceremony'; })[0];
       var church = cer && (C.venues || []).filter(function (v) { return v.id === cer.venueId; })[0];
@@ -215,7 +214,6 @@
               '<button class="rv-tap" type="button" data-tap>RSVP — accept the invitation</button>' +
             '</div>' +
             '<p class="rv-hint" aria-hidden="true">Tap <strong>RSVP</strong> to accept the invitation</p>' +
-            '<p class="rsvp-by">Kindly respond by ' + (AD.has(R.deadline) ? '<strong>' + AD.esc(AD.formatDate(R.deadline)) + '</strong>' : AD.tbp('RSVP deadline')) + '</p>' +
             '<div class="hp-field" aria-hidden="true"><label for="rsvp-website">Website</label><input id="rsvp-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>' +
             '<div data-status aria-live="polite"></div>' +
           '</div>' +
