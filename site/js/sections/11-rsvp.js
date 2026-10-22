@@ -4,7 +4,7 @@
    Angel & David · Kindly RSVP"). Tapping RSVP on the envelope:
      · the same dove lets go of the envelope and flies up over the page to
        the top — slow, full wing beats and a gentle wavy path, as in the
-       couple's dove video — with a soft whoosh on each beat (the sound
+       couple's dove video — while a soft, slow harp melody plays (it
        fades as soon as the guest scrolls);
      · the envelope straightens, its top opens, a card slides out and it
        all dissolves in light;
@@ -23,15 +23,15 @@
   'use strict';
   var AD = window.AD;
   var KEY = 'ad-rsvp-accepted';
-  var V = '?v=20261022f';
+  var V = '?v=20261022g';
   var IMG = 'assets/images/dove/';
   // Inside dove-envelope.webp (fractions of its width / height)
   var BODY = { x: .64, y: .61 };       // the sitting dove's body
   var ENV = { cx: .2859, cy: .4398 };  // centre of the envelope (tilted 7.5°)
   // Inside the flying dove's box (dove-*.webp, facing left)
   var DOVE = { ratio: 408 / 418, bx: .55, by: .73 };
-  var FLIGHT = 4600;                   // ms from the envelope to off the top of the screen
-  var BEAT = 980;                      // ms per wing beat: slow and full, as in the video
+  var FLIGHT = 5400;                   // ms from the envelope to off the top of the screen
+  var BEAT = 1000;                     // ms per wing beat: slow and full, as in the video
 
   function guestName() {
     try {
@@ -46,7 +46,6 @@
     try { if (v) localStorage.setItem(KEY, JSON.stringify(v)); else localStorage.removeItem(KEY); } catch (e) {}
   }
   function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
-  function rnd(a, b) { return a + Math.random() * (b - a); }
 
   // A white dove whose wings really beat: body and two wings, one picture each.
   function dove(cls) {
@@ -61,52 +60,69 @@
     return el;
   }
 
-  /* ---------- The sound of the dove's wings (made in the browser, no file) ----------
-     One soft whoosh of air on each downstroke, in time with the wings,
-     quieter as the dove flies away. Kept low and natural. */
-  function wings(seconds) {
+  /* ---------- A soft, slow melody while the dove flies (made in the browser, no file) ----------
+     A harp-like arpeggio in F major — F, C/E, Dm, B♭, C, F — with a quiet
+     bell melody on top, a faint pad underneath and a little echo for space.
+     Gentle and low; it fades away as soon as the guest scrolls. */
+  function melody() {
     var Ctx = window.AudioContext || window.webkitAudioContext;
     if (!Ctx) return null;
     var ctx;
     try { ctx = new Ctx(); } catch (e) { return null; }
     if (ctx.state === 'suspended' && ctx.resume) ctx.resume();
-    var out = ctx.createGain(), t0 = ctx.currentTime + .03, end = t0 + seconds;
+    function hz(n) { return 440 * Math.pow(2, (n - 69) / 12); }   // MIDI note number to frequency
+    var out = ctx.createGain(), t0 = ctx.currentTime + .05;
     out.gain.value = .3;
-    out.connect(ctx.destination);
-    var sr = ctx.sampleRate, buf = ctx.createBuffer(1, sr * 2, sr), d = buf.getChannelData(0);
-    for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
-    var beat = BEAT / 1000;
-    for (var k = 0, t = t0; t < end - .2; k++, t += beat) {
-      var away = Math.max(.15, 1 - k * beat / seconds * .85);
-      // the stroke: a rush of air that swells and falls away
-      var s = ctx.createBufferSource(); s.buffer = buf;
-      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = .6;
-      bp.frequency.setValueAtTime(420, t); bp.frequency.linearRampToValueAtTime(900, t + beat * .35); bp.frequency.linearRampToValueAtTime(500, t + beat * .6);
-      var g = ctx.createGain();
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(.9 * away, t + beat * .22);
-      g.gain.exponentialRampToValueAtTime(.001, t + beat * .62);
-      s.connect(bp); bp.connect(g); g.connect(out);
-      s.start(t, rnd(0, 1), beat * .7);
-      // and the light flutter of feathers at the bottom of the stroke
-      var f = ctx.createBufferSource(); f.buffer = buf;
-      var hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 2200;
-      var fg = ctx.createGain();
-      var tb = t + beat * .42;
-      fg.gain.setValueAtTime(0, tb); fg.gain.linearRampToValueAtTime(.12 * away, tb + .02); fg.gain.exponentialRampToValueAtTime(.001, tb + .16);
-      f.connect(hp); hp.connect(fg); fg.connect(out);
-      f.start(tb, rnd(0, 1), .2);
+    var tone = ctx.createBiquadFilter(); tone.type = 'lowpass'; tone.frequency.value = 3200;
+    tone.connect(out); out.connect(ctx.destination);
+    // a soft echo for space
+    var dl = ctx.createDelay(1), fb = ctx.createGain(), dlp = ctx.createBiquadFilter(), wet = ctx.createGain();
+    dl.delayTime.value = .27; fb.gain.value = .3; dlp.type = 'lowpass'; dlp.frequency.value = 1900; wet.gain.value = .32;
+    tone.connect(dl); dl.connect(dlp); dlp.connect(fb); fb.connect(dl); dlp.connect(wet); wet.connect(out);
+    function pluck(n, t, v, len) {           // a harp / music-box note
+      [[1, 'sine', 1], [2, 'triangle', .16]].forEach(function (h) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = h[1]; o.frequency.value = hz(n) * h[0];
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(v * h[2], t + .012);
+        g.gain.exponentialRampToValueAtTime(.0005, t + len);
+        o.connect(g); g.connect(tone); o.start(t); o.stop(t + len + .05);
+      });
     }
+    function pad(notes, t, len) {            // a faint held chord underneath
+      notes.forEach(function (n) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.type = 'sine'; o.frequency.value = hz(n);
+        g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(.035, t + .45); g.gain.linearRampToValueAtTime(0, t + len);
+        o.connect(g); g.connect(tone); o.start(t); o.stop(t + len + .05);
+      });
+    }
+    // chord (arpeggio, low to high), melody note on top
+    var song = [
+      [[53, 60, 65, 69, 72], 81], [[52, 55, 60, 64, 67], 79], [[50, 57, 62, 65, 69], 77],
+      [[46, 53, 58, 62, 65], 74], [[48, 55, 60, 64, 67], 76], [[53, 60, 65, 69, 72, 77], 77]
+    ];
+    var step = .95, t = t0;
+    song.forEach(function (c, i) {
+      var last = i === song.length - 1;
+      c[0].forEach(function (n, k) { pluck(n, t + k * .11, .16 - k * .012, last ? 3.2 : 2.2); });
+      pluck(c[1], t + .06, .1, last ? 3.6 : 2.4);
+      pad([c[0][0] + 12, c[0][1] + 12], t, step + .5);
+      t += step;
+    });
+    var end = t + 3.2;
+    out.gain.setValueAtTime(.3, end - 1.4);
+    out.gain.linearRampToValueAtTime(0, end);
     var done = false;
     function close() { if (done) return; done = true; setTimeout(function () { try { ctx.close(); } catch (e) {} }, 900); }
-    setTimeout(close, seconds * 1000 + 300);
+    setTimeout(close, (end - ctx.currentTime) * 1000 + 300);
     return {
-      fade: function () {           // the guest scrolled: the sound goes
+      fade: function () {           // the guest scrolled: the music goes
         if (done) return;
         var now = ctx.currentTime;
         out.gain.cancelScheduledValues(now);
         out.gain.setValueAtTime(out.gain.value, now);
-        out.gain.linearRampToValueAtTime(0, now + .6);
+        out.gain.linearRampToValueAtTime(0, now + .8);
         close();
       }
     };
@@ -278,35 +294,33 @@
 
       /* ---------- Tap RSVP ---------- */
       // The same dove lets go of the envelope and flies up, off the top of the
-      // screen: it lifts slowly, then climbs faster along a gentle wavy path,
-      // wings beating slowly and fully, the body rising a little on each
-      // downstroke and tilting with the sway (driven frame by frame).
+      // screen: it lifts gently, climbs along a soft wavy path and glides out,
+      // tilting with the sway. The path is worked out in advance and played by
+      // the browser's compositor, and the wings beat with CSS (slowly and
+      // fully, the body rising on each downstroke), so it stays smooth even
+      // while the envelope and the satin are moving.
       function flyUp(sky) {
         var r = stage.getBoundingClientRect(), dw = r.width * .7, dh = dw * DOVE.ratio;
         var x0 = r.left + BODY.x * r.width - DOVE.bx * dw, y0 = r.top + BODY.y * r.height - DOVE.by * dh;
-        var d = dove(), near, far;
+        var d = dove('is-flying');
         d.style.setProperty('--dw', dw + 'px');
+        d.style.setProperty('--beat', (BEAT / 2) + 'ms');
         sky.appendChild(d);
-        near = d.querySelector('.dv__near'); far = d.querySelector('.dv__far');
-        var rise = y0 + dh * 1.4, drift = -.12 * innerWidth, sway = Math.min(34, innerWidth * .06);
-        var t0 = performance.now();
-        return new Promise(function (done) {
-          (function frame(now) {
-            var t = now - t0, u = Math.min(1, t / FLIGHT);
-            var ph = t / BEAT * Math.PI * 2;                     // 0 = wings up
-            var s = (1 - Math.cos(ph)) / 2;                      // 0 up … 1 down, easing at both ends
-            var grow = Math.min(1, u * 3);                       // the sway builds once it is away
-            var wave = Math.sin(u * Math.PI * 2.6);
-            var x = x0 + drift * u + sway * wave * grow;
-            var y = y0 - rise * Math.pow(u, 1.6) - dh * .04 * Math.sin(ph - .5);
-            var tilt = -5 * grow + 2.4 * Math.cos(ph) + 7 * Math.cos(u * Math.PI * 2.6) * grow * (sway / 34);
-            d.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) rotate(' + tilt.toFixed(2) + 'deg) scale(' + (1 + .12 * u).toFixed(3) + ')';
-            d.style.opacity = Math.min(1, t / 260).toFixed(3);
-            near.style.transform = 'rotate(' + (64 * s).toFixed(2) + 'deg) scale(' + (1 + .02 * s).toFixed(3) + ',' + (1 - .28 * s).toFixed(3) + ')';
-            far.style.transform = 'rotate(' + (-50 * s).toFixed(2) + 'deg) scaleY(' + (1 - .23 * s).toFixed(3) + ')';
-            if (u < 1) requestAnimationFrame(frame); else done();
-          })(t0);
-        });
+        var rise = y0 + dh * 1.45, drift = -.1 * innerWidth, sway = Math.min(30, innerWidth * .055);
+        function at(u) {
+          var p = (1 - Math.cos(u * Math.PI)) / 2;               // eases in and out
+          var lift = p * .75 + u * u * .25;                       // a gentle start, then away
+          var wave = Math.sin(u * Math.PI * 2.2) * Math.min(1, u * 2.2);
+          return { x: x0 + drift * p + sway * wave, y: y0 - rise * lift, s: 1 + .1 * p };
+        }
+        var N = 90, frames = [];
+        for (var k = 0; k <= N; k++) {
+          var u = k / N, q = at(u), nx = at(Math.min(1, u + .02));
+          var tilt = Math.max(-12, Math.min(12, Math.atan2(nx.x - q.x, q.y - nx.y + .001) * 57.3 * .6)) - 3 * Math.min(1, u * 4);
+          frames.push({ transform: 'translate3d(' + q.x.toFixed(1) + 'px,' + q.y.toFixed(1) + 'px,0) rotate(' + tilt.toFixed(2) + 'deg) scale(' + q.s.toFixed(3) + ')', offset: u });
+        }
+        d.animate([{ opacity: 0 }, { opacity: 1, offset: .08 }, { opacity: 1 }], { duration: FLIGHT, fill: 'forwards' });
+        return d.animate(frames, { duration: FLIGHT, easing: 'linear', fill: 'forwards' }).finished;
       }
       function openEnvelope() {
         // the envelope straightens and comes forward, opens, a card slides out, and it all turns to light
@@ -342,10 +356,10 @@
           return;
         }
         // Sound first, while the tap still counts as the guest's own action.
-        var sound = wings(FLIGHT / 1000), y0 = window.scrollY;
+        var sound = melody(), y0 = window.scrollY;
         function onScroll() { if (Math.abs(window.scrollY - y0) > 40 && sound) { sound.fade(); sound = null; window.removeEventListener('scroll', onScroll); } }
         window.addEventListener('scroll', onScroll, { passive: true });
-        setTimeout(function () { window.removeEventListener('scroll', onScroll); }, FLIGHT + 1500);
+        setTimeout(function () { window.removeEventListener('scroll', onScroll); }, 10000);
 
         var sky = document.createElement('div');
         sky.className = 'dove-sky';

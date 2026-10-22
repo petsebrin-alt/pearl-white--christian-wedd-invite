@@ -242,7 +242,7 @@
   height: var(--trim);
   margin-top: calc(var(--trim) / -2);
   transform-origin: 0 50%;
-  background: url("../assets/images/lace-pearl-trim.webp?v=20261022f") repeat-x 0 50% / auto 100%;
+  background: url("../assets/images/lace-pearl-trim.webp?v=20261022g") repeat-x 0 50% / auto 100%;
 }
 
 /* Light: a glow from the seal, a sheen sweeping the lace, pearls sparkling. */
@@ -713,7 +713,7 @@
   height: 12px;
   margin-top: -6px;
   transform-origin: 0 50%;
-  background: url("../assets/images/bead-chain.webp?v=20261022f") repeat-x left center / 24px 12px;
+  background: url("../assets/images/bead-chain.webp?v=20261022g") repeat-x left center / 24px 12px;
   filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18));
 }
 .cd-tile { display: flex; flex-direction: column; align-items: center; gap: .25rem; min-width: 0; }
@@ -1246,7 +1246,7 @@
 .ww-bg__roses {
   position: absolute;
   inset: -7%;
-  background: url("../assets/images/white-roses.webp?v=20261022f") 8% 50% / auto 100% repeat-x;
+  background: url("../assets/images/white-roses.webp?v=20261022g") 8% 50% / auto 100% repeat-x;
   will-change: transform, opacity;
 }
 .ww-bg__roses--b { opacity: .3; background-position: 62% 20%; transform: rotate(180deg) scale(1.14); }
@@ -1424,7 +1424,7 @@
   filter: drop-shadow(0 18px 16px rgba(60, 50, 35, .1));
   transition: opacity .3s ease, transform .5s cubic-bezier(.3, 1.5, .5, 1);
 }
-.rv.is-off .rv-sit { opacity: 0; transition-duration: .22s; }
+.rv.is-off .rv-sit { opacity: 0; transition-duration: .45s; }
 /* a soft pulse around RSVP on the envelope, inviting the tap */
 .rv-ring { position: absolute; left: 14.4%; top: 51.3%; width: 23.2%; height: 13.4%; border-radius: 8px; transform: rotate(7.5deg); pointer-events: none; }
 .rv.is-landed:not(.is-off) .rv-ring { animation: rv-ring 2s ease-out .4s infinite; }
@@ -1454,9 +1454,16 @@
 .dv { position: absolute; left: 0; top: 0; width: var(--dw, 200px); aspect-ratio: 418 / 408; pointer-events: none; will-change: transform; }
 .dv__b { position: absolute; inset: 0; }
 .dv img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; user-select: none; }
-/* the wings turn about the shoulders (the script beats them, slowly and fully) */
+/* the wings turn about the shoulders, slowly and fully; the body rises a
+   little on each downstroke (all on the compositor, so it stays smooth) */
 .dv__near { transform-origin: 41.95% 66.1%; will-change: transform; }
 .dv__far { transform-origin: 36.8% 57.6%; will-change: transform; }
+.dv.is-flying .dv__near { animation: dv-near var(--beat, .5s) ease-in-out infinite alternate; }
+.dv.is-flying .dv__far { animation: dv-far var(--beat, .5s) ease-in-out infinite alternate; }
+.dv.is-flying .dv__b { animation: dv-bob var(--beat, .5s) ease-in-out infinite alternate; }
+@keyframes dv-near { from { transform: rotate(0deg) scale(1, 1); } to { transform: rotate(64deg) scale(1.02, .72); } }
+@keyframes dv-far { from { transform: rotate(0deg) scaleY(1); } to { transform: rotate(-50deg) scaleY(.77); } }
+@keyframes dv-bob { from { transform: translateY(0) rotate(0deg); } to { transform: translateY(-3.5%) rotate(-1.2deg); } }
 /* the sky over the whole page while the dove flies up */
 .dove-sky { position: fixed; inset: 0; z-index: 90; overflow: hidden; pointer-events: none; }
 .dove-sky .dv { filter: drop-shadow(0 10px 12px rgba(60, 50, 35, .16)); }
@@ -1563,7 +1570,7 @@
 .info-list { list-style: none; display: grid; gap: .55rem; }
 
 /* ---------- Travel & Stay: one large card at a time (couple's card video) ----------
-   White, black or soft green only. The word dissolves letter by letter into
+   White, cream, champagne pearl or soft green. The word dissolves letter by letter into
    the next, the photographs slide up (the next one waits, blurred, below)
    and the colour of the card changes. */
 .tv {
@@ -1583,8 +1590,13 @@
   box-shadow: 0 34px 60px -42px rgba(30, 25, 20, .6), 0 0 0 1px rgba(18, 18, 18, .06);
   transition: background-color .9s cubic-bezier(.45, .05, .3, 1), color .9s cubic-bezier(.45, .05, .3, 1);
 }
-.tv--black { --tv-bg: #121212; --tv-ink: #fff; --tv-soft: rgba(255, 255, 255, .72); --tv-line: rgba(255, 255, 255, .2); }
+.tv--cream { --tv-bg: #f6f0e4; --tv-line: rgba(18, 18, 18, .13); }
+.tv--pearl { --tv-bg: #ece4d4; --tv-soft: rgba(18, 18, 18, .66); --tv-line: rgba(18, 18, 18, .15); }
 .tv--green { --tv-bg: #d5decb; --tv-ink: #121212; --tv-soft: rgba(18, 18, 18, .68); --tv-line: rgba(18, 18, 18, .16); }
+/* a soft pearl sheen over the warmer cards */
+.tv::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .9s ease; background: radial-gradient(120% 80% at 18% 0%, rgba(255, 255, 255, .7), rgba(255, 255, 255, 0) 60%); }
+.tv--cream::before, .tv--pearl::before { opacity: 1; }
+.tv > *, .tv__text > * { position: relative; }
 .tv__text { display: contents; }
 .tv__head { grid-area: head; }
 .tv__kicker { margin: 0; font: 500 .75rem/1.4 var(--font-body); letter-spacing: .22em; text-transform: uppercase; color: var(--tv-soft); }
@@ -1670,10 +1682,10 @@
 .ct-row { display: flex; flex-direction: column; align-items: center; margin: 0 auto; padding: 0; list-style: none; max-width: 60rem; }
 .ct-item { position: relative; flex: none; display: flex; justify-content: center; }
 /* the pearl chain between the buttons (pearls and silver beads) */
-.ct-chain { width: 15px; height: 46px; background: url("../assets/images/bead-chain-v.webp?v=20261022f") center top / 15px auto repeat-y; filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18)); }
+.ct-chain { width: 15px; height: 46px; background: url("../assets/images/bead-chain-v.webp?v=20261022g") center top / 15px auto repeat-y; filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18)); }
 @media (min-width: 720px) {
   .ct-row { flex-direction: row; justify-content: center; }
-  .ct-chain { flex: 0 1 130px; width: auto; min-width: 40px; height: 16px; background: url("../assets/images/bead-chain.webp?v=20261022f") left center / auto 16px repeat-x; }
+  .ct-chain { flex: 0 1 130px; width: auto; min-width: 40px; height: 16px; background: url("../assets/images/bead-chain.webp?v=20261022g") left center / auto 16px repeat-x; }
 }
 /* the button: a round picture and a name */
 .ct-pill {

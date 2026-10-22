@@ -323,7 +323,7 @@ window.WEDDING = {
   // Display only confirmed arrangements. null = To be provided.
   // Travel & Stay — one card at a time, as in the couple's card video:
   // a large word, a photograph and the details, each with a Location button
-  // (opens Google Maps with "map"). Card colours: white, black, soft green.
+  // (opens Google Maps with "map"). Card colours: white, cream, pearl, soft green.
   // PROPOSALS — real places in and around Alappuzha suggested for guests;
   // please confirm before sharing. Photos: free Unsplash photographs
   // (unsplash.com, Unsplash License), made black and white.
@@ -340,7 +340,7 @@ window.WEDDING = {
         ]
       },
       {
-        id: "stay", word: "Stay", kicker: "Where to stay", tone: "black",
+        id: "stay", word: "Stay", kicker: "Where to stay", tone: "cream",
         photo: { src: "assets/images/travel/stay.webp", alt: "A house among palm trees, reflected in the backwaters" },
         items: [
           { name: "Ramada by Wyndham Alleppey", note: "On Punnamada Lake — also where the Sangeet and Reception are held.", map: "Ramada by Wyndham Alleppey" },
@@ -367,7 +367,7 @@ window.WEDDING = {
         ]
       },
       {
-        id: "cruise", word: "Cruise", kicker: "On the backwaters", tone: "black",
+        id: "cruise", word: "Cruise", kicker: "On the backwaters", tone: "pearl",
         photo: { src: "assets/images/travel/cruise.webp", alt: "A houseboat on the palm-lined backwaters of Alappuzha" },
         items: [
           { name: "Houseboat cruise", note: "Day or overnight kettuvallam cruises from the Finishing Point, Punnamada.", map: "Alappuzha houseboat Finishing Point Punnamada" },

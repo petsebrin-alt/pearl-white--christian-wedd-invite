@@ -12,7 +12,7 @@
 (function () {
   'use strict';
   var AD = window.AD;
-  var V = '?v=20261022f';
+  var V = '?v=20261022g';
   var PIECES = {
     bloom: [463, 509],
     bud: [210, 232],

@@ -4,15 +4,15 @@
    Location button that opens Google Maps) and a photograph, with the next
    photograph waiting, softly blurred, below it. The black round button
    brings the next card: the word dissolves letter by letter into the next
-   one, the card's colour changes (white, black or soft green only), the
+   one, the card's colour changes (white, cream, pearl or soft green), the
    photographs slide up and the details follow. Arrows, keys and swipes work
    too. The places are suggestions (content.js → travel.cards).
    ========================================================================== */
 (function () {
   'use strict';
   var AD = window.AD;
-  var V = '?v=20261022f';
-  var TONES = { white: 1, black: 1, green: 1 };
+  var V = '?v=20261022g';
+  var TONES = { white: 1, cream: 1, pearl: 1, green: 1 };
 
   function mapUrl(q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Kerala'); }
   function letters(word) {
@@ -111,7 +111,7 @@
         if (i === cur) return;
         var c = cards[i];
         cur = i;
-        box.classList.remove('tv--white', 'tv--black', 'tv--green');
+        box.classList.remove('tv--white', 'tv--cream', 'tv--pearl', 'tv--green');
         box.classList.add('tv--' + (TONES[c.tone] ? c.tone : 'white'));
         box.classList.toggle('is-back', dir < 0);
         place();
