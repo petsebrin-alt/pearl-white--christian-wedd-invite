@@ -41,7 +41,7 @@
           AD.florals.img('drops', 'parking__drops') +
         '</div>' +
         '<div class="parking__car">' +
-          '<img src="assets/images/wedding-car.webp?v=20261022d" width="720" height="1219" alt="" decoding="async">' +   // already cached from the opening
+          '<img src="assets/images/wedding-car.webp?v=20261022e" width="720" height="1219" alt="" decoding="async">' +   // already cached from the opening
           '<span class="parking__glint parking__glint--1"></span><span class="parking__glint parking__glint--2"></span><span class="parking__glint parking__glint--3"></span>' +
         '</div>' +
       '</div>' +

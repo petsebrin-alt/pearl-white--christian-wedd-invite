@@ -21,7 +21,7 @@
   var TURN = 1300;                  // ms the ring takes to bring the next face up
   var PHOTO_RE = /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/;
   var ASSET_RE = /^assets\/images\/wishes\/[a-z0-9-]+\.webp$/;
-  var V = '?v=20261022d';
+  var V = '?v=20261022e';
   var OTHER = 'Other';
 
   function initials(name) {

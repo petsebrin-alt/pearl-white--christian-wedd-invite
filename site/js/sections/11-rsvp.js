@@ -2,32 +2,36 @@
    11. RSVP — the dove brings the invitation (the couple's dove pictures).
    A white dove sits in the middle holding the envelope ("Please join us…
    Angel & David · Kindly RSVP"). Tapping RSVP on the envelope:
-     · the same dove takes off, wings beating, and flies up over the page
-       to the top, with a soft sound of wings (it fades as soon as the
-       guest scrolls);
+     · the same dove lets go of the envelope and flies up over the page to
+       the top — slow, full wing beats and a gentle wavy path, as in the
+       couple's dove video — with a soft whoosh on each beat (the sound
+       fades as soon as the guest scrolls);
      · the envelope straightens, its top opens, a card slides out and it
        all dissolves in light;
-     · in its place a satin-draped frame appears (the satin gently waving),
-       the couple's black-and-white photo develops on it, and "Thank you for
-       accepting our invitation" writes itself, with the day and the church
-       and buttons to add it to the calendar or get directions.
+     · satin, in the colour of the page, sweeps across the whole section
+       from left to right and keeps waving; the couple's black-and-white
+       photo develops on it and "Thank you for accepting our invitation"
+       writes itself, with the day and the church and buttons to add it to
+       the calendar or get directions.
    A personal link can carry the guest's name (…/?guest=Anu%20Thomas): it
    greets them and the acceptance is saved under that name. The acceptance
-   is remembered on this device (a later visit shows the board; "See the
-   invitation again" brings the dove back). Saved by AD.store: in this
+   is remembered on this device (a later visit shows the thank-you; "See
+   the invitation again" brings the dove back). Saved by AD.store: in this
    browser until the Google Sheet is connected.
    ========================================================================== */
 (function () {
   'use strict';
   var AD = window.AD;
   var KEY = 'ad-rsvp-accepted';
-  var V = '?v=20261022d';
+  var V = '?v=20261022e';
   var IMG = 'assets/images/dove/';
   // Inside dove-envelope.webp (fractions of its width / height)
   var BODY = { x: .64, y: .61 };       // the sitting dove's body
   var ENV = { cx: .2859, cy: .4398 };  // centre of the envelope (tilted 7.5°)
   // Inside the flying dove's box (dove-*.webp, facing left)
   var DOVE = { ratio: 408 / 418, bx: .55, by: .73 };
+  var FLIGHT = 4600;                   // ms from the envelope to off the top of the screen
+  var BEAT = 980;                      // ms per wing beat: slow and full, as in the video
 
   function guestName() {
     try {
@@ -57,44 +61,45 @@
     return el;
   }
 
-  /* ---------- The sound of one dove's wings (made in the browser, no file) ----------
-     Soft wing-claps (filtered noise bursts, about 8 a second, slowing a
-     little) over a faint rush of air, quieter as the dove flies away.
-     Kept low: a gentle, natural flutter. Starts on the guest's tap. */
+  /* ---------- The sound of the dove's wings (made in the browser, no file) ----------
+     One soft whoosh of air on each downstroke, in time with the wings,
+     quieter as the dove flies away. Kept low and natural. */
   function wings(seconds) {
     var Ctx = window.AudioContext || window.webkitAudioContext;
     if (!Ctx) return null;
     var ctx;
     try { ctx = new Ctx(); } catch (e) { return null; }
     if (ctx.state === 'suspended' && ctx.resume) ctx.resume();
-    var LOUD = .22;
     var out = ctx.createGain(), t0 = ctx.currentTime + .03, end = t0 + seconds;
+    out.gain.value = .3;
     out.connect(ctx.destination);
-    out.gain.setValueAtTime(0, t0);
-    out.gain.linearRampToValueAtTime(LOUD, t0 + .08);
-    out.gain.setValueAtTime(LOUD, t0 + seconds * .45);
-    out.gain.linearRampToValueAtTime(0, end);
-    var sr = ctx.sampleRate, buf = ctx.createBuffer(1, sr, sr), d = buf.getChannelData(0);
-    for (var i = 0; i < sr; i++) d[i] = Math.random() * 2 - 1;
-    var air = ctx.createBufferSource(); air.buffer = buf; air.loop = true;
-    var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 450;
-    var ag = ctx.createGain(); ag.gain.setValueAtTime(0, t0); ag.gain.linearRampToValueAtTime(.08, t0 + .3); ag.gain.linearRampToValueAtTime(0, end);
-    air.connect(lp); lp.connect(ag); ag.connect(out); air.start(t0); air.stop(end);
-    var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 950; bp.Q.value = .9;
-    bp.connect(out);
-    for (var t = t0, k = 0; t < end - .1; k++) {
-      var s = ctx.createBufferSource(), g = ctx.createGain(), away = 1 - (t - t0) / seconds * .8;
-      s.buffer = buf;
+    var sr = ctx.sampleRate, buf = ctx.createBuffer(1, sr * 2, sr), d = buf.getChannelData(0);
+    for (var i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    var beat = BEAT / 1000;
+    for (var k = 0, t = t0; t < end - .2; k++, t += beat) {
+      var away = Math.max(.15, 1 - k * beat / seconds * .85);
+      // the stroke: a rush of air that swells and falls away
+      var s = ctx.createBufferSource(); s.buffer = buf;
+      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = .6;
+      bp.frequency.setValueAtTime(420, t); bp.frequency.linearRampToValueAtTime(900, t + beat * .35); bp.frequency.linearRampToValueAtTime(500, t + beat * .6);
+      var g = ctx.createGain();
       g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(away, t + .008);
-      g.gain.exponentialRampToValueAtTime(.001, t + rnd(.07, .1));
-      s.connect(g); g.connect(bp);
-      s.start(t, rnd(0, .8), .13);
-      t += (1 / (8.5 - k * .06)) * rnd(.92, 1.08);     // the beats slow a little as it climbs
+      g.gain.linearRampToValueAtTime(.9 * away, t + beat * .22);
+      g.gain.exponentialRampToValueAtTime(.001, t + beat * .62);
+      s.connect(bp); bp.connect(g); g.connect(out);
+      s.start(t, rnd(0, 1), beat * .7);
+      // and the light flutter of feathers at the bottom of the stroke
+      var f = ctx.createBufferSource(); f.buffer = buf;
+      var hp = ctx.createBiquadFilter(); hp.type = 'highpass'; hp.frequency.value = 2200;
+      var fg = ctx.createGain();
+      var tb = t + beat * .42;
+      fg.gain.setValueAtTime(0, tb); fg.gain.linearRampToValueAtTime(.12 * away, tb + .02); fg.gain.exponentialRampToValueAtTime(.001, tb + .16);
+      f.connect(hp); hp.connect(fg); fg.connect(out);
+      f.start(tb, rnd(0, 1), .2);
     }
     var done = false;
     function close() { if (done) return; done = true; setTimeout(function () { try { ctx.close(); } catch (e) {} }, 900); }
-    setTimeout(close, seconds * 1000 + 200);
+    setTimeout(close, seconds * 1000 + 300);
     return {
       fade: function () {           // the guest scrolled: the sound goes
         if (done) return;
@@ -107,57 +112,55 @@
     };
   }
 
-  /* ---------- Satin that waves (WebGL; the still picture if unavailable) ----------
-     A mask marks the satin (not the frame, the jewelled spray or the pen);
-     only there the picture ripples gently and light moves over the folds. */
-  function satin(canvas, srcs) {
+  /* ---------- Satin across the whole section (WebGL; plain paper if unavailable) ----------
+     Drawn, not a picture: long soft folds that travel and bend, with a
+     satin sheen sliding over them, in the colour of the page. */
+  function satin(canvas) {
     var gl;
-    try { gl = canvas.getContext('webgl', { alpha: false, antialias: false, premultipliedAlpha: false }); } catch (e) { gl = null; }
+    try { gl = canvas.getContext('webgl', { alpha: false, antialias: false }); } catch (e) { gl = null; }
     if (!gl) return null;
     function sh(type, src) { var s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null; }
     var vs = sh(gl.VERTEX_SHADER, 'attribute vec2 p;varying vec2 uv;void main(){uv=vec2(p.x*.5+.5,.5-p.y*.5);gl_Position=vec4(p,0.,1.);}');
-    var fs = sh(gl.FRAGMENT_SHADER, 'precision mediump float;varying vec2 uv;uniform sampler2D tex;uniform sampler2D msk;uniform float t;' +
-      'void main(){float m=texture2D(msk,uv).r;' +
-      'vec2 w=vec2(sin(uv.y*13.+t*1.25)*.0048+sin(uv.y*29.-t*1.7)*.0018,sin(uv.x*10.+uv.y*4.+t*1.05)*.0045);' +
-      'vec3 c=texture2D(tex,uv+w*m).rgb;' +
-      'float l=1.+m*(sin(uv.x*8.+uv.y*12.+t*1.5)*.035+sin(uv.y*21.-t*1.2)*.02);' +
-      'gl_FragColor=vec4(c*l,1.);}');
+    var fs = sh(gl.FRAGMENT_SHADER, 'precision mediump float;varying vec2 uv;uniform vec2 res;uniform float t;' +
+      'float H(vec2 p){' +
+        'float h=sin(p.x*1.1+p.y*.5+t*1.15+sin(p.y*.85+t*.75)*1.7)*.62;' +
+        'h+=sin(-p.x*.75+p.y*1.3-t*.95+sin(p.x*1.25-t*.6)*1.3)*.4;' +
+        'h+=sin(p.x*2.2+p.y*1.6+t*1.7+sin(p.y*1.4+t*1.2)*.9)*.15;' +
+        'return h;}' +
+      'void main(){' +
+        'vec2 p=uv*res/95.;float e=.04;' +
+        'float hx=H(p+vec2(e,0.))-H(p-vec2(e,0.));float hy=H(p+vec2(0.,e))-H(p-vec2(0.,e));' +
+        'vec3 n=normalize(vec3(-hx,-hy,e*2.6));' +
+        'vec3 l=normalize(vec3(-.45,-.6,.68));' +
+        'float d=clamp(dot(n,l),0.,1.);' +
+        'float sp=pow(clamp(reflect(-l,n).z,0.,1.),16.);' +
+        'vec3 c=mix(vec3(.865,.848,.815),vec3(.99,.984,.97),smoothstep(.2,.95,d));' +
+        'c+=sp*.16;' +
+        'gl_FragColor=vec4(min(c,vec3(1.)),1.);}');
     if (!vs || !fs) return null;
     var pr = gl.createProgram(); gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.linkProgram(pr);
     if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) return null;
     gl.useProgram(pr);
-    var bufr = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, bufr);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
     var loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-    var uT = gl.getUniformLocation(pr, 't');
-    function tex(unit, img, name) {
-      var tx = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, tx);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
-      gl.uniform1i(gl.getUniformLocation(pr, name), unit);
-    }
-    var raf = 0, on = false, t0 = performance.now(), ready = false;
-    function size() {
-      var r = canvas.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
-      var w = Math.max(1, Math.round(r.width * dpr)), h = Math.max(1, Math.round(r.height * dpr));
+    var uT = gl.getUniformLocation(pr, 't'), uR = gl.getUniformLocation(pr, 'res');
+    var raf = 0, on = false, t0 = performance.now();
+    function draw(now) {
+      var r = canvas.getBoundingClientRect();
+      // the satin is soft, so it is drawn at a lower resolution and scaled up
+      var q = Math.min(.7, 800 / Math.max(1, Math.max(r.width, r.height)));
+      var w = Math.max(1, Math.round(r.width * q)), h = Math.max(1, Math.round(r.height * q));
       if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
       gl.viewport(0, 0, w, h);
-    }
-    function frame(now) {
-      if (!on) return;
-      size();
+      gl.uniform2f(uR, r.width, r.height);
       gl.uniform1f(uT, (now - t0) / 1000);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
-      raf = requestAnimationFrame(frame);
     }
-    var loaded = Promise.all(srcs.map(function (s) {
-      return new Promise(function (res, rej) { var im = new Image(); im.onload = function () { res(im); }; im.onerror = rej; im.src = s; });
-    })).then(function (ims) { tex(0, ims[0], 'tex'); tex(1, ims[1], 'msk'); ready = true; });
+    function frame(now) { if (!on) return; draw(now); raf = requestAnimationFrame(frame); }
     return {
-      start: function () { loaded.then(function () { if (on) return; on = true; canvas.parentNode.classList.add('has-gl'); raf = requestAnimationFrame(frame); }, function () {}); },
-      stop: function () { on = false; cancelAnimationFrame(raf); },
-      ready: function () { return ready; }
+      start: function (moving) { if (on) return; if (!moving) { draw(performance.now()); return; } on = true; raf = requestAnimationFrame(frame); },
+      stop: function () { on = false; cancelAnimationFrame(raf); }
     };
   }
 
@@ -169,7 +172,10 @@
       var church = cer && (C.venues || []).filter(function (v) { return v.id === cer.venueId; })[0];
       var photo = (C.couplePhotos || [])[0];
       var guest = guestName();
-      return '<div class="container container--narrow">' +
+      return '' +
+        // Satin over the whole section once the invitation is accepted
+        '<div class="rv-satin" aria-hidden="true"><div class="rv-satin__sweep"><canvas></canvas></div></div>' +
+        '<div class="container container--narrow">' +
         AD.sectionHead({
           id: 'rsvp', eyebrow: 'RSVP', title: 'Kindly Respond',
           intro: 'Please let us know if you can join us.'
@@ -197,21 +203,15 @@
             '<div class="hp-field" aria-hidden="true"><label for="rsvp-website">Website</label><input id="rsvp-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>' +
             '<div data-status aria-live="polite"></div>' +
           '</div>' +
-          // The thank-you board on satin
+          // The thank-you, on the satin
           '<div class="rv-board" data-board tabindex="-1" hidden>' +
-            '<div class="rv-frame" data-frame>' +
-              '<img class="rv-frame__img" src="' + IMG + 'satin-frame.webp' + V + '" width="736" height="1318" alt="" decoding="async">' +
-              '<canvas class="rv-frame__gl" aria-hidden="true"></canvas>' +
-              '<div class="rv-in">' +
-                (photo ? '<figure class="rv-photo"><img src="' + AD.esc(photo.src) + V + '" alt="' + AD.esc(photo.alt || (C.couple.bride + ' and ' + C.couple.groom)) + '" decoding="async"></figure>' : '') +
-                (guest ? '<p class="rv-to">Dear ' + AD.esc(guest) + ',</p>' : '') +
-                '<h3 class="rv-quote script"><span class="rv-q" style="--i:0">Thank you for accepting</span> <span class="rv-q" style="--i:1">our invitation</span></h3>' +
-                '<p class="rv-line">We can’t wait to celebrate with you.</p>' +
-                '<p class="rv-sign script">' + AD.esc(C.couple.bride) + ' <span class="amp">&amp;</span> ' + AD.esc(C.couple.groom) + '</p>' +
-                (AD.has(date) ? '<p class="rv-when">' + AD.esc(AD.formatDateShort(date)) + (cer && AD.has(cer.startTime) ? ' · ' + AD.esc(AD.formatTime(cer.startTime)) : '') + '</p>' : '') +
-                (church ? '<p class="rv-where">' + AD.esc(church.name) + '</p>' : '') +
-              '</div>' +
-            '</div>' +
+            (photo ? '<figure class="rv-photo"><img src="' + AD.esc(photo.src) + V + '" alt="' + AD.esc(photo.alt || (C.couple.bride + ' and ' + C.couple.groom)) + '" decoding="async"></figure>' : '') +
+            (guest ? '<p class="rv-to">Dear ' + AD.esc(guest) + ',</p>' : '') +
+            '<h3 class="rv-quote"><span class="rv-q" style="--i:0">Thank you for accepting</span> <span class="rv-q" style="--i:1">our invitation</span></h3>' +
+            '<p class="rv-line">We can’t wait to celebrate with you.</p>' +
+            '<p class="rv-sign script">' + AD.esc(C.couple.bride) + ' <span class="amp">&amp;</span> ' + AD.esc(C.couple.groom) + '</p>' +
+            (AD.has(date) ? '<p class="rv-when">' + AD.esc(AD.formatDateShort(date)) + (cer && AD.has(cer.startTime) ? ' · ' + AD.esc(AD.formatTime(cer.startTime)) : '') + '</p>' : '') +
+            (church ? '<p class="rv-where">' + AD.esc(church.name) + '</p>' : '') +
             '<div class="rv-actions">' +
               (cer && AD.has(cer.date) ? '<button class="btn btn--primary btn--sm" type="button" data-cal>' + AD.icon('calendar') + 'Add to Calendar</button>' : '') +
               (church && AD.mapUrl(church) ? '<a class="btn btn--secondary btn--sm" href="' + AD.esc(AD.mapUrl(church)) + '" target="_blank" rel="noopener">' + AD.icon('pin') + 'Get Directions</a>' : '') +
@@ -224,33 +224,36 @@
 
     init: function (el, C) {
       var rv = el.querySelector('[data-rv]'), scene = el.querySelector('[data-scene]'), stage = el.querySelector('[data-stage]');
-      var sit = stage.querySelector('.rv-sit'), env = el.querySelector('[data-env]'), flap = el.querySelector('[data-flap]');
+      var env = el.querySelector('[data-env]'), flap = el.querySelector('[data-flap]');
       var tap = el.querySelector('[data-tap]'), status = el.querySelector('[data-status]');
-      var board = el.querySelector('[data-board]'), frameEl = el.querySelector('[data-frame]');
+      var board = el.querySelector('[data-board]'), cloth = el.querySelector('.rv-satin canvas');
       var still = AD.reducedMotion() || !Element.prototype.animate;
-      var busy = false, wave = null;
+      var busy = false, wave = null, inView = false;
 
-      /* ---------- The board ---------- */
+      /* ---------- Satin and the thank-you ---------- */
       function startWave() {
-        if (still) return;
-        if (!wave) wave = satin(frameEl.querySelector('canvas'), [IMG + 'satin-frame.webp' + V, IMG + 'satin-mask.webp' + V]);
-        if (wave) wave.start();
+        if (!wave) wave = satin(cloth);
+        if (wave) wave.start(!still && inView);
       }
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (en) {
-          if (board.hidden) return;
-          if (en[0].isIntersecting) startWave(); else if (wave) wave.stop();
-        }).observe(frameEl);
-      }
+          inView = en[0].isIntersecting;
+          if (!el.classList.contains('is-satin')) return;
+          if (inView) startWave(); else if (wave) wave.stop();
+        }).observe(el);
+      } else inView = true;
       function showBoard(play) {
         scene.hidden = true;
         board.hidden = false;
         rv.classList.add('is-accepted');
+        el.classList.add('is-satin');
+        el.classList.toggle('is-sweeping', !!play && !still);
         board.classList.toggle('is-playing', !!play && !still);
         startWave();
       }
       function showScene() {
         board.hidden = true;
+        el.classList.remove('is-satin', 'is-sweeping');
         if (wave) wave.stop();
         scene.hidden = false;
         rv.classList.remove('is-accepted', 'is-opening', 'is-off', 'is-landed');
@@ -274,20 +277,36 @@
       ['dove-body', 'dove-near', 'dove-far'].forEach(function (n) { var i = new Image(); i.src = IMG + n + '.webp' + V; });
 
       /* ---------- Tap RSVP ---------- */
-      function takeOff(sky) {
-        // the same dove leaves the envelope and flies up, off the top of the screen
+      // The same dove lets go of the envelope and flies up, off the top of the
+      // screen: it lifts slowly, then climbs faster along a gentle wavy path,
+      // wings beating slowly and fully, the body rising a little on each
+      // downstroke and tilting with the sway (driven frame by frame).
+      function flyUp(sky) {
         var r = stage.getBoundingClientRect(), dw = r.width * .7, dh = dw * DOVE.ratio;
-        var x = r.left + BODY.x * r.width - DOVE.bx * dw, y = r.top + BODY.y * r.height - DOVE.by * dh;
-        var d = dove('is-flying');
-        d.style.setProperty('--dw', dw + 'px'); d.style.setProperty('--beat', '.12s');
+        var x0 = r.left + BODY.x * r.width - DOVE.bx * dw, y0 = r.top + BODY.y * r.height - DOVE.by * dh;
+        var d = dove(), near, far;
+        d.style.setProperty('--dw', dw + 'px');
         sky.appendChild(d);
-        var a = d.animate([
-          { transform: 'translate(' + x + 'px,' + y + 'px) rotate(0deg) scale(1)', opacity: 0 },
-          { opacity: 1, offset: .06 },
-          { transform: 'translate(' + (x - .06 * innerWidth) + 'px,' + (y - .2 * innerHeight) + 'px) rotate(-8deg) scale(1.04)', offset: .3 },
-          { transform: 'translate(' + (x - .14 * innerWidth) + 'px,' + (-dh * 1.4) + 'px) rotate(-14deg) scale(1.12)', opacity: 1 }
-        ], { duration: 2600, easing: 'cubic-bezier(.4,0,.7,1)', fill: 'forwards' });
-        return a.finished;
+        near = d.querySelector('.dv__near'); far = d.querySelector('.dv__far');
+        var rise = y0 + dh * 1.4, drift = -.12 * innerWidth, sway = Math.min(34, innerWidth * .06);
+        var t0 = performance.now();
+        return new Promise(function (done) {
+          (function frame(now) {
+            var t = now - t0, u = Math.min(1, t / FLIGHT);
+            var ph = t / BEAT * Math.PI * 2;                     // 0 = wings up
+            var s = (1 - Math.cos(ph)) / 2;                      // 0 up … 1 down, easing at both ends
+            var grow = Math.min(1, u * 3);                       // the sway builds once it is away
+            var wave = Math.sin(u * Math.PI * 2.6);
+            var x = x0 + drift * u + sway * wave * grow;
+            var y = y0 - rise * Math.pow(u, 1.6) - dh * .04 * Math.sin(ph - .5);
+            var tilt = -5 * grow + 2.4 * Math.cos(ph) + 7 * Math.cos(u * Math.PI * 2.6) * grow * (sway / 34);
+            d.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,0) rotate(' + tilt.toFixed(2) + 'deg) scale(' + (1 + .12 * u).toFixed(3) + ')';
+            d.style.opacity = Math.min(1, t / 260).toFixed(3);
+            near.style.transform = 'rotate(' + (64 * s).toFixed(2) + 'deg) scale(' + (1 + .02 * s).toFixed(3) + ',' + (1 - .28 * s).toFixed(3) + ')';
+            far.style.transform = 'rotate(' + (-50 * s).toFixed(2) + 'deg) scaleY(' + (1 - .23 * s).toFixed(3) + ')';
+            if (u < 1) requestAnimationFrame(frame); else done();
+          })(t0);
+        });
       }
       function openEnvelope() {
         // the envelope straightens and comes forward, opens, a card slides out, and it all turns to light
@@ -297,15 +316,15 @@
         env.animate([
           { transform: 'translate(0,0) rotate(7.5deg) scale(1)' },
           { transform: 'translate(' + dx + 'px,' + dy + 'px) rotate(0deg) scale(' + s + ')' }
-        ], { duration: 700, delay: 150, easing: 'cubic-bezier(.3,.1,.3,1)', fill: 'forwards' });
-        flap.animate([{ transform: 'rotateX(0deg)' }, { transform: 'rotateX(180deg)' }], { duration: 700, delay: 880, easing: 'cubic-bezier(.45,.05,.4,1)', fill: 'forwards' });
-        setTimeout(function () { flap.style.zIndex = '1'; }, 1230);   // once it is up, the card passes in front of it
+        ], { duration: 800, delay: 450, easing: 'cubic-bezier(.3,.1,.3,1)', fill: 'forwards' });
+        flap.animate([{ transform: 'rotateX(0deg)' }, { transform: 'rotateX(180deg)' }], { duration: 750, delay: 1300, easing: 'cubic-bezier(.45,.05,.4,1)', fill: 'forwards' });
+        setTimeout(function () { flap.style.zIndex = '1'; }, 1680);   // once it is up, the card passes in front of it
         env.querySelector('.rv-env__letter').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-58%)' }],
-          { duration: 700, delay: 1350, easing: 'cubic-bezier(.3,.1,.3,1)', fill: 'forwards' });
+          { duration: 750, delay: 1800, easing: 'cubic-bezier(.3,.1,.3,1)', fill: 'forwards' });
         stage.querySelector('.rv-flash').animate([{ opacity: 0, transform: 'scale(.4)' }, { opacity: 1, transform: 'scale(1.1)', offset: .55 }, { opacity: 0, transform: 'scale(1.3)' }],
-          { duration: 900, delay: 1950, easing: 'ease-out', fill: 'both' });
-        env.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 450, delay: 2150, fill: 'forwards' });
-        return wait(2350);
+          { duration: 900, delay: 2450, easing: 'ease-out', fill: 'both' });
+        env.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 450, delay: 2650, fill: 'forwards' });
+        return wait(2850);
       }
 
       function accept() {
@@ -323,17 +342,17 @@
           return;
         }
         // Sound first, while the tap still counts as the guest's own action.
-        var sound = wings(2.6), y0 = window.scrollY;
+        var sound = wings(FLIGHT / 1000), y0 = window.scrollY;
         function onScroll() { if (Math.abs(window.scrollY - y0) > 40 && sound) { sound.fade(); sound = null; window.removeEventListener('scroll', onScroll); } }
         window.addEventListener('scroll', onScroll, { passive: true });
-        setTimeout(function () { window.removeEventListener('scroll', onScroll); }, 6000);
+        setTimeout(function () { window.removeEventListener('scroll', onScroll); }, FLIGHT + 1500);
 
         var sky = document.createElement('div');
         sky.className = 'dove-sky';
         sky.setAttribute('aria-hidden', 'true');
         document.body.appendChild(sky);
         rv.classList.add('is-off');                   // the sitting dove gives way to the one taking off
-        takeOff(sky).then(function () { sky.remove(); }, function () { sky.remove(); });
+        flyUp(sky).then(function () { sky.remove(); });
 
         Promise.all([openEnvelope(), save]).then(function (res) {
           var r = res[1];
@@ -359,7 +378,7 @@
         if (!e.detail) tap.focus({ preventScroll: true });   // keyboard users land on RSVP
       });
 
-      // A guest who has already accepted on this device sees the board.
+      // A guest who has already accepted on this device sees the thank-you.
       if (remembered()) showBoard(false);
       else land();
     }

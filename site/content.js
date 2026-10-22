@@ -321,13 +321,60 @@ window.WEDDING = {
   },
 
   // Display only confirmed arrangements. null = To be provided.
+  // Travel & Stay — one card at a time, as in the couple's card video:
+  // a large word, a photograph and the details, each with a Location button
+  // (opens Google Maps with "map"). Card colours: white, black, soft green.
+  // PROPOSALS — real places in and around Alappuzha suggested for guests;
+  // please confirm before sharing. Photos: free Unsplash photographs
+  // (unsplash.com, Unsplash License), made black and white.
   travel: {
-    guidance: null,
-    parking: null,
-    shuttle: null,
-    pickupPoints: [], // e.g. [{ place: "…", time: "…" }]
-    accommodation: [], // e.g. [{ name: "…", note: "…", url: "…" }]
-    bookingLinks: [], // e.g. [{ label: "…", url: "…" }]
+    note: "Suggestions for your stay in Alappuzha — please check timings and book ahead.",
+    cards: [
+      {
+        id: "arrive", word: "Arrive", kicker: "Getting to Alappuzha", tone: "white",
+        photo: { src: "assets/images/travel/arrive.webp", alt: "A plane on the runway among coconut palms" },
+        items: [
+          { name: "Cochin International Airport (COK)", note: "About 85 km from Alappuzha — roughly 2 to 2½ hours by road.", map: "Cochin International Airport" },
+          { name: "Alappuzha Railway Station", note: "Trains from Ernakulam (Kochi) and Thiruvananthapuram.", map: "Alappuzha Railway Station" },
+          { name: "Airport pickup", note: null }
+        ]
+      },
+      {
+        id: "stay", word: "Stay", kicker: "Where to stay", tone: "black",
+        photo: { src: "assets/images/travel/stay.webp", alt: "A house among palm trees, reflected in the backwaters" },
+        items: [
+          { name: "Ramada by Wyndham Alleppey", note: "On Punnamada Lake — also where the Sangeet and Reception are held.", map: "Ramada by Wyndham Alleppey" },
+          { name: "Punnamada Resort", note: "A lakeside resort on the backwaters at Punnamada.", map: "Punnamada Resort Alappuzha" },
+          { name: "Raheem Residency", note: "A heritage hotel on Beach Road, opposite Alappuzha Beach.", map: "Raheem Residency Alappuzha" }
+        ]
+      },
+      {
+        id: "dine", word: "Dine", kicker: "Eating out", tone: "green",
+        photo: { src: "assets/images/travel/dine.webp", alt: "A Kerala meal served on a banana leaf" },
+        items: [
+          { name: "The Harbour Restaurant", note: "Seafood in a lantern-lit garden on Beach Road, opposite the beach.", map: "The Harbour Restaurant Beach Road Alappuzha" },
+          { name: "Thaff", note: "Kerala dishes, near YMCA Bridge.", map: "Thaff Restaurant Alappuzha" },
+          { name: "Kream Korner Art Café", note: "An art café on Mullakkal Road — known for biryani and parotta.", map: "Kream Korner Art Cafe Alappuzha" }
+        ]
+      },
+      {
+        id: "explore", word: "Explore", kicker: "Places to see", tone: "white",
+        photo: { src: "assets/images/travel/explore.webp", alt: "The old pier stretching into the sea at Alappuzha Beach" },
+        items: [
+          { name: "Alappuzha Beach & Lighthouse", note: "The old pier and the lighthouse of 1862.", map: "Alappuzha Lighthouse" },
+          { name: "Marari Beach", note: "A quiet, palm-lined beach a short drive north.", map: "Marari Beach Mararikulam" },
+          { name: "Krishnapuram Palace", note: "A Travancore palace museum at Kayamkulam, with Kerala’s largest mural.", map: "Krishnapuram Palace Kayamkulam" }
+        ]
+      },
+      {
+        id: "cruise", word: "Cruise", kicker: "On the backwaters", tone: "black",
+        photo: { src: "assets/images/travel/cruise.webp", alt: "A houseboat on the palm-lined backwaters of Alappuzha" },
+        items: [
+          { name: "Houseboat cruise", note: "Day or overnight kettuvallam cruises from the Finishing Point, Punnamada.", map: "Alappuzha houseboat Finishing Point Punnamada" },
+          { name: "Pathiramanal Island", note: "A bird island in Vembanad Lake, reached by boat.", map: "Pathiramanal Island" }
+        ]
+      }
+    ],
     assistance: { name: null, phone: null }
   },
 

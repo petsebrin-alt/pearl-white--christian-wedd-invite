@@ -340,22 +340,30 @@ The dove brings the invitation, as in the couple's dove pictures:
 
 - **The dove:** when guests scroll to the section, a white dove sits in the middle holding the envelope ("Please join us… Angel & David · Kindly RSVP · RSVP"). A soft pulse around **RSVP** and "Tap RSVP to accept the invitation" invite the tap. (No fly-in, at the couple's request.)
 - **Tap RSVP:**
-  - the same dove (same colours) takes off, wings beating, and flies up over the page to the top — only the one dove, at the couple's request;
-  - a soft, natural sound of its wings plays (made in the browser, no sound file) and fades as soon as the guest scrolls;
+  - the same dove (same colours) lets go of the envelope, lifts slowly and flies up over the page to the top along a gentle wavy path, with slow, full wing beats (about one a second) as in the couple's dove video — only the one dove;
+  - a soft whoosh of air on each wing beat plays (made in the browser, no sound file) and fades as soon as the guest scrolls;
   - the envelope straightens, its top opens, a card marked "Accepted" slides out and it all turns to light.
-- **The board:** a satin-draped frame (the couple's picture) appears; the satin gently waves. The couple's black-and-white photo (the Welcome photo) develops on it, then "Thank you for accepting our invitation" writes itself, with "We can't wait to celebrate with you.", Angel & David, the date and time, and the church. Below: **Add to Calendar**, **Get Directions** and "See the invitation again".
+- **The thank-you:** satin in the colour of the page sweeps across the whole section from left to right, edge to edge, and keeps waving clearly. The couple's black-and-white photo (the Welcome photo) develops on it, then "Thank you for accepting our invitation" writes itself in a fuller, brighter script (Great Vibes), with "We can't wait to celebrate with you.", Angel & David, the date and time, and the church. Below: **Add to Calendar**, **Get Directions** and "See the invitation again".
 - **Personal links:** `?guest=Anu%20Thomas` greets the guest ("Dear Anu Thomas,") and saves the acceptance under that name. Without it the RSVP sheet records "Guest (name not given)".
 - The acceptance is remembered on the device: a later visit shows the board; "See the invitation again" brings the dove back.
 - There is no decline button. Guests who cannot come use the Contact section. **Proposal:** add a small "Regretfully decline" link if the couple wants one.
 - Success shows **only** after the save is confirmed; a failure brings the dove back with an error and the contact fallback.
-- Reduced motion: a tap shows the board at once (no flight, no sound, still satin).
+- Reduced motion: a tap shows the thank-you at once (no flight, no sound, still satin).
 
-### 4.12 Transportation and accommodation
+### 4.12 Travel & Stay
 
-Placeholder cards for: **Travel guidance, Parking, Pickup and shuttle arrangements, Pickup locations and timings, Suggested accommodation, Booking links, Assistance contact.**
+One large card at a time, after the couple's card video ("Sun · Mono · Earth"), in **white, black or soft green only**:
 
-- Each category is either confirmed (shown with details) or shows "To be provided".
-- Only confirmed arrangements appear as guest-facing facts; no hotel names, shuttle times or links are invented.
+- Each card: a big word, a small heading, the details (each with a **Location** button that opens Google Maps), "Suggestions · please confirm before booking", and a black-and-white photograph with the next one waiting, blurred, below it.
+- The black round button brings the next card (the up arrow goes back; keys and swipes too): the word dissolves into the next, the card changes colour, the photographs slide up and the details follow. A counter shows "2 / 5".
+- **Proposal — the five cards** (real places, to be confirmed by the couple):
+  1. **Arrive** (white): Cochin International Airport (about 85 km, 2–2½ hours by road), Alappuzha Railway Station, airport pickup (To be provided).
+  2. **Stay** (black): Ramada by Wyndham Alleppey (Punnamada; also the Sangeet and Reception venue), Punnamada Resort, Raheem Residency (Beach Road).
+  3. **Dine** (green): The Harbour Restaurant (Beach Road), Thaff (near YMCA Bridge), Kream Korner Art Café (Mullakkal Road).
+  4. **Explore** (white): Alappuzha Beach & Lighthouse, Marari Beach, Krishnapuram Palace (Kayamkulam).
+  5. **Cruise** (black): houseboat cruises from the Finishing Point, Punnamada; Pathiramanal Island.
+- Under the card: "Travel help:" — To be provided.
+- Content in `content.js → travel.cards`; photographs are free Unsplash photos, black and white.
 
 ### 4.13 Contact
 
@@ -403,8 +411,9 @@ Full details in [THEME.md](THEME.md). Summary:
 | A7 | Wishing wall ring turns | Automatically while on screen (5–11 s per wish), or ‹ › / swipe | 1.3 s ease-in-out turn along the ring; the old wish blurs out, the new one appears word by word (45 ms per word) | No automatic turn; arrows change the wish at once | Text always in the DOM |
 | A7b | New wish joins | Successful save | Scroll to the ring, then it spins up to 3 places to bring the new wish to the top, with a soft glow | Shown at the top at once | — |
 | A7c | Roses sway | While the section is on screen | Two rose layers drift and sway (11 s and 15 s, alternating) with a light 5 s breeze | Still roses | Plain linen if the image fails |
-| A7e | RSVP accepted | Tap **RSVP** on the envelope | The same dove takes off and flies up off the screen in 2.6 s (wings beating every 0.12 s); soft wing sound 2.6 s (fades on scroll); envelope straightens 0.7 s, opens 0.7 s, card rises 0.7 s, light 0.9 s; board appears, photo develops 2 s, thank-you written in 2.4 s, details and buttons by ≈ 6 s | Board shown at once, no sound | Board shown if animations are unsupported |
-| A7f | Satin waves | Board on screen | Continuous WebGL ripple and moving light on the satin only (frame, spray and pen still) | Still picture | Still picture without WebGL |
+| A7e | RSVP accepted | Tap **RSVP** on the envelope | The same dove lifts off and flies up off the screen in 4.6 s (wing beat 0.98 s, wavy path, body rising on each downstroke); one whoosh per beat (fades on scroll); envelope straightens 0.8 s, opens 0.75 s, card rises 0.75 s, light 0.9 s; satin sweeps across the section 1.6 s; photo develops 2 s; thank-you written in 2.4 s; details and buttons by ≈ 6 s | Thank-you shown at once, no sound | Thank-you shown if animations are unsupported |
+| A7f | Satin waves | Thank-you on screen | Continuous WebGL satin across the whole section: long folds travelling and bending, a sheen sliding over them (folds cross the screen in a few seconds) | Still satin | Plain page without WebGL |
+| A7g | Travel & Stay card changes | Black round button (or ‹ › keys, swipe) | The word dissolves letter by letter (32 ms apart) and the next rises into focus; card colour 0.9 s (white, black or soft green); photographs slide up 1 s, the next waiting blurred below; details follow | Instant change | All details in the page |
 | A8 | Overlay open/close | Button | 250 ms fade + 12 px rise | Instant | `<dialog>` fallback to fixed overlay |
 | A9 | Handwriting reveal | Thank-you enters view | 2.4 s stroke + 400 ms fill | Static text | Static text |
 | A10 | Return to top | Tap | Native smooth scroll | Instant jump | — |
@@ -548,7 +557,7 @@ v1 ships SVG/CSS versions of every decoration so the site is complete; realistic
 9. **Venues** — church, reception and other venue placeholders; event cards link to them.
 10. **Wishing wall** — the ring turns by itself; no card; "Other" opens its own box; a new wish appears at the top; validation works.
 11. **RSVP** — the dove sits holding the envelope; tapping RSVP sends that one dove up the page with a soft wing sound (stops on scroll); the envelope opens to the satin thank-you board; success only when saved.
-12. **Travel** — seven placeholder categories; nothing invented.
+12. **Travel & Stay** — five suggestion cards (labelled), Location buttons open Google Maps, the black button changes the card smoothly; only white, black and soft green.
 13. **Contact** — three cards; call/WhatsApp only with real numbers.
 14. **Thank you** — exact wording; handwriting reveal with static fallback; the car parks fully in view; Return to Top comes last and works.
 
