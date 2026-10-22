@@ -378,11 +378,14 @@ window.WEDDING = {
     assistance: { name: null, phone: null }
   },
 
+  // Contact: three round buttons on a pearl chain; hovering (or tapping on
+  // a phone) opens each one's card with Call and WhatsApp. "label" is the
+  // short name on the button; "photo" its picture (a family photograph, or
+  // null for a pearl monogram). Names and numbers: To be provided.
   contacts: [
-    { role: "Bride's Family Representative", name: null, relationship: null, phone: null, whatsapp: null },
-    { role: "Groom's Family Representative", name: null, relationship: null, phone: null, whatsapp: null },
-    // Shown to guests only if supplied (shown as optional placeholder in preview).
-    { role: "Event Coordinator", name: null, relationship: null, phone: null, whatsapp: null, optional: true }
+    { role: "Bride's Family Representative", label: "Bride's family", photo: "assets/images/family-bride-1.webp", name: null, relationship: null, phone: null, whatsapp: null },
+    { role: "Groom's Family Representative", label: "Groom's family", photo: "assets/images/family-groom-1.webp", name: null, relationship: null, phone: null, whatsapp: null },
+    { role: "Event Coordinator", label: "Event coordinator", photo: null, name: null, relationship: null, phone: null, whatsapp: null }
   ],
 
   thankYou: {

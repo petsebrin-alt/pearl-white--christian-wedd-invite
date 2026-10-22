@@ -367,9 +367,11 @@ One large card at a time, after the couple's card video ("Sun · Mono · Earth")
 
 ### 4.13 Contact
 
-- Cards: **Bride's family representative**, **Groom's family representative**, **Event coordinator** (only rendered for guests if supplied; shown as an optional placeholder in preview).
-- Each card: name, relationship, **Call** (`tel:`) and **WhatsApp** (`https://wa.me/<number>`) buttons, rendered only when a real number exists. Until then: "Phone number — To be provided".
-- Numbers stored in international format (e.g. `+91…`); no numbers are invented.
+After the couple's "hover me" video, in black and white:
+
+- Three round buttons, each with a picture and a short name — **Bride's family**, **Groom's family** (their family photographs) and **Event coordinator** (a pearl monogram) — strung together on a pearl-and-silver-bead chain (in a row on wide screens, one under another on phones).
+- **Hover** (computer) or **tap** (phone) a button and it grows into a card: the small round picture becomes a large photograph, then the role, name, phone number and the **Call** and **WhatsApp** buttons appear. Moving away, tapping outside, × or Esc shrinks it back. One card at a time.
+- Names and numbers: To be provided. Until a number is supplied, Call and WhatsApp are shown faded with a dashed edge and do nothing; with a number, Call opens the phone and WhatsApp opens a chat with a short greeting.
 
 ### 4.14 Thank you
 
@@ -414,6 +416,7 @@ Full details in [THEME.md](THEME.md). Summary:
 | A7e | RSVP accepted | Tap **RSVP** on the envelope | The same dove lifts off and flies up off the screen in 4.6 s (wing beat 0.98 s, wavy path, body rising on each downstroke); one whoosh per beat (fades on scroll); envelope straightens 0.8 s, opens 0.75 s, card rises 0.75 s, light 0.9 s; satin sweeps across the section 1.6 s; photo develops 2 s; thank-you written in 2.4 s; details and buttons by ≈ 6 s | Thank-you shown at once, no sound | Thank-you shown if animations are unsupported |
 | A7f | Satin waves | Thank-you on screen | Continuous WebGL satin across the whole section: long folds travelling and bending, a sheen sliding over them (folds cross the screen in a few seconds) | Still satin | Plain page without WebGL |
 | A7g | Travel & Stay card changes | Black round button (or ‹ › keys, swipe) | The word dissolves letter by letter (32 ms apart) and the next rises into focus; card colour 0.9 s (white, black or soft green); photographs slide up 1 s, the next waiting blurred below; details follow | Instant change | All details in the page |
+| A7h | Contact card | Hover (computer) or tap (phone) a contact button | The button grows into the card in 0.45 s (a soft spring): the round picture becomes the photograph, the details fade in 0.14 s later; it shrinks back in 0.38 s | Card shown and hidden at once | All details in the page |
 | A8 | Overlay open/close | Button | 250 ms fade + 12 px rise | Instant | `<dialog>` fallback to fixed overlay |
 | A9 | Handwriting reveal | Thank-you enters view | 2.4 s stroke + 400 ms fill | Static text | Static text |
 | A10 | Return to top | Tap | Native smooth scroll | Instant jump | — |
@@ -558,7 +561,7 @@ v1 ships SVG/CSS versions of every decoration so the site is complete; realistic
 10. **Wishing wall** — the ring turns by itself; no card; "Other" opens its own box; a new wish appears at the top; validation works.
 11. **RSVP** — the dove sits holding the envelope; tapping RSVP sends that one dove up the page with a soft wing sound (stops on scroll); the envelope opens to the satin thank-you board; success only when saved.
 12. **Travel & Stay** — five suggestion cards (labelled), Location buttons open Google Maps, the black button changes the card smoothly; only white, black and soft green.
-13. **Contact** — three cards; call/WhatsApp only with real numbers.
+13. **Contact** — three buttons on a pearl chain; hover or tap opens each card; Call/WhatsApp work only with real numbers.
 14. **Thank you** — exact wording; handwriting reveal with static fallback; the car parks fully in view; Return to Top comes last and works.
 
 ---
