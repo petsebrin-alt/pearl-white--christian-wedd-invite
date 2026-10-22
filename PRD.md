@@ -121,7 +121,7 @@ Family and friends of both families, many on mid-range Android phones and iPhone
 5. **Meet the families** → optionally open either family tree.
 6. **Plan** using the events timeline → per-event calendar and location actions → venues section with directions.
 7. **Prepare** with dress-code guidance and the gifting note.
-8. **Respond** → leave a wish, then accept the invitation with one tap.
+8. **Respond** → leave a wish, then tap RSVP on the dove's envelope.
 9. **Logistics** → travel, accommodation and contacts.
 10. **Close** with the thank-you, the parked car and **Return to Top**.
 
@@ -336,15 +336,20 @@ Modelled on the couple's "arc dial" reference video, in black and white:
 
 ### 4.11 RSVP
 
-One invitation card with one button, as the couple asked:
+The dove brings the invitation, as in the couple's dove pictures:
 
-- **The card:** "The wedding of", **Angel & David**, the date, "10:30 am · Our Lady of Mount Carmel Cathedral", a pearl divider, "Kindly respond by" (To be provided) and **Accept Invitation**.
-- **Personal links:** `?guest=Anu%20Thomas` adds "Dear Anu Thomas," to the card and saves the acceptance under that name. Without it the RSVP sheet records "Guest (name not given)".
-- **On Accept:** a light sweeps the card, it turns over, a pearl seal is pressed on the back with a tick, "Invitation Accepted" writes itself, white rose petals burst from the seal, then "Thank you! We look forward to celebrating with you on 27 January 2027."
-- The acceptance is remembered on the device: a later visit shows the accepted side, with "See the invitation again" to turn it back.
-- There is no decline button, guest count, event list or message. Guests who cannot come use the Contact section. **Proposal:** add a small "Regretfully decline" link if the couple wants one.
-- Success shows **only** after the save is confirmed; a failure shows an error with retry and the contact fallback.
-- Demo mode keeps the acceptance in this browser only (no preview note, at the couple's request).
+- **Fly-in:** when the section scrolls into view, a white dove flies in from the left, wings beating, and settles in the middle holding the envelope ("Please join us… Angel & David · Kindly RSVP · RSVP"). A soft pulse around **RSVP** and "Tap RSVP to accept the invitation" invite the tap.
+- **Tap RSVP:**
+  - the dove takes off and flies up over the page;
+  - a flock of doves (from the couple's flock picture, plus doves with beating wings) rises from below and flies over every section to the top;
+  - the sound of their wings plays (made in the browser, no sound file) and fades as soon as the guest scrolls;
+  - the envelope straightens, its top opens, a card marked "Accepted" slides out and it all turns to light.
+- **The board:** a satin-draped frame (the couple's picture) appears; the satin gently waves. The couple's black-and-white photo (the Welcome photo) develops on it, then "Thank you for accepting our invitation" writes itself, with "We can't wait to celebrate with you.", Angel & David, the date and time, and the church. Below: **Add to Calendar**, **Get Directions** and "See the invitation again".
+- **Personal links:** `?guest=Anu%20Thomas` greets the guest ("Dear Anu Thomas,") and saves the acceptance under that name. Without it the RSVP sheet records "Guest (name not given)".
+- The acceptance is remembered on the device: a later visit shows the board; "See the invitation again" brings the dove back.
+- There is no decline button. Guests who cannot come use the Contact section. **Proposal:** add a small "Regretfully decline" link if the couple wants one.
+- Success shows **only** after the save is confirmed; a failure brings the dove back with an error and the contact fallback.
+- Reduced motion: the dove is already sitting; a tap shows the board at once (no flock, no sound, still satin).
 
 ### 4.12 Transportation and accommodation
 
@@ -399,7 +404,9 @@ Full details in [THEME.md](THEME.md). Summary:
 | A7 | Wishing wall ring turns | Automatically while on screen (5–11 s per wish), or ‹ › / swipe | 1.3 s ease-in-out turn along the ring; the old wish blurs out, the new one appears word by word (45 ms per word) | No automatic turn; arrows change the wish at once | Text always in the DOM |
 | A7b | New wish joins | Successful save | Scroll to the ring, then it spins up to 3 places to bring the new wish to the top, with a soft glow | Shown at the top at once | — |
 | A7c | Roses sway | While the section is on screen | Two rose layers drift and sway (11 s and 15 s, alternating) with a light 5 s breeze | Still roses | Plain linen if the image fails |
-| A7d | RSVP accepted | Tap **Accept Invitation** | Light sweep 0.75 s; card turns 1.2 s; seal stamp 0.55 s; tick 0.6 s; "Invitation Accepted" written 1.4 s; 22 rose petals 2.6–3.8 s | Accepted side shown at once | Text always in the DOM |
+| A7d | Dove flies in | RSVP stage 45 % in view (once per visit) | 2.7 s flight from the left, wings beating every 0.17 s; wings fold, it turns and settles holding the envelope (0.4 s cross-fade) | Dove shown sitting | Envelope picture only |
+| A7e | RSVP accepted | Tap **RSVP** on the envelope | Dove takes off 2.1 s; 15–22 doves rise 2.3–4.2 s each over 2 s; wing sound 4.6 s (fades on scroll); envelope straightens 0.7 s, opens 0.7 s, card rises 0.7 s, light 0.9 s; board appears, photo develops 2 s, thank-you written in 2.4 s, details and buttons by ≈ 6 s | Board shown at once, no sound | Board shown if animations are unsupported |
+| A7f | Satin waves | Board on screen | Continuous WebGL ripple and moving light on the satin only (frame, spray and pen still) | Still picture | Still picture without WebGL |
 | A8 | Overlay open/close | Button | 250 ms fade + 12 px rise | Instant | `<dialog>` fallback to fixed overlay |
 | A9 | Handwriting reveal | Thank-you enters view | 2.4 s stroke + 400 ms fill | Static text | Static text |
 | A10 | Return to top | Tap | Native smooth scroll | Instant jump | — |
@@ -542,7 +549,7 @@ v1 ships SVG/CSS versions of every decoration so the site is complete; realistic
 8. **Gifting** — envelope opens/closes; message wording exact; no registry.
 9. **Venues** — church, reception and other venue placeholders; event cards link to them.
 10. **Wishing wall** — the ring turns by itself; no card; "Other" opens its own box; a new wish appears at the top; validation works.
-11. **RSVP** — one card, one **Accept Invitation** button; the acceptance animation plays; success only when saved.
+11. **RSVP** — the dove flies in with the envelope; tapping RSVP sends the dove and a flock up the page with wing sound (stops on scroll); the envelope opens to the satin thank-you board; success only when saved.
 12. **Travel** — seven placeholder categories; nothing invented.
 13. **Contact** — three cards; call/WhatsApp only with real numbers.
 14. **Thank you** — exact wording; handwriting reveal with static fallback; the car parks fully in view; Return to Top comes last and works.
