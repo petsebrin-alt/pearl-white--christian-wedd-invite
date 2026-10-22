@@ -1,11 +1,10 @@
 /* =============================================================================
    11. RSVP — the dove brings the invitation (the couple's dove pictures).
-   When guests scroll to it, a white dove flies in from the left, wings
-   beating, and settles in the middle holding the envelope ("Please join
-   us… Angel & David · Kindly RSVP"). Tapping RSVP on the envelope:
-     · the dove takes off and flies up over the page, and a whole flock of
-       doves rises after it to the top of the screen, with the sound of
-       their wings (the sound fades as soon as the guest scrolls);
+   A white dove sits in the middle holding the envelope ("Please join us…
+   Angel & David · Kindly RSVP"). Tapping RSVP on the envelope:
+     · the same dove takes off, wings beating, and flies up over the page
+       to the top, with a soft sound of wings (it fades as soon as the
+       guest scrolls);
      · the envelope straightens, its top opens, a card slides out and it
        all dissolves in light;
      · in its place a satin-draped frame appears (the satin gently waving),
@@ -22,9 +21,8 @@
   'use strict';
   var AD = window.AD;
   var KEY = 'ad-rsvp-accepted';
-  var V = '?v=20261022c';
+  var V = '?v=20261022d';
   var IMG = 'assets/images/dove/';
-  var FLOCK = 8;                       // flock-1 … flock-8.webp (cut from the couple's picture)
   // Inside dove-envelope.webp (fractions of its width / height)
   var BODY = { x: .64, y: .61 };       // the sitting dove's body
   var ENV = { cx: .2859, cy: .4398 };  // centre of the envelope (tilted 7.5°)
@@ -58,52 +56,41 @@
     '</span>';
     return el;
   }
-  // One of the doves from the couple's flock picture, fluttering.
-  function flockDove(k) {
-    var el = document.createElement('span');
-    el.className = 'dv-s';
-    el.innerHTML = '<img src="' + IMG + 'flock-' + k + '.webp' + V + '" alt="" draggable="false">';
-    return el;
-  }
 
-  /* ---------- The sound of wings (made in the browser, no sound file) ----------
-     Each dove is a run of soft wing-claps (filtered noise bursts, 6–11 per
-     second) that fade as it flies away. Starts on the guest's tap. */
+  /* ---------- The sound of one dove's wings (made in the browser, no file) ----------
+     Soft wing-claps (filtered noise bursts, about 8 a second, slowing a
+     little) over a faint rush of air, quieter as the dove flies away.
+     Kept low: a gentle, natural flutter. Starts on the guest's tap. */
   function wings(seconds) {
     var Ctx = window.AudioContext || window.webkitAudioContext;
     if (!Ctx) return null;
     var ctx;
     try { ctx = new Ctx(); } catch (e) { return null; }
     if (ctx.state === 'suspended' && ctx.resume) ctx.resume();
+    var LOUD = .22;
     var out = ctx.createGain(), t0 = ctx.currentTime + .03, end = t0 + seconds;
     out.connect(ctx.destination);
     out.gain.setValueAtTime(0, t0);
-    out.gain.linearRampToValueAtTime(.85, t0 + .2);
-    out.gain.setValueAtTime(.85, end - 1.6);
+    out.gain.linearRampToValueAtTime(LOUD, t0 + .08);
+    out.gain.setValueAtTime(LOUD, t0 + seconds * .45);
     out.gain.linearRampToValueAtTime(0, end);
     var sr = ctx.sampleRate, buf = ctx.createBuffer(1, sr, sr), d = buf.getChannelData(0);
     for (var i = 0; i < sr; i++) d[i] = Math.random() * 2 - 1;
-    // a soft rush of air under the claps
     var air = ctx.createBufferSource(); air.buffer = buf; air.loop = true;
-    var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 520;
-    var ag = ctx.createGain(); ag.gain.setValueAtTime(0, t0); ag.gain.linearRampToValueAtTime(.16, t0 + .6); ag.gain.linearRampToValueAtTime(0, end - .4);
+    var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 450;
+    var ag = ctx.createGain(); ag.gain.setValueAtTime(0, t0); ag.gain.linearRampToValueAtTime(.08, t0 + .3); ag.gain.linearRampToValueAtTime(0, end);
     air.connect(lp); lp.connect(ag); ag.connect(out); air.start(t0); air.stop(end);
-    for (var b = 0; b < 12; b++) {
-      var start = t0 + (b < 3 ? b * .06 : rnd(.15, 1.7)), dur = rnd(1.4, 3), rate = rnd(6, 11);
-      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = rnd(650, 1500); bp.Q.value = .8;
-      var bg = ctx.createGain(); bg.gain.value = (b < 3 ? .55 : .3) * rnd(.7, 1.2);
-      bp.connect(bg);
-      if (ctx.createStereoPanner) { var pan = ctx.createStereoPanner(); pan.pan.value = rnd(-.7, .7); bg.connect(pan); pan.connect(out); }
-      else bg.connect(out);
-      for (var t = start; t < Math.min(start + dur, end - .05); t += (1 / rate) * rnd(.85, 1.15)) {
-        var s = ctx.createBufferSource(), g = ctx.createGain(), away = 1 - (t - start) / dur * .75;
-        s.buffer = buf;
-        g.gain.setValueAtTime(0, t);
-        g.gain.linearRampToValueAtTime(away, t + .006);
-        g.gain.exponentialRampToValueAtTime(.001, t + rnd(.06, .11));
-        s.connect(g); g.connect(bp);
-        s.start(t, rnd(0, .8), .14);
-      }
+    var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 950; bp.Q.value = .9;
+    bp.connect(out);
+    for (var t = t0, k = 0; t < end - .1; k++) {
+      var s = ctx.createBufferSource(), g = ctx.createGain(), away = 1 - (t - t0) / seconds * .8;
+      s.buffer = buf;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(away, t + .008);
+      g.gain.exponentialRampToValueAtTime(.001, t + rnd(.07, .1));
+      s.connect(g); g.connect(bp);
+      s.start(t, rnd(0, .8), .13);
+      t += (1 / (8.5 - k * .06)) * rnd(.92, 1.08);     // the beats slow a little as it climbs
     }
     var done = false;
     function close() { if (done) return; done = true; setTimeout(function () { try { ctx.close(); } catch (e) {} }, 900); }
@@ -190,7 +177,7 @@
         '<div class="rv" data-rv>' +
           (guest ? '<p class="rv-dear">Dear ' + AD.esc(guest) + ',</p>' : '') +
           // The dove with the envelope
-          '<div class="rv-scene" data-scene>' +
+          '<div class="rv-scene reveal" data-scene>' +
             '<div class="rv-stage" data-stage>' +
               '<img class="rv-sit" src="' + IMG + 'dove-envelope.webp' + V + '" width="1000" height="693" decoding="async" ' +
                 'alt="A white dove holding the invitation: Please join us… ' + AD.esc(C.couple.bride) + ' &amp; ' + AD.esc(C.couple.groom) + '. Kindly RSVP.">' +
@@ -241,7 +228,7 @@
       var tap = el.querySelector('[data-tap]'), status = el.querySelector('[data-status]');
       var board = el.querySelector('[data-board]'), frameEl = el.querySelector('[data-frame]');
       var still = AD.reducedMotion() || !Element.prototype.animate;
-      var busy = false, flier = null, wave = null;
+      var busy = false, wave = null;
 
       /* ---------- The board ---------- */
       function startWave() {
@@ -268,7 +255,6 @@
         scene.hidden = false;
         rv.classList.remove('is-accepted', 'is-opening', 'is-off', 'is-landed');
         if (stage.getAnimations) stage.getAnimations({ subtree: true }).forEach(function (a) { a.cancel(); });
-        if (flier) { flier.remove(); flier = null; }
         flap.style.zIndex = '';
       }
 
@@ -282,95 +268,26 @@
         if (c) AD.calendar.open(c, cal);
       });
 
-      /* ---------- The dove flies in and settles ---------- */
-      function land() {
-        rv.classList.add('is-landed');
-      }
-      function flyIn() {
-        if (still) { land(); return; }
-        var W = stage.clientWidth, H = stage.clientHeight, dw = W * .7, dh = dw * DOVE.ratio;
-        var lx = BODY.x * W - (1 - DOVE.bx) * dw, ly = BODY.y * H - DOVE.by * dh;   // facing right
-        var off = stage.getBoundingClientRect().left + dw + 20;                    // just off the left of the screen
-        flier = dove('is-right is-flying rv-flier');
-        flier.style.setProperty('--dw', dw + 'px');
-        flier.style.setProperty('--beat', '.17s');
-        stage.appendChild(flier);
-        var a = flier.animate([
-          { transform: 'translate(' + (-off) + 'px,' + (-.42 * H) + 'px) rotate(-6deg) scale(.5)' },
-          { transform: 'translate(' + (.02 * W - .4 * dw) + 'px,' + (-.55 * H) + 'px) rotate(-4deg) scale(.72)', offset: .45 },
-          { transform: 'translate(' + (lx - .07 * W) + 'px,' + (ly - .2 * H) + 'px) rotate(4deg) scale(.92)', offset: .8 },
-          { transform: 'translate(' + lx + 'px,' + ly + 'px) rotate(0deg) scale(1)' }
-        ], { duration: 2700, easing: 'cubic-bezier(.25,.1,.35,1)', fill: 'forwards' });
-        a.finished.then(function () {
-          // wings fold, it turns to face the guest's left, and it is holding the envelope
-          flier.classList.remove('is-flying');
-          flier.classList.add('is-folding');
-          return wait(240);
-        }).then(function () {
-          flier.classList.remove('is-right');
-          return wait(160);
-        }).then(function () {
-          land();
-          var f = flier; flier = null;
-          f.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 380, fill: 'forwards' }).finished.then(function () { f.remove(); });
-        });
-      }
-      function ready(img) {
-        return img.complete ? Promise.resolve() : new Promise(function (r) { img.addEventListener('load', r, { once: true }); img.addEventListener('error', r, { once: true }); });
-      }
-      var preload = ['dove-body', 'dove-near', 'dove-far'].map(function (n) { var i = new Image(); i.src = IMG + n + '.webp' + V; return i; });
-      function whenReady(fn) { Promise.all([sit].concat(preload).map(ready)).then(fn); }
-
-      function armFlyIn() {
-        if (still || !('IntersectionObserver' in window)) { land(); return; }
-        var io = new IntersectionObserver(function (en) {
-          if (!en[0].isIntersecting || en[0].intersectionRatio < .45) return;
-          io.disconnect();
-          whenReady(flyIn);
-        }, { threshold: [0, .45] });
-        io.observe(stage);
-      }
+      /* ---------- The dove sits holding the envelope ---------- */
+      function land() { rv.classList.add('is-landed'); }
+      // the flying dove's pictures, ready before the tap
+      ['dove-body', 'dove-near', 'dove-far'].forEach(function (n) { var i = new Image(); i.src = IMG + n + '.webp' + V; });
 
       /* ---------- Tap RSVP ---------- */
       function takeOff(sky) {
-        // the dove leaves the envelope and flies up, off the top of the screen
+        // the same dove leaves the envelope and flies up, off the top of the screen
         var r = stage.getBoundingClientRect(), dw = r.width * .7, dh = dw * DOVE.ratio;
         var x = r.left + BODY.x * r.width - DOVE.bx * dw, y = r.top + BODY.y * r.height - DOVE.by * dh;
         var d = dove('is-flying');
-        d.style.setProperty('--dw', dw + 'px'); d.style.setProperty('--beat', '.1s');
+        d.style.setProperty('--dw', dw + 'px'); d.style.setProperty('--beat', '.12s');
         sky.appendChild(d);
-        d.animate([
-          { transform: 'translate(' + x + 'px,' + y + 'px) rotate(0deg) scale(1)' },
-          { transform: 'translate(' + (x - .12 * innerWidth) + 'px,' + (y - .22 * innerHeight) + 'px) rotate(-10deg) scale(1.08)', offset: .35 },
-          { transform: 'translate(' + (x - .3 * innerWidth) + 'px,' + (-dh * 1.6) + 'px) rotate(-18deg) scale(1.25)' }
-        ], { duration: 2100, easing: 'cubic-bezier(.4,0,.75,1)', fill: 'forwards' });
-      }
-      function flock(sky) {
-        // many doves rise from below and fly up over every section to the top
-        var vw = innerWidth, vh = innerHeight, phone = vw < 600, n = phone ? 15 : 22, longest = 0;
-        var r = stage.getBoundingClientRect();
-        for (var i = 0; i < n; i++) {
-          var puppet = i % 3 === 0, size = rnd(phone ? 46 : 64, phone ? 120 : 170);
-          var right = Math.random() < .5;
-          var el = puppet ? dove('is-flying' + (right ? ' is-right' : '')) : flockDove(1 + (i % FLOCK));
-          el.style.setProperty('--dw', size + 'px');
-          el.style.setProperty('--beat', rnd(.08, .13).toFixed(3) + 's');
-          sky.appendChild(el);
-          var fromStage = i < 5;
-          var x0 = fromStage ? r.left + rnd(.2, .8) * r.width - size / 2 : rnd(-.1, 1) * vw - size / 2;
-          var y0 = fromStage ? r.top + rnd(.3, .7) * r.height : vh + rnd(20, 160);
-          var x1 = x0 + (right ? 1 : -1) * rnd(.1, .45) * vw, y1 = -size * 1.4 - rnd(0, 120);
-          var sway = rnd(-70, 70), rot = puppet ? (right ? 1 : -1) * rnd(10, 24) : rnd(-12, 12);
-          var dur = rnd(2300, 4200), delay = fromStage ? i * 110 : rnd(250, 2000);
-          longest = Math.max(longest, dur + delay);
-          el.animate([
-            { transform: 'translate(' + x0 + 'px,' + y0 + 'px) rotate(' + rot + 'deg) scale(.8)', opacity: 0 },
-            { opacity: 1, offset: .07 },
-            { transform: 'translate(' + ((x0 + x1) / 2 + sway) + 'px,' + ((y0 + y1) / 2) + 'px) rotate(' + (rot * .6) + 'deg) scale(1)', opacity: 1, offset: .5 },
-            { transform: 'translate(' + x1 + 'px,' + y1 + 'px) rotate(' + rot + 'deg) scale(1.12)', opacity: 1 }
-          ], { duration: dur, delay: delay, easing: 'cubic-bezier(.3,.1,.6,.95)', fill: 'both' });
-        }
-        return longest;
+        var a = d.animate([
+          { transform: 'translate(' + x + 'px,' + y + 'px) rotate(0deg) scale(1)', opacity: 0 },
+          { opacity: 1, offset: .06 },
+          { transform: 'translate(' + (x - .06 * innerWidth) + 'px,' + (y - .2 * innerHeight) + 'px) rotate(-8deg) scale(1.04)', offset: .3 },
+          { transform: 'translate(' + (x - .14 * innerWidth) + 'px,' + (-dh * 1.4) + 'px) rotate(-14deg) scale(1.12)', opacity: 1 }
+        ], { duration: 2600, easing: 'cubic-bezier(.4,0,.7,1)', fill: 'forwards' });
+        return a.finished;
       }
       function openEnvelope() {
         // the envelope straightens and comes forward, opens, a card slides out, and it all turns to light
@@ -406,7 +323,7 @@
           return;
         }
         // Sound first, while the tap still counts as the guest's own action.
-        var sound = wings(4.6), y0 = window.scrollY;
+        var sound = wings(2.6), y0 = window.scrollY;
         function onScroll() { if (Math.abs(window.scrollY - y0) > 40 && sound) { sound.fade(); sound = null; window.removeEventListener('scroll', onScroll); } }
         window.addEventListener('scroll', onScroll, { passive: true });
         setTimeout(function () { window.removeEventListener('scroll', onScroll); }, 6000);
@@ -416,9 +333,7 @@
         sky.setAttribute('aria-hidden', 'true');
         document.body.appendChild(sky);
         rv.classList.add('is-off');                   // the sitting dove gives way to the one taking off
-        takeOff(sky);
-        var longest = flock(sky);
-        setTimeout(function () { sky.remove(); }, Math.max(longest, 2200) + 300);
+        takeOff(sky).then(function () { sky.remove(); }, function () { sky.remove(); });
 
         Promise.all([openEnvelope(), save]).then(function (res) {
           var r = res[1];
@@ -438,15 +353,15 @@
       }
       tap.addEventListener('click', accept);
 
-      el.querySelector('[data-again]').addEventListener('click', function () {
+      el.querySelector('[data-again]').addEventListener('click', function (e) {
         showScene();
-        if (still) land(); else whenReady(flyIn);
-        tap.focus({ preventScroll: true });
+        land();
+        if (!e.detail) tap.focus({ preventScroll: true });   // keyboard users land on RSVP
       });
 
       // A guest who has already accepted on this device sees the board.
       if (remembered()) showBoard(false);
-      else armFlyIn();
+      else land();
     }
   });
 })();
