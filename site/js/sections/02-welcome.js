@@ -1,8 +1,9 @@
 /* =============================================================================
    2. WELCOME INVITATION — the couple photograph in black and white, modelled
-   on the couple's slideshow reference video: it drifts slowly and moves
-   with a gentle parallax as guests scroll, then fades into the paper, with
-   the invitation over its lighter lower part (pearl flowers at the corners).
+   on the couple's slideshow reference video: it fills the section from top
+   to bottom (the couple and the dress), kept faint so the invitation over it
+   reads clearly; it drifts slowly and moves with a gentle parallax as guests
+   scroll (pearl flowers at the corners).
    With more than one photo in content.js → couplePhotos they crossfade.
    As guests scroll down to it, the photo slides down from the top into its
    place and then the invitation appears letter by letter.
@@ -89,7 +90,7 @@
         ticking = false;
         var r = box.getBoundingClientRect();
         if (r.bottom < -200 || r.top > window.innerHeight + 200) return;
-        var y = Math.max(-r.height * 0.12, Math.min(r.height * 0.12, -r.top * DEPTH));
+        var y = Math.max(-r.height * 0.05, Math.min(r.height * 0.05, -r.top * DEPTH));
         par.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0)';
       }
       window.addEventListener('scroll', function () {

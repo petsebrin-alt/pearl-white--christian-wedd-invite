@@ -39,13 +39,15 @@ body {
   will-change: transform;
   user-select: none;
 }
-.deco--big { --dw: clamp(92px, 24vw, 200px); }
-.deco--spray { --dw: clamp(110px, 30vw, 240px); }
-.deco--small { --dw: clamp(54px, 14vw, 110px); }
-.deco--drop { --dw: clamp(34px, 9vw, 64px); }
+.deco--big { --dw: clamp(78px, 20vw, 170px); }
+.deco--spray { --dw: clamp(96px, 26vw, 210px); }
+.deco--small { --dw: clamp(50px, 13vw, 100px); }
+.deco--drop { --dw: clamp(32px, 8.5vw, 60px); }
 .deco { width: var(--dw); }
-.deco--right { right: calc(var(--dw) * var(--off) * -1); }
-.deco--left { left: calc(var(--dw) * var(--off) * -1); --fx: -1; }
+/* Each flower shows whole, never cut by the edge of the screen (with room
+   for its turn), at the side of the section. */
+.deco--right { right: calc(var(--dw) * .1 + 4px); }
+.deco--left { left: calc(var(--dw) * .1 + 4px); --fx: -1; }
 
 /* ---------- Scroll reveal: a soft focus-pull ---------- */
 .motion-ok .reveal {

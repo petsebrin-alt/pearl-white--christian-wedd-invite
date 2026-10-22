@@ -374,8 +374,7 @@ window.WEDDING = {
           { name: "Pathiramanal Island", note: "A bird island in Vembanad Lake, reached by boat.", map: "Pathiramanal Island" }
         ]
       }
-    ],
-    assistance: { name: null, phone: null }
+    ]
   },
 
   // Contact: three round buttons on a pearl chain; hovering (or tapping on

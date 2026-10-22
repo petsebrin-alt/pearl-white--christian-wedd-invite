@@ -63,42 +63,31 @@
   transition: opacity .35s;
 }
 .op-monogram.is-gone { opacity: 0; }
+/* Only the logo before the car: a tall A and D, stretched upwards, with a small & */
 .op-monogram__mark {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0;
+  margin: .4em 0;
   font-family: var(--font-script);
-  font-size: clamp(5.2rem, 3.6rem + 7vw, 8.5rem);
+  font-size: clamp(5.6rem, 3.8rem + 8vw, 9.4rem);
   line-height: .9;
   color: var(--ink);
 }
-.op-monogram__a { transform: translateY(-.12em); }
-.op-monogram__d { transform: translateY(.16em); }
-.op-monogram__amp { margin: .5em .1em 0; font-family: var(--font-display); font-style: italic; font-size: .3em; color: var(--muted); }
-.op-monogram__names { margin: 1.4rem 0 .55rem; font: 500 .72rem/1.3 var(--font-body); letter-spacing: .34em; margin-right: -.34em; text-transform: uppercase; color: var(--charcoal); }
-.op-monogram__date {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: .75rem;
-  margin: 0;
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1rem;
-  letter-spacing: .2em;
-  font-variant-numeric: lining-nums;
-  color: var(--muted);
-}
-.op-rule { width: 2.2rem; height: 1px; background: #cfc7b8; }
+.op-monogram__a, .op-monogram__d { display: inline-block; transform-origin: 50% 55%; }
+.op-monogram__a { transform: translateY(-.1em) scale(.84, 1.72); }
+.op-monogram__d { transform: translateY(.14em) scale(.84, 1.72); }
+.op-monogram__amp { margin: .55em .02em 0; font-family: var(--font-display); font-style: italic; font-size: .26em; color: var(--muted); }
 
-/* Names: uncovered from the top down behind the car (JS moves --r) */
+/* Names: appear behind the car (JS moves the --r edge) and travel with it a
+   little before easing to a stop in their place (JS moves the block) */
 .op-names {
   --r: -200px;
+  will-change: transform;
   -webkit-mask-image: linear-gradient(to bottom, #000 calc(var(--r) - 44px), transparent var(--r));
   mask-image: linear-gradient(to bottom, #000 calc(var(--r) - 44px), transparent var(--r));
 }
-.op-names.is-revealed { -webkit-mask-image: none; mask-image: none; }
+.op-names.is-revealed { -webkit-mask-image: none; mask-image: none; transform: none !important; transition: transform .6s cubic-bezier(.2, .7, .3, 1); }
 .op-kicker {
   margin: 0 -.36em clamp(1rem, 3vh, 1.9rem) 0;
   font: 500 .72rem/1 var(--font-body);
@@ -242,7 +231,7 @@
   height: var(--trim);
   margin-top: calc(var(--trim) / -2);
   transform-origin: 0 50%;
-  background: url("../assets/images/lace-pearl-trim.webp?v=20261022g") repeat-x 0 50% / auto 100%;
+  background: url("../assets/images/lace-pearl-trim.webp?v=20261022i") repeat-x 0 50% / auto 100%;
 }
 
 /* Light: a glow from the seal, a sheen sweeping the lace, pearls sparkling. */
@@ -407,8 +396,10 @@
 .section--welcome { padding-top: calc(var(--header-h) + clamp(3rem, 7vw, 4.5rem)); }
 
 /* The couple photograph (as in the reference video): black and white,
-   drifting slowly and moving with a gentle parallax, fading into the paper,
-   with the invitation over its lighter lower part. */
+   drifting slowly and moving with a gentle parallax. It fills the whole
+   section from top to bottom — the couple and the dress — kept faint so the
+   invitation over it reads clearly. */
+.section--welcome:has(.wel--photo) { padding-block: 0; }
 .wel { position: relative; width: min(100%, 36rem); margin: 0 auto; text-align: center; }
 @media (max-width: 599px) {
   /* Edge to edge on phones */
@@ -417,22 +408,22 @@
 }
 .wel-photo {
   position: absolute;
-  left: 0; right: 0; top: 0;
-  aspect-ratio: 2 / 3;
+  inset: 0;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, .55) 74%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, .55) 74%, transparent 100%);
+  /* faint all the way down, a little stronger where the faces are, and soft at the ends */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, .56) 4%, rgba(0, 0, 0, .44) 28%, rgba(0, 0, 0, .27) 46%, rgba(0, 0, 0, .24) 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, .56) 4%, rgba(0, 0, 0, .44) 28%, rgba(0, 0, 0, .27) 46%, rgba(0, 0, 0, .24) 90%, transparent 100%);
 }
 @media (min-width: 600px) {
   /* Wider screens: the sides fade softly into the paper too */
   .wel-photo {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, .55) 74%, transparent 100%), linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, .56) 4%, rgba(0, 0, 0, .44) 28%, rgba(0, 0, 0, .27) 46%, rgba(0, 0, 0, .24) 90%, transparent 100%), linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
     -webkit-mask-composite: source-in;
-    mask-image: linear-gradient(to bottom, #000 0%, #000 52%, rgba(0, 0, 0, .55) 74%, transparent 100%), linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, .56) 4%, rgba(0, 0, 0, .44) 28%, rgba(0, 0, 0, .27) 46%, rgba(0, 0, 0, .24) 90%, transparent 100%), linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%);
     mask-composite: intersect;
   }
 }
-.wel-photo__par { position: absolute; left: 0; right: 0; top: -12%; height: 124%; will-change: transform; }
+.wel-photo__par { position: absolute; left: 0; right: 0; top: -6%; height: 112%; will-change: transform; }
 .wel-shot { position: absolute; inset: 0; opacity: 0; transition: opacity 1.8s ease-in-out; }
 .wel-shot.is-active { opacity: 1; }
 .wel-shot img {
@@ -440,7 +431,7 @@
   height: 100%;
   max-width: none;
   object-fit: cover;
-  object-position: 50% 30%;
+  object-position: 50% 0%;
   filter: grayscale(1) contrast(.94) brightness(1.05);
   transform: scale(1.04);
 }
@@ -465,16 +456,10 @@
 .motion-ok .wel--photo.is-waiting .wel-names .wel-name { opacity: 0; filter: blur(10px); transform: scale(1.06); }
 .motion-ok .wel--photo.is-waiting .wel-floral { opacity: 0; }
 .motion-ok .wel-floral { transition: opacity 1.4s ease .6s; }
-/* Soft white haze over the lower part, where the text sits */
-.wel-photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(247, 245, 241, .06) 0%, rgba(247, 245, 241, .14) 34%, rgba(247, 245, 241, .78) 54%, rgba(247, 245, 241, .92) 100%);
-}
 
 .wel-body { position: relative; z-index: 1; padding: clamp(3rem, 8vw, 4rem) var(--gutter) clamp(2.5rem, 7vw, 3.5rem); }
-.wel--photo .wel-body { padding-top: 76%; }   /* % of the width: text starts on the lighter lower part of the photo */
+.wel--photo .wel-body { padding: 70% var(--gutter) clamp(4rem, 10vw, 6rem); }   /* % of the width: the faces show above the invitation */
+@media (min-width: 600px) { .wel--photo .wel-body { padding-top: calc(var(--header-h) + 56%); } }
 .wel-names .wel-name { display: block; }
 /* The names come slowly into focus, as in the video */
 .motion-ok .wel-names .wel-name { opacity: 0; filter: blur(10px); transform: scale(1.06); transition: opacity 1.4s ease, filter 1.6s ease, transform 2.2s ease; }
@@ -501,9 +486,9 @@
 .wel-floral img { position: absolute; max-width: none; height: auto; }
 /* Top-left spray: a zero-height anchor at the start of the text */
 .wel-floral--tl { position: relative; height: 0; }
-.wel-floral--tl img { top: -2.5rem; left: calc(var(--gutter) * -1 - 4px); width: clamp(110px, 30vw, 190px); transform: scaleX(-1); }
+.wel-floral--tl img { top: -2.5rem; left: 0; width: clamp(100px, 27vw, 180px); transform: scaleX(-1); }
 .wel--photo .wel-floral--tl img { top: -6rem; }
-.wel-floral--br { position: absolute; right: -10px; bottom: -6.6rem; width: clamp(90px, 25vw, 150px); aspect-ratio: 1; }
+.wel-floral--br { position: absolute; right: 10px; bottom: -2.4rem; width: clamp(70px, 18vw, 118px); aspect-ratio: 1; }
 .wel-floral--br .pf--bloom { right: 0; bottom: 0; width: 100%; transform: rotate(-18deg); }
 .wel-floral--br .pf--sprig { right: 78%; bottom: 46%; width: 52%; transform: rotate(-24deg); }
 .invite-card__cross { width: 22px; height: 33px; margin: 0 auto 1.4rem; color: #4a4741; }
@@ -713,7 +698,7 @@
   height: 12px;
   margin-top: -6px;
   transform-origin: 0 50%;
-  background: url("../assets/images/bead-chain.webp?v=20261022g") repeat-x left center / 24px 12px;
+  background: url("../assets/images/bead-chain.webp?v=20261022i") repeat-x left center / 24px 12px;
   filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18));
 }
 .cd-tile { display: flex; flex-direction: column; align-items: center; gap: .25rem; min-width: 0; }
@@ -1246,7 +1231,7 @@
 .ww-bg__roses {
   position: absolute;
   inset: -7%;
-  background: url("../assets/images/white-roses.webp?v=20261022g") 8% 50% / auto 100% repeat-x;
+  background: url("../assets/images/white-roses.webp?v=20261022i") 8% 50% / auto 100% repeat-x;
   will-change: transform, opacity;
 }
 .ww-bg__roses--b { opacity: .3; background-position: 62% 20%; transform: rotate(180deg) scale(1.14); }
@@ -1670,7 +1655,6 @@
   .tv__count { position: static; margin-left: .4rem; }
   .tv__photos { aspect-ratio: auto; height: calc(100% + 2rem); margin-bottom: -2rem; border-radius: 14px 14px 0 0; }
 }
-.tv-help { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; align-items: center; margin: 1.4rem 0 0; color: var(--muted); }
 
 /* =============================================================================
    13. CONTACT — three round buttons with pictures on a pearl-and-bead chain;
@@ -1682,10 +1666,10 @@
 .ct-row { display: flex; flex-direction: column; align-items: center; margin: 0 auto; padding: 0; list-style: none; max-width: 60rem; }
 .ct-item { position: relative; flex: none; display: flex; justify-content: center; }
 /* the pearl chain between the buttons (pearls and silver beads) */
-.ct-chain { width: 15px; height: 46px; background: url("../assets/images/bead-chain-v.webp?v=20261022g") center top / 15px auto repeat-y; filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18)); }
+.ct-chain { width: 15px; height: 46px; background: url("../assets/images/bead-chain-v.webp?v=20261022i") center top / 15px auto repeat-y; filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18)); }
 @media (min-width: 720px) {
   .ct-row { flex-direction: row; justify-content: center; }
-  .ct-chain { flex: 0 1 130px; width: auto; min-width: 40px; height: 16px; background: url("../assets/images/bead-chain.webp?v=20261022g") left center / auto 16px repeat-x; }
+  .ct-chain { flex: 0 1 130px; width: auto; min-width: 40px; height: 16px; background: url("../assets/images/bead-chain.webp?v=20261022i") left center / auto 16px repeat-x; }
 }
 /* the button: a round picture and a name */
 .ct-pill {

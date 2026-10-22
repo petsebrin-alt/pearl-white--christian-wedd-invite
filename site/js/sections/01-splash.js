@@ -7,12 +7,13 @@
    Open:  light blooms from the seal, a sheen sweeps the lace and the pearls
           sparkle; then, as in the reference video, the side flaps fold away,
           followed by the top flap (carrying the seal) and the bottom flap,
-          revealing the card: monogram + names + date, with the front of the
-          wedding car peeking in at the top.
+          revealing the card: only the tall, stretched A & D, with the front
+          of the wedding car peeking in at the top.
    Drive: the car (seen from above) glides straight down the invitation at
           one steady, smooth speed — no speeding up or slowing down —
-          sweeping the monogram away under it and uncovering behind it,
-          from the top down:
+          sweeping the A & D away under it. Behind it the names appear, from
+          the top down, and travel with the car for a moment before easing
+          to a stop in their place (as in the reference video):
           The Wedding of · Angel & David · Save the Date · 27.JAN.2027
    Then the opening stays as the first screen and guests scroll down.
    Reduced motion or a missing car image: the final text appears at once.
@@ -28,6 +29,9 @@
   var STEPS = { open: 1200, done: 3450 };
   var CY = 0.47;      // where the flaps meet (fraction of the height)
   var CAR_GO = 150;   // the car sets off this soon after the flaps start to open (no waiting)
+  // The names travel with the car: the block moves at FOLLOW × the car's
+  // speed while it is being uncovered, then eases to a stop over SETTLE px.
+  var FOLLOW = 0.36, SETTLE = 38;
   var MON = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   var splash, env, btn, car, mono, names, cue;
@@ -44,12 +48,10 @@
     var c = C.couple || {}, date = AD.weddingDate();
     set('initial-bride', (c.bride || '').charAt(0));
     set('initial-groom', (c.groom || '').charAt(0));
-    set('names-caps', c.bride + ' & ' + c.groom);
     set('bride', c.bride);
     set('groom', c.groom);
     if (AD.has(date)) {
       var p = date.split('-');
-      set('date-dots', p[2] + ' · ' + p[1] + ' · ' + p[0]);
       set('date', p[2] + '.' + MON[Number(p[1]) - 1] + '.' + p[0]);
     }
     btn.setAttribute('aria-label', 'Open the wedding invitation of ' + c.bride + ' and ' + c.groom);
@@ -57,6 +59,7 @@
 
   /* ---------- Geometry ---------- */
   function measure() {
+    names.style.transform = '';
     var sr = splash.getBoundingClientRect();
     var monoTop = mono.getBoundingClientRect().top - sr.top;
     var ch = car.offsetHeight;
@@ -67,8 +70,23 @@
       yStart: peek - ch,
       yEnd: sr.height + 30,
       monoTop: monoTop,
-      namesTop: names.getBoundingClientRect().top - sr.top
+      namesTop: names.getBoundingClientRect().top - sr.top,
+      namesH: names.offsetHeight
     };
+    // How far above its place the block starts, so that it has just been
+    // fully uncovered when it begins to ease to a stop.
+    geo.lead = SETTLE + FOLLOW * geo.namesH / (1 - FOLLOW);
+  }
+
+  // Where the names block is (px above its place) when the car's rear is at r.
+  function namesOffset(r) {
+    var start = geo.namesTop - geo.lead;          // the rear reaches the block's first line here
+    if (r <= start) return -geo.lead;
+    var ride = (geo.lead - SETTLE) / FOLLOW;      // car distance while it follows the car
+    var d = r - start;
+    if (d <= ride) return -geo.lead + FOLLOW * d;
+    var k = Math.min(1, (d - ride) / (2 * SETTLE / FOLLOW));   // then eases out, starting at the same speed
+    return -SETTLE * (1 - k) * (1 - k);
   }
 
   function carTransform(y) { return 'translate3d(-50%, ' + y.toFixed(2) + 'px, 0)'; }
@@ -76,12 +94,14 @@
     car.style.transform = carTransform(y);
     masks(y);
   }
-  // The monogram goes under the car and the names appear behind it.
+  // The monogram goes under the car; the names appear behind it and travel with it.
   function masks(y) {
     var front = y + geo.ch * 0.99;   // front bumper
     var rear = y + geo.ch * 0.01;    // rear of the car
+    var o = namesOffset(rear);
     mono.style.setProperty('--f', (front - geo.monoTop - 12).toFixed(1) + 'px');
-    names.style.setProperty('--r', (rear - geo.namesTop + 8).toFixed(1) + 'px');
+    names.style.transform = 'translate3d(0,' + o.toFixed(2) + 'px,0)';
+    names.style.setProperty('--r', (rear - geo.namesTop - o + 8).toFixed(1) + 'px');
   }
 
   /* ---------- Animation loop: one constant, smooth speed ----------

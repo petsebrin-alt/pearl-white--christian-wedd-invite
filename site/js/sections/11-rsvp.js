@@ -2,10 +2,10 @@
    11. RSVP — the dove brings the invitation (the couple's dove pictures).
    A white dove sits in the middle holding the envelope ("Please join us…
    Angel & David · Kindly RSVP"). Tapping RSVP on the envelope:
-     · the same dove lets go of the envelope and flies up over the page to
-       the top — slow, full wing beats and a gentle wavy path, as in the
-       couple's dove video — while a soft, slow harp melody plays (it
-       fades as soon as the guest scrolls);
+     · the same dove lets go of the envelope and flies away on a slanting
+       line, up and out across the side of the screen — slow, full wing
+       beats and a gentle wavy path, as in the couple's dove video — while a
+       soft, slow harp melody plays (it fades as soon as the guest scrolls);
      · the envelope straightens, its top opens, a card slides out and it
        all dissolves in light;
      · satin, in the colour of the page, sweeps across the whole section
@@ -23,7 +23,7 @@
   'use strict';
   var AD = window.AD;
   var KEY = 'ad-rsvp-accepted';
-  var V = '?v=20261022g';
+  var V = '?v=20261022i';
   var IMG = 'assets/images/dove/';
   // Inside dove-envelope.webp (fractions of its width / height)
   var BODY = { x: .64, y: .61 };       // the sitting dove's body
@@ -194,7 +194,7 @@
         '<div class="container container--narrow">' +
         AD.sectionHead({
           id: 'rsvp', eyebrow: 'RSVP', title: 'Kindly Respond',
-          intro: 'Please let us know if you can join us.'
+          intro: ''
         }) +
         '<div class="rv" data-rv>' +
           (guest ? '<p class="rv-dear">Dear ' + AD.esc(guest) + ',</p>' : '') +
@@ -293,8 +293,9 @@
       ['dove-body', 'dove-near', 'dove-far'].forEach(function (n) { var i = new Image(); i.src = IMG + n + '.webp' + V; });
 
       /* ---------- Tap RSVP ---------- */
-      // The same dove lets go of the envelope and flies up, off the top of the
-      // screen: it lifts gently, climbs along a soft wavy path and glides out,
+      // The same dove lets go of the envelope and flies away on a slanting
+      // line, up and out across the left side of the screen (the way it
+      // faces): it lifts gently, glides along a soft wavy path and goes out,
       // tilting with the sway. The path is worked out in advance and played by
       // the browser's compositor, and the wings beat with CSS (slowly and
       // fully, the body rising on each downstroke), so it stays smooth even
@@ -306,12 +307,13 @@
         d.style.setProperty('--dw', dw + 'px');
         d.style.setProperty('--beat', (BEAT / 2) + 'ms');
         sky.appendChild(d);
-        var rise = y0 + dh * 1.45, drift = -.1 * innerWidth, sway = Math.min(30, innerWidth * .055);
+        // out through the left edge, about 40 % of the screen higher: a slanting line
+        var x1 = -dw * 1.25, y1 = Math.max(-dh * 1.2, y0 - innerHeight * .4), sway = Math.min(24, innerHeight * .03);
         function at(u) {
           var p = (1 - Math.cos(u * Math.PI)) / 2;               // eases in and out
-          var lift = p * .75 + u * u * .25;                       // a gentle start, then away
+          var go = p * .7 + u * u * .3;                           // a gentle start, then away
           var wave = Math.sin(u * Math.PI * 2.2) * Math.min(1, u * 2.2);
-          return { x: x0 + drift * p + sway * wave, y: y0 - rise * lift, s: 1 + .1 * p };
+          return { x: x0 + (x1 - x0) * go, y: y0 + (y1 - y0) * go + sway * wave, s: 1 + .1 * p };
         }
         var N = 90, frames = [];
         for (var k = 0; k <= N; k++) {

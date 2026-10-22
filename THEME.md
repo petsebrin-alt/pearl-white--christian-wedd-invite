@@ -24,7 +24,7 @@ Companion to [PRD.md](PRD.md). This file defines the visual direction, colour pa
 
 **Opening:** a full-screen envelope in the couple's white lace and pearl embroidery, closed with a pearl dove seal, lights up and its four flaps open onto the card; then the couple's white wedding car, seen from above, drives down a clear path between fine stems of small pearl-and-satin flowers (modelled on the couple's reference video and image).
 
-**Whole page (modelled on the couple's reference videos):** one continuous pearl-white linen paper; small pearl flowers peeking in at the section edges and drifting slowly as guests scroll; content arriving with a soft focus-pull and small heading lines spelling themselves out letter by letter; the Welcome opens on the couple photograph in black and white, drifting slowly with a gentle parallax. At the very end, after the thank-you, the wedding car drives in and parks on a slant at the bottom left, the couple waving, beside the "A & D" monogram. Typography and colours stay as below (black ink).
+**Whole page (modelled on the couple's reference videos):** one continuous pearl-white linen paper; small pearl flowers at the section sides — always whole, never cut by the screen edge — drifting slowly as guests scroll; content arriving with a soft focus-pull and small heading lines spelling themselves out letter by letter; the Welcome opens on the couple photograph in black and white, drifting slowly with a gentle parallax. At the very end, after the thank-you, the wedding car drives in and parks on a slant at the bottom left, the couple waving, beside the "A & D" monogram. Typography and colours stay as below (black ink).
 
 ---
 
@@ -129,9 +129,10 @@ Shadows: soft and low — `0 1px 2px rgba(18,18,18,.06), 0 12px 32px -12px rgba(
 - Durations: micro 150–250 ms, reveals 400–700 ms, splash total ≈ 2.2 s.
 - Easing: `cubic-bezier(.22,.61,.36,1)` for settling; `cubic-bezier(.65,0,.35,1)` for cloth pulling.
 - Scroll-linked, at one steady rate (no easing): the gentle drift of the edge flowers.
+- Opening: before the car only the tall A & D shows; the names and date appear behind the car, travel with it at about a third of its speed and ease to a stop in place.
 - Parking at the end: the car drives in from the left over 3.2 s, turning into a 32° slant and slowing to a stop (once per visit), fully in view; Return to Top comes after it.
 - Wishing wall: the ring of faces turns for 1.3 s every 5–11 s (long enough to read); the white roses behind sway in slow 11–15 s cycles with a light 5 s breeze.
-- RSVP: the dove sits holding the envelope; on RSVP the same dove lifts off gently and glides up along a soft wavy path over 5.4 s, wings beating fully about once a second, while a soft, slow harp melody plays (fading when the guest scrolls); the envelope opens into light and satin sweeps across the whole section, waving clearly.
+- RSVP: the dove sits holding the envelope; on RSVP the same dove lifts off gently and flies out on a slanting line through the left side over 5.4 s, wings beating fully about once a second, while a soft, slow harp melody plays (fading when the guest scrolls); the envelope opens into light and satin sweeps across the whole section, waving clearly.
 - Travel & Stay: each card change takes about 1 s — letters dissolve 32 ms apart, colours and photographs glide.
 - Reveals: content rises slightly and comes into focus (blur → sharp) over about 1 s; small heading lines appear letter by letter (55 ms per letter) out of a soft blur, as in the couple's slideshow video.
 - Welcome photo: the black-and-white couple photo drifts at one steady speed (16 s) and moves at 22 % of the scroll (parallax); the names come into focus over about 2 s. Several photos crossfade every 7 s (1.8 s fade).
@@ -213,7 +214,7 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | M11 | Switching tabs card: event menu, details blur out/in, photo cross-fades with a soft zoom; arrows, swipe, keys | Wedding events | CSS + `js/sections/06-events.js` | Built |
 | M12 | Venue: "We are gathered / HERE TOGETHER" written in; the Kerala church line drawing draws itself with the scroll | The venue | CSS (stroke-dashoffset from a scroll variable) + `js/sections/09-venues.js` | Built |
 | M13 | Wishing wall: black-and-white faces on a ring that turns by itself like a globe, bringing each face to the top; the wish appears word by word under it (no card); a new wish spins in at the top; white roses swaying behind | Wishing wall | requestAnimationFrame + CSS keyframes, `js/sections/10-wishes.js` | Built |
-| M14 | RSVP: a dove sits holding the envelope; on RSVP the same dove lifts off and glides up (pre-computed wavy path on the compositor, CSS wing beats) with a soft harp melody; the envelope opens into light; satin in the page colour sweeps across the whole section and waves; the couple photo develops and the thank-you writes itself (Great Vibes) | RSVP | Web Animations API + CSS (dove), WebGL (satin), Web Audio (melody), `js/sections/11-rsvp.js` | Built |
+| M14 | RSVP: a dove sits holding the envelope; on RSVP the same dove lifts off and flies out on a slanting line through the left side (pre-computed wavy path on the compositor, CSS wing beats) with a soft harp melody; the envelope opens into light; satin in the page colour sweeps across the whole section and waves; the couple photo develops and the thank-you writes itself (Great Vibes) | RSVP | Web Animations API + CSS (dove), WebGL (satin), Web Audio (melody), `js/sections/11-rsvp.js` | Built |
 | M15 | Travel & Stay card: the word dissolves letter by letter into the next, the card turns white / cream / pearl / soft green, the photographs slide up with the next one blurred below | Travel & Stay | CSS transitions + `js/sections/12-travel.js` | Built |
 | M16 | Contact: buttons on a pearl chain grow into cards (round picture to photograph, details fade in) on hover or tap, and shrink back | Contact | CSS clip-path + transforms (FLIP), `js/sections/13-contact.js` | Built |
 | M7 | Tap the petals: satin petals burst, swirl and settle into a wreath, the date appears, real rose petals shower down | Save the Date | Web Animations API, `js/sections/03-save-the-date.js` | Built |
@@ -226,7 +227,7 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | Item | Status |
 |---|---|
 | Figma designs | To be provided — when supplied, Figma values override this file |
-| Brand or monogram artwork | To be provided (v1 uses "A & D" in Pinyon Script) |
+| Brand or monogram artwork | To be provided (v1 uses "A & D" in Pinyon Script; in the opening the A and D are stretched tall) |
 
 ### 6.6 Delivery rules for assets
 

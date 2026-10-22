@@ -151,15 +151,15 @@ Shared rules for all sections:
 | 1.25–2.4 s | The left and right flaps fold away. |
 | 1.95–3.45 s | The top flap (carrying the seal) and the bottom flap fold away, revealing the card. |
 
-**Card:** pearl-white linen backdrop; down the left and right edges, **fine champagne stems with many small pearl-and-satin flowers**, buds, pearl sprigs and tiny pearls (small, delicate and plentiful, as in the couple's reference image with the car), leaving a clear path in the middle; an "A & D" monogram with "Angel & David" and "27 · 01 · 2027" in the centre; the front of the car peeking in from the top edge. Lettering stays in the original typography (Pinyon Script names, black ink).
+**Card:** pearl-white linen backdrop; down the left and right edges, **fine champagne stems with many small pearl-and-satin flowers**, buds, pearl sprigs and tiny pearls (small, delicate and plentiful, as in the couple's reference image with the car), leaving a clear path in the middle; only a tall, stretched **"A & D"** logo in the centre (no names or date before the car, at the couple's request); the front of the car peeking in from the top edge. Lettering stays in the original typography (Pinyon Script names, black ink).
 
 **Car drive (≈ 9.5 s, sets off 0.15 s after the flaps start to open — no waiting; it comes out from under the top flap as it lifts):** the car moves on the graphics card (Web Animations), so a busy moment on the phone cannot make it stutter; the text reveal follows the animation's own clock. The car picture is decoded before the drive.
 
 | Step | What happens |
 |---|---|
 | 1 | The car glides straight down from the top at **one smooth, steady speed** (no speeding up, slowing down or bouncing). |
-| 2 | As the car passes over the monogram, it disappears beneath it. |
-| 3 | Behind the car, from the top down, the text is uncovered: **The Wedding of** · **Angel & David** · **Save the Date** · **27.JAN.2027**. Nothing else is shown. |
+| 2 | As the car passes over the A & D logo, it disappears beneath it. |
+| 3 | Behind the car, from the top down, the text appears: **The Wedding of** · **Angel & David** · **Save the Date** · **27.JAN.2027**. It travels down with the car for a few seconds (at about a third of its speed) and then eases to a stop in its place, as in the reference video. Nothing else is shown. |
 | 4 | The car drives out at the bottom. The opening stays as the first screen with a "View the invitation" cue; the header stays hidden until guests scroll past it. |
 
 - It opens by itself 5 s after the page appears (a moment longer only if the car picture is still loading, at most 3 s). Tapping the seal (or anywhere on the envelope), or Enter/Space on the focused seal, opens it sooner.
@@ -174,7 +174,7 @@ Modelled on the couple's reference videos (a scrolling invitation website, and a
 
 - **Paper:** one continuous pearl-white linen paper behind all sections (no alternating bands).
 - **Typography and colour:** unchanged from §5 (black ink; Pinyon Script, Cormorant Garamond, Jost). The small heading lines spell themselves out letter by letter out of a soft blur as they scroll in (from the couple's photo invitation video).
-- **Flowers:** small pearl flowers peek in at the section edges and drift slowly as guests scroll; pearl flowers dress the welcome and the thank-you.
+- **Flowers:** small pearl flowers at the sides of the sections, always shown whole (never cut by the edge of the screen), drifting slowly as guests scroll; pearl flowers dress the welcome and the thank-you.
 - **Reveals:** content rises slightly and comes into focus (soft blur → sharp) as it scrolls in.
 - **Reduced motion:** no drifting flowers or travelling car; the car is shown parked at the end.
 
@@ -192,7 +192,7 @@ Modelled on the couple's reference videos (a scrolling invitation website, and a
 
 - Ceremony time: **10:30 am IST**.
 
-**Design (modelled on the couple's slideshow reference video):** the couple photograph in **black and white** fills the top of the section (edge to edge on phones). As in the video, when guests scroll down to it after the opening, the photo **slides down from the top into its place**, and only then does the invitation text appear, letter by letter. It then drifts slowly at one steady speed and moving with a gentle **parallax** as guests scroll; it fades into the paper under a soft white haze. The invitation sits over its lighter lower part: the cross, "Together with their families" spelling itself out letter by letter, **Angel & David** (Pinyon Script, black) coming slowly into focus, the message, then the date block as in the video — "JANUARY" above, **WEDNESDAY | 27 | 2027** between fine rules that draw outward — the ceremony time and the verse. Pearl flowers at the top-left and bottom-right of the text. If more photos are added to `content.js → couplePhotos`, they crossfade one after another. Reduced motion: the photo stays still. Photograph: `site/assets/images/couple-bw.webp` — the **sample supplied for the design** (it carries a photographer's "Maab Road" tag); replace it with Angel & David's own photograph before sharing.
+**Design (modelled on the couple's slideshow reference video):** the couple photograph in **black and white** fills the **whole section from top to bottom** — the couple and the dress (edge to edge on phones) — kept **faint** so the invitation over it reads clearly (a little stronger where the faces are). As in the video, when guests scroll down to it after the opening, the photo **slides down from the top into its place**, and only then does the invitation text appear, letter by letter. It then drifts slowly at one steady speed and moving with a gentle **parallax** as guests scroll; its ends fade softly into the paper. The invitation sits over it: the cross, "Together with their families" spelling itself out letter by letter, **Angel & David** (Pinyon Script, black) coming slowly into focus, the message, then the date block as in the video — "JANUARY" above, **WEDNESDAY | 27 | 2027** between fine rules that draw outward — the ceremony time and the verse. Pearl flowers at the top-left and bottom-right of the text. If more photos are added to `content.js → couplePhotos`, they crossfade one after another. Reduced motion: the photo stays still. Photograph: `site/assets/images/couple-bw.webp` — the **sample supplied for the design** (it carries a photographer's "Maab Road" tag); replace it with Angel & David's own photograph before sharing.
 
 ### 4.3 Save the Date
 
@@ -340,7 +340,7 @@ The dove brings the invitation, as in the couple's dove pictures:
 
 - **The dove:** when guests scroll to the section, a white dove sits in the middle holding the envelope ("Please join us… Angel & David · Kindly RSVP · RSVP"). A soft pulse around **RSVP** and "Tap RSVP to accept the invitation" invite the tap. (No fly-in, at the couple's request.)
 - **Tap RSVP:**
-  - the same dove (same colours) lets go of the envelope, lifts gently and glides up over the page to the top along a soft wavy path, with slow, full wing beats (about one a second) as in the couple's dove video — only the one dove; the whole flight is played by the browser's compositor so it stays smooth;
+  - the same dove (same colours) lets go of the envelope, lifts gently and flies away on a slanting line, up and out through the left side of the screen, along a soft wavy path, with slow, full wing beats (about one a second) as in the couple's dove video — only the one dove; the whole flight is played by the browser's compositor so it stays smooth;
   - a soft, slow harp-like melody plays (an original arpeggio in F major with a quiet bell melody, made in the browser, no sound file, about 8 s, low volume) and fades as soon as the guest scrolls;
   - the envelope straightens, its top opens, a card marked "Accepted" slides out and it all turns to light.
 - **The thank-you:** satin in the colour of the page sweeps across the whole section from left to right, edge to edge, and keeps waving clearly. The couple's black-and-white photo (the Welcome photo) develops on it, then "Thank you for accepting our invitation" writes itself in a fuller, brighter script (Great Vibes), with "We can't wait to celebrate with you.", Angel & David, the date and time, and the church. Below: **Add to Calendar**, **Get Directions** and "See the invitation again".
@@ -362,7 +362,6 @@ One large card at a time, after the couple's card video ("Sun · Mono · Earth")
   3. **Dine** (green): The Harbour Restaurant (Beach Road), Thaff (near YMCA Bridge), Kream Korner Art Café (Mullakkal Road).
   4. **Explore** (white): Alappuzha Beach & Lighthouse, Marari Beach, Krishnapuram Palace (Kayamkulam).
   5. **Cruise** (pearl): houseboat cruises from the Finishing Point, Punnamada; Pathiramanal Island.
-- Under the card: "Travel help:" — To be provided.
 - Content in `content.js → travel.cards`; photographs are free Unsplash photos, black and white.
 
 ### 4.13 Contact
@@ -413,7 +412,7 @@ Full details in [THEME.md](THEME.md). Summary:
 | A7 | Wishing wall ring turns | Automatically while on screen (5–11 s per wish), or ‹ › / swipe | 1.3 s ease-in-out turn along the ring; the old wish blurs out, the new one appears word by word (45 ms per word) | No automatic turn; arrows change the wish at once | Text always in the DOM |
 | A7b | New wish joins | Successful save | Scroll to the ring, then it spins up to 3 places to bring the new wish to the top, with a soft glow | Shown at the top at once | — |
 | A7c | Roses sway | While the section is on screen | Two rose layers drift and sway (11 s and 15 s, alternating) with a light 5 s breeze | Still roses | Plain linen if the image fails |
-| A7e | RSVP accepted | Tap **RSVP** on the envelope | The same dove lifts off and glides up off the screen in 5.4 s (pre-computed wavy path, wing beat 1 s, body rising on each downstroke); soft harp melody ≈ 8 s (fades on scroll); envelope straightens 0.8 s, opens 0.75 s, card rises 0.75 s, light 0.9 s; satin sweeps across the section 1.6 s; photo develops 2 s; thank-you written in 2.4 s; details and buttons by ≈ 6 s | Thank-you shown at once, no sound | Thank-you shown if animations are unsupported |
+| A7e | RSVP accepted | Tap **RSVP** on the envelope | The same dove lifts off and flies out on a slanting line (up and through the left edge) in 5.4 s (pre-computed wavy path, wing beat 1 s, body rising on each downstroke); soft harp melody ≈ 8 s (fades on scroll); envelope straightens 0.8 s, opens 0.75 s, card rises 0.75 s, light 0.9 s; satin sweeps across the section 1.6 s; photo develops 2 s; thank-you written in 2.4 s; details and buttons by ≈ 6 s | Thank-you shown at once, no sound | Thank-you shown if animations are unsupported |
 | A7f | Satin waves | Thank-you on screen | Continuous WebGL satin across the whole section: long folds travelling and bending, a sheen sliding over them (folds cross the screen in a few seconds) | Still satin | Plain page without WebGL |
 | A7g | Travel & Stay card changes | Black round button (or ‹ › keys, swipe) | The word dissolves letter by letter (32 ms apart) and the next rises into focus; card colour 0.9 s (white, cream, pearl or soft green); photographs slide up 1 s, the next waiting blurred below; details follow | Instant change | All details in the page |
 | A7h | Contact card | Hover (computer) or tap (phone) a contact button | The button grows into the card in 0.45 s (a soft spring): the round picture becomes the photograph, the details fade in 0.14 s later; it shrinks back in 0.38 s | Card shown and hidden at once | All details in the page |

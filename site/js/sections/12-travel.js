@@ -11,7 +11,7 @@
 (function () {
   'use strict';
   var AD = window.AD;
-  var V = '?v=20261022g';
+  var V = '?v=20261022i';
   var TONES = { white: 1, cream: 1, pearl: 1, green: 1 };
 
   function mapUrl(q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Kerala'); }
@@ -37,7 +37,6 @@
     render: function (C) {
       var T = C.travel || {};
       var cards = (T.cards || []).filter(function (c) { return c && AD.has(c.word); });
-      var a = T.assistance || {};
       if (!cards.length) {
         return '<div class="container">' + AD.sectionHead({ id: 'travel', eyebrow: 'Travel & Stay', title: 'Getting There', intro: 'Arrangements will be listed here once they are confirmed.' }) + '</div>';
       }
@@ -65,9 +64,6 @@
             '<span class="tv__count numerals" data-count>1 / ' + cards.length + '</span>' +
           '</div>' +
         '</div>' +
-        '<p class="tv-help">Travel help: ' + (AD.has(a.phone)
-          ? AD.esc(a.name || '') + ' <a href="tel:' + AD.esc(a.phone.replace(/[^\d+]/g, '')) + '">' + AD.esc(a.phone) + '</a>'
-          : AD.tbp('Travel assistance contact')) + '</p>' +
       '</div>';
     },
 

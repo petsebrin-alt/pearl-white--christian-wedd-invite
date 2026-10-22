@@ -7,7 +7,7 @@
   'use strict';
   var AD = window.AD;
 
-  // [piece, side, top within the section, size, share hidden off-screen, turn, drift speed]
+  // [piece, side, top within the section, size, (unused: flowers now show whole), turn, drift speed]
   var DECOR = {
     'welcome': [['bloom', 'right', '16%', 'big', 0.44, -20, 0.14], ['sprig', 'left', '72%', 'small', 0.12, 160, 0.08]],
     'save-the-date': [['bud', 'left', '7%', 'small', 0.12, -15, 0.1], ['bloom', 'right', '58%', 'big', 0.46, 35, 0.16]],
