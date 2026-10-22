@@ -71,6 +71,26 @@
   color: var(--ink); font-size: .95rem; min-height: 44px;
 }
 
+/* ---------- A hand that taps (shows guests where to touch) ---------- */
+.tap-hand { position: absolute; z-index: 6; width: 40px; height: 40px; pointer-events: none; transform: rotate(var(--rot, -18deg)); transform-origin: 40% 10%; }
+.tap-hand svg { width: 100%; height: 100%; overflow: visible; fill: #fff; stroke: #121212; stroke-width: 1.1; stroke-linejoin: round; stroke-linecap: round; filter: drop-shadow(0 4px 5px rgba(30, 25, 20, .3)); }
+/* the ripple where the finger touches */
+.tap-hand::before { content: ""; position: absolute; left: 30%; top: -10%; width: 40%; height: 40%; border-radius: 50%; border: 2px solid rgba(18, 18, 18, .55); opacity: 0; }
+.motion-ok .tap-hand { animation: tap-hand 1.8s ease-in-out var(--tap-delay, 0s) infinite; }
+.motion-ok .tap-hand::before { animation: tap-ripple 1.8s ease-out var(--tap-delay, 0s) infinite; }
+@keyframes tap-hand {
+  0%, 100% { transform: rotate(var(--rot, -18deg)) translate(6px, 8px) scale(1); }
+  38%      { transform: rotate(var(--rot, -18deg)) translate(0, 0) scale(1); }
+  48%      { transform: rotate(var(--rot, -18deg)) translate(0, 0) scale(.88); }
+  60%      { transform: rotate(var(--rot, -18deg)) translate(0, 0) scale(1); }
+}
+@keyframes tap-ripple {
+  0%, 44% { opacity: 0; transform: scale(.4); }
+  52%     { opacity: 1; transform: scale(.8); }
+  80%     { opacity: 0; transform: scale(2); }
+  100%    { opacity: 0; }
+}
+
 /* ---------- Paper card ---------- */
 .paper {
   position: relative;

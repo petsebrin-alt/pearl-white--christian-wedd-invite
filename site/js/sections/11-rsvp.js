@@ -23,7 +23,7 @@
   'use strict';
   var AD = window.AD;
   var KEY = 'ad-rsvp-accepted';
-  var V = '?v=20261022j';
+  var V = '?v=20261022k';
   var IMG = 'assets/images/dove/';
   // Inside dove-envelope.webp (fractions of its width / height)
   var BODY = { x: .64, y: .61 };       // the sitting dove's body
@@ -203,6 +203,7 @@
               '<img class="rv-sit" src="' + IMG + 'dove-envelope.webp' + V + '" width="1000" height="693" decoding="async" ' +
                 'alt="A white dove holding the invitation: Please join us… ' + AD.esc(C.couple.bride) + ' &amp; ' + AD.esc(C.couple.groom) + '. Kindly RSVP.">' +
               '<span class="rv-ring" aria-hidden="true"></span>' +
+              AD.tapHand('rv-hand') +
               // the envelope, apart from the dove, for the opening
               '<div class="rv-env" data-env aria-hidden="true">' +
                 '<span class="rv-env__inside"></span>' +

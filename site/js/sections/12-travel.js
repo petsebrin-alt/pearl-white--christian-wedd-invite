@@ -11,7 +11,7 @@
 (function () {
   'use strict';
   var AD = window.AD;
-  var V = '?v=20261022j';
+  var V = '?v=20261022k';
   var TONES = { white: 1, cream: 1, pearl: 1, green: 1 };
 
   function mapUrl(q) { return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(q + ', Kerala'); }

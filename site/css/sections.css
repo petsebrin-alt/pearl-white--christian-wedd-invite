@@ -88,6 +88,8 @@
   mask-image: linear-gradient(to bottom, #000 calc(var(--r) - 44px), transparent var(--r));
 }
 .op-names.is-revealed { -webkit-mask-image: none; mask-image: none; transform: none !important; transition: transform .6s cubic-bezier(.2, .7, .3, 1); }
+/* The guest is greeted first, in the same script as the names */
+.op-dear { margin: 0 0 clamp(.6rem, 2vh, 1.1rem); font-family: var(--font-script); font-size: clamp(2rem, 1.5rem + 2.2vw, 2.9rem); line-height: 1.1; color: var(--ink); overflow-wrap: anywhere; }
 .op-kicker {
   margin: 0 -.36em clamp(1rem, 3vh, 1.9rem) 0;
   font: 500 .72rem/1 var(--font-body);
@@ -231,7 +233,7 @@
   height: var(--trim);
   margin-top: calc(var(--trim) / -2);
   transform-origin: 0 50%;
-  background: url("../assets/images/lace-pearl-trim.webp?v=20261022j") repeat-x 0 50% / auto 100%;
+  background: url("../assets/images/lace-pearl-trim.webp?v=20261022k") repeat-x 0 50% / auto 100%;
 }
 
 /* Light: a glow from the seal, a sheen sweeping the lace, pearls sparkling. */
@@ -698,7 +700,7 @@
   height: 12px;
   margin-top: -6px;
   transform-origin: 0 50%;
-  background: url("../assets/images/bead-chain.webp?v=20261022j") repeat-x left center / 24px 12px;
+  background: url("../assets/images/bead-chain.webp?v=20261022k") repeat-x left center / 24px 12px;
   filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18));
 }
 .cd-tile { display: flex; flex-direction: column; align-items: center; gap: .25rem; min-width: 0; }
@@ -1231,7 +1233,7 @@
 .ww-bg__roses {
   position: absolute;
   inset: -7%;
-  background: url("../assets/images/white-roses.webp?v=20261022j") 8% 50% / auto 100% repeat-x;
+  background: url("../assets/images/white-roses.webp?v=20261022k") 8% 50% / auto 100% repeat-x;
   will-change: transform, opacity;
 }
 .ww-bg__roses--b { opacity: .3; background-position: 62% 20%; transform: rotate(180deg) scale(1.14); }
@@ -1387,6 +1389,20 @@
 /* "Other": one more box opens for the guest's own answer */
 .motion-ok .ww-other:not([hidden]) { animation: ww-other-in .45s var(--ease-settle) both; }
 @keyframes ww-other-in { from { opacity: 0; transform: translateY(-8px); } }
+/* View all wishes: every blessing in a pop-up card */
+.ww-all { position: relative; z-index: 2; margin: -1.4rem 0 2.4rem; text-align: center; }
+.ww-all .btn { background: rgba(255, 255, 255, .9); }
+.ww-all__n { margin-left: -.25em; letter-spacing: .06em; }
+.dlg--wishes .dlg__body > * { max-width: 40rem; margin-inline: auto; }
+.ww-list { display: grid; margin: 0; padding: 0; list-style: none; }
+.ww-li { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: .95rem; padding: 1.1rem 0; border-bottom: 1px solid var(--hairline); }
+.ww-li:last-child { border-bottom: 0; }
+.ww-li__face { display: block; width: 52px; height: 52px; }
+.ww-li__face .ww-av { box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(150, 140, 125, .4); }
+.ww-li__face .ww-av span { font-size: 1.05rem; }
+.ww-li__msg { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: 1.12rem; line-height: 1.5; color: var(--ink); overflow-wrap: anywhere; }
+.ww-li__name { margin: .55rem 0 0; font: 500 .75rem/1.3 var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--ink); overflow-wrap: anywhere; }
+.ww-li__rel { margin: .15rem 0 0; font-size: .8125rem; color: var(--muted); }
 .ww-pick { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; }
 .ww-pick__preview { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: #faf8f4; color: #a59d8f; box-shadow: 0 0 0 2px #fff, 0 0 0 3px #d9d3c7; }
 .ww-pick__preview svg { width: 24px; height: 24px; }
@@ -1427,6 +1443,9 @@
   -webkit-tap-highlight-color: transparent;
 }
 .rv:not(.is-landed) .rv-tap, .rv.is-off .rv-tap { pointer-events: none; }
+/* a hand taps beside RSVP so guests know where to touch */
+.rv-hand { left: 31%; top: 59%; --rot: -28deg; }
+.rv:not(.is-landed) .rv-hand, .rv.is-off .rv-hand { opacity: 0; }
 .rv-tap:focus { outline: none; }
 .rv-tap:focus-visible { box-shadow: 0 0 0 3px rgba(255, 255, 255, .95), 0 0 0 4px rgba(18, 18, 18, .35); }
 .rv-hint { margin: 1rem 0 .35rem; font: 500 .75rem/1.4 var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); transition: opacity .8s ease .3s; }
@@ -1665,10 +1684,10 @@
 .ct-row { display: flex; flex-direction: column; align-items: center; margin: 0 auto; padding: 0; list-style: none; max-width: 60rem; }
 .ct-item { position: relative; flex: none; display: flex; justify-content: center; }
 /* the pearl chain between the buttons (pearls and silver beads) */
-.ct-chain { width: 15px; height: 46px; background: url("../assets/images/bead-chain-v.webp?v=20261022j") center top / 15px auto repeat-y; filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18)); }
+.ct-chain { width: 15px; height: 46px; background: url("../assets/images/bead-chain-v.webp?v=20261022k") center top / 15px auto repeat-y; filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18)); }
 @media (min-width: 720px) {
   .ct-row { flex-direction: row; justify-content: center; }
-  .ct-chain { flex: 0 1 130px; width: auto; min-width: 40px; height: 16px; background: url("../assets/images/bead-chain.webp?v=20261022j") left center / auto 16px repeat-x; }
+  .ct-chain { flex: 0 1 130px; width: auto; min-width: 40px; height: 16px; background: url("../assets/images/bead-chain.webp?v=20261022k") left center / auto 16px repeat-x; }
 }
 /* the button: a round picture and a name */
 .ct-pill {
@@ -1689,6 +1708,11 @@
 .ct-av { flex: none; width: 46px; height: 46px; border-radius: 50%; object-fit: cover; filter: grayscale(1); box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(18, 18, 18, .14); }
 .ct-mono { display: grid; place-items: center; background: radial-gradient(circle at 34% 28%, #fff 0 16%, #f6f3ee 40%, #e2dbcf 88%); font: 600 1.05rem/1 var(--font-display); letter-spacing: .04em; color: var(--ink); }
 .ct-item.is-open .ct-pill { opacity: 0; }
+/* a hand taps beside each button so guests know where to touch */
+.ct-hand { right: -10px; top: 58%; --rot: -32deg; }
+.ct-item:nth-child(3) .ct-hand { --tap-delay: .6s; }
+.ct-item:nth-child(5) .ct-hand { --tap-delay: 1.2s; }
+.ct-item.is-open .ct-hand { opacity: 0; }
 @media (min-width: 720px) { .ct-av { width: 56px; height: 56px; } }
 @media (min-width: 720px) { .ct-pill { min-height: 66px; padding-right: 1.6rem; font-size: .875rem; } }
 

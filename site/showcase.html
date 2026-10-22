@@ -2,6 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <script>
+    // On a phone or tablet, open the invitation itself, full screen — not a
+    // picture of a phone inside the phone. The guest's name in the link is kept.
+    (function () {
+      var mq = window.matchMedia && window.matchMedia('(max-width: 760px), (pointer: coarse) and (max-width: 1180px)');
+      if (!mq || !mq.matches) return;
+      var q = new URLSearchParams(location.search);
+      q.delete('section'); q.delete('live');
+      var s = q.toString();
+      location.replace('index.html' + (s ? '?' + s : '') + location.hash);
+    })();
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Angel &amp; David · Every Section on iPhone</title>
   <meta name="description" content="Every section of Angel and David's wedding invitation, each shown live inside an iPhone 17 Pro Max.">

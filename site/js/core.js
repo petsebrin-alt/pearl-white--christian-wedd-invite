@@ -161,6 +161,14 @@
     return '<svg class="' + (cls || 'icon') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + (ICONS[name] || '') + '</svg>';
   };
 
+  // A small white hand that taps, with a ripple at the fingertip: shows
+  // guests where to touch (RSVP, Contact). Decorative only.
+  AD.tapHand = function (cls) {
+    return '<span class="tap-hand ' + (cls || '') + '" aria-hidden="true"><svg viewBox="0 0 24 24">' +
+      '<path d="M10 3.6c0-.9.7-1.6 1.6-1.6s1.6.7 1.6 1.6V10c.3-.6.9-1 1.6-1 .9 0 1.6.7 1.6 1.6v.6c.3-.5.8-.8 1.4-.8.9 0 1.6.7 1.6 1.6v.9c.3-.4.7-.6 1.2-.6.8 0 1.4.6 1.4 1.4V17c0 3-2.4 5.4-5.4 5.4h-2.4c-1.7 0-3.3-.8-4.3-2.2l-3.9-4.6c-.5-.7-.4-1.7.3-2.2.7-.5 1.6-.4 2.2.2L10 16.5z"/>' +
+      '<path d="M13.2 10v3.4M16.4 11.2v2.4M19.4 12.6v1.6"/></svg></span>';
+  };
+
   /* ---------- Scroll lock ---------- */
   var lockCount = 0;
   AD.lockScroll = function () { if (lockCount++ === 0) document.documentElement.classList.add('is-locked'); };

@@ -356,23 +356,6 @@ window.WEDDING = {
           { name: "Thaff", note: "Kerala dishes, near YMCA Bridge.", map: "Thaff Restaurant Alappuzha" },
           { name: "Kream Korner Art Café", note: "An art café on Mullakkal Road — known for biryani and parotta.", map: "Kream Korner Art Cafe Alappuzha" }
         ]
-      },
-      {
-        id: "explore", word: "Explore", kicker: "Places to see", tone: "white",
-        photo: { src: "assets/images/travel/explore.webp", alt: "The old pier stretching into the sea at Alappuzha Beach" },
-        items: [
-          { name: "Alappuzha Beach & Lighthouse", note: "The old pier and the lighthouse of 1862.", map: "Alappuzha Lighthouse" },
-          { name: "Marari Beach", note: "A quiet, palm-lined beach a short drive north.", map: "Marari Beach Mararikulam" },
-          { name: "Krishnapuram Palace", note: "A Travancore palace museum at Kayamkulam, with Kerala’s largest mural.", map: "Krishnapuram Palace Kayamkulam" }
-        ]
-      },
-      {
-        id: "cruise", word: "Cruise", kicker: "On the backwaters", tone: "pearl",
-        photo: { src: "assets/images/travel/cruise.webp", alt: "A houseboat on the palm-lined backwaters of Alappuzha" },
-        items: [
-          { name: "Houseboat cruise", note: "Day or overnight kettuvallam cruises from the Finishing Point, Punnamada.", map: "Alappuzha houseboat Finishing Point Punnamada" },
-          { name: "Pathiramanal Island", note: "A bird island in Vembanad Lake, reached by boat.", map: "Pathiramanal Island" }
-        ]
       }
     ]
   },

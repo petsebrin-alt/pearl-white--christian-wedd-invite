@@ -21,7 +21,7 @@
   var TURN = 1300;                  // ms the ring takes to bring the next face up
   var PHOTO_RE = /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/;
   var ASSET_RE = /^assets\/images\/wishes\/[a-z0-9-]+\.webp$/;
-  var V = '?v=20261022j';
+  var V = '?v=20261022k';
   var OTHER = 'Other';
 
   function initials(name) {
@@ -118,6 +118,8 @@
             '<p class="ww-rel" data-rel></p>' +
           '</div>' +
         '</div>' +
+        // every wish at once, in a pop-up card (for when there are many)
+        '<div class="ww-all"><button class="btn btn--secondary btn--sm" type="button" data-all hidden>' + AD.icon('heart') + '<span>View all wishes</span> <span class="ww-all__n numerals" data-all-n></span></button></div>' +
 
         // The form, on frosted paper over the roses
         '<form class="wish-form classic reveal" id="wish-form" novalidate>' +
@@ -343,6 +345,7 @@
           list = mine.concat(local, saved.length ? saved : (W.showSamples ? (W.samples || []).slice() : []));
           measure();
           build();
+          countAll();
           if (spinIn && list.length > 1 && !still) {
             // the ring spins round and brings the new wish up to the top
             cur = 0; pos = 0; draw();
@@ -354,6 +357,39 @@
         });
       }
       refresh();
+
+      /* ---------- All the wishes, in a pop-up card ---------- */
+      var allBtn = el.querySelector('[data-all]'), allN = el.querySelector('[data-all-n]'), dlg = null;
+      function fillAll() {
+        var ul = document.createElement('ul');
+        ul.className = 'ww-list';
+        list.forEach(function (w) {
+          var li = document.createElement('li'); li.className = 'ww-li';
+          var f = document.createElement('span'); f.className = 'ww-li__face'; f.appendChild(face(w));
+          var t = document.createElement('div');
+          var m = document.createElement('blockquote'); m.className = 'ww-li__msg'; m.textContent = w.message;
+          var n = document.createElement('p'); n.className = 'ww-li__name'; n.textContent = w.name;
+          t.appendChild(m); t.appendChild(n);
+          if (AD.has(w.relation) || w.pending) {
+            var r = document.createElement('p'); r.className = 'ww-li__rel';
+            r.textContent = [w.relation, w.pending ? 'Awaiting approval' : ''].filter(Boolean).join(' · ');
+            t.appendChild(r);
+          }
+          li.appendChild(f); li.appendChild(t); ul.appendChild(li);
+        });
+        var body = dlg.querySelector('.dlg__body');
+        body.innerHTML = '';
+        body.appendChild(ul);
+        dlg.querySelector('.dlg__title').textContent = 'All Wishes (' + list.length + ')';
+      }
+      allBtn.addEventListener('click', function () {
+        if (!dlg) dlg = AD.dialog.create({ id: 'wishes-dialog', title: 'All Wishes', size: 'md', className: 'dlg--wishes' });
+        pause(30000);
+        fillAll();
+        AD.dialog.open(dlg, allBtn);
+      });
+      // keep the button's count in step with the wall
+      function countAll() { allBtn.hidden = list.length < 2; allN.textContent = '(' + list.length + ')'; }
 
       /* ---------- The form ---------- */
       var form = el.querySelector('#wish-form');

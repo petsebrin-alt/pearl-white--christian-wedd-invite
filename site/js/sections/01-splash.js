@@ -14,7 +14,7 @@
           sweeping the A & D away under it. Behind it the names appear, from
           the top down, and travel with the car for a moment before easing
           to a stop in their place (as in the reference video):
-          The Wedding of · Angel & David · Save the Date · 27.JAN.2027
+          Dear Guest, · The Wedding of · Angel & David · Save the Date · 27.JAN.2027
    Then the opening stays as the first screen and guests scroll down.
    Reduced motion or a missing car image: the final text appears at once.
    ========================================================================== */
@@ -48,6 +48,11 @@
     var c = C.couple || {}, date = AD.weddingDate();
     set('initial-bride', (c.bride || '').charAt(0));
     set('initial-groom', (c.groom || '').charAt(0));
+    // Every guest is greeted first: their own name from a personal link
+    // (…/?guest=Anu%20Thomas), otherwise "Dear Guest,".
+    var guest = '';
+    try { guest = (new URLSearchParams(window.location.search).get('guest') || '').replace(/\s+/g, ' ').trim().slice(0, 60); } catch (e) {}
+    set('dear', 'Dear ' + (guest || 'Guest') + ',');
     set('bride', c.bride);
     set('groom', c.groom);
     if (AD.has(date)) {

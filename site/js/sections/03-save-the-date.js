@@ -2,9 +2,10 @@
    3. SAVE THE DATE — 27 January 2027 is the focal point.
    "Save the Date" in brush lettering (the couple's reference), then a ring of
    real pearls and crystals. The date inside is covered by a pile of satin
-   petals; one tap and the petals burst, swirl round and settle into a wreath
-   along the pearl ring, the date appears, and real white rose petals shower
-   down from the top (modelled on the couple's reference video).
+   petals; one tap — or simply 2 seconds on screen, no tap needed — and the
+   petals burst, swirl round and settle into a wreath along the pearl ring,
+   the date appears, and real white rose petals shower down from the top
+   (modelled on the couple's reference video).
    Reduced motion: the wreath and the date are shown at once, no shower.
    Calendar: all-day entry until the ceremony time + timezone are confirmed.
    ========================================================================== */
@@ -12,8 +13,9 @@
   'use strict';
   var AD = window.AD;
 
-  var V = '?v=20261022j';
-  var SATIN = 8, ROSE = 6;          // petal pictures in assets/images/petals/
+  var V = '?v=20261022k';
+  var SATIN = 8, ROSE = 6;
+  var AUTO = 2000;                  // ms on screen before the petals open by themselves          // petal pictures in assets/images/petals/
   var COUNT = 92;                   // satin petals in the pile / wreath
 
   function ceremonyCalendar(C) {
@@ -220,6 +222,21 @@
 
     place('pile');
     tap.addEventListener('click', reveal);
+    // No tap needed: 2 seconds after the ring is well on screen it opens by itself.
+    if (!AD.reducedMotion() && 'IntersectionObserver' in window) {
+      var wait = 0;
+      var watch = function () {
+        var io = new IntersectionObserver(function (en) {
+          if (open) { io.disconnect(); return; }
+          if (en[0].intersectionRatio >= .55) { if (!wait) wait = setTimeout(function () { wait = 0; if (!open) reveal(); io.disconnect(); }, AUTO); }
+          else { clearTimeout(wait); wait = 0; }
+        }, { threshold: [0, .3, .55, .8] });
+        io.observe(ring);
+      };
+      // while the opening plays, the page underneath does not count as seen
+      if (document.documentElement.classList.contains('splash-active')) document.addEventListener('ad:opened', watch, { once: true });
+      else watch();
+    }
     var resizeT = 0;
     window.addEventListener('resize', function () { clearTimeout(resizeT); resizeT = setTimeout(function () { place(open ? 'open' : 'pile'); }, 150); });
     // Showcase view and reduced motion: show the wreath and the date straight away.

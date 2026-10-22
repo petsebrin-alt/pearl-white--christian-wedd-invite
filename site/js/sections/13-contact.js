@@ -11,7 +11,7 @@
 (function () {
   'use strict';
   var AD = window.AD;
-  var V = '?v=20261022j';
+  var V = '?v=20261022k';
 
   function digits(n) { return String(n || '').replace(/[^\d]/g, ''); }
   function initials(s) { return String(s || '').split(/\s+/).filter(Boolean).map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase(); }
@@ -32,6 +32,7 @@
         picture(p, 'ct-av') +
         '<span class="ct-pill__label">' + AD.esc(p.label || p.role) + '</span>' +
       '</button>' +
+      AD.tapHand('ct-hand') +
       '<div class="ct-card" id="' + id + '" role="group" aria-label="' + AD.esc(p.role) + '" hidden>' +
         picture(p, 'ct-card__photo') +
         '<div class="ct-card__body">' +

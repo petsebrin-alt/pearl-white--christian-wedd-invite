@@ -159,7 +159,7 @@ Shared rules for all sections:
 |---|---|
 | 1 | The car glides straight down from the top at **one smooth, steady speed** (no speeding up, slowing down or bouncing). |
 | 2 | As the car passes over the A & D logo, it disappears beneath it. |
-| 3 | Behind the car, from the top down, the text appears: **The Wedding of** · **Angel & David** · **Save the Date** · **27.JAN.2027**. It travels down with the car for a few seconds (at about a third of its speed) and then eases to a stop in its place, as in the reference video. Nothing else is shown. |
+| 3 | Behind the car, from the top down, the text appears: **Dear Guest,** (the guest's own name from a personal link, in the same script as the names) · **The Wedding of** · **Angel & David** · **Save the Date** · **27.JAN.2027**. It travels down with the car for a few seconds (at about a third of its speed) and then eases to a stop in its place, as in the reference video. Nothing else is shown. |
 | 4 | The car drives out at the bottom. The opening stays as the first screen with a "View the invitation" cue; the header stays hidden until guests scroll past it. |
 
 - It opens by itself 5 s after the page appears (a moment longer only if the car picture is still loading, at most 3 s). Tapping the seal (or anywhere on the envelope), or Enter/Space on the focused seal, opens it sooner.
@@ -199,7 +199,7 @@ Modelled on the couple's reference videos (a scrolling invitation website, and a
 - **"Save the Date"** in tall brush lettering (Comforter) as in the couple's reference: in the same black ink as the couple's names, "the" tucked inside a hand-drawn loop, a small pearl flower beside "Save".
 - A **ring of real pearls and crystals** (cut from the couple's pearl image): a chain of large, medium and small pearls over sparkling crystals, with a cluster of pearls at the bottom.
 - Inside it, **27** dominates (very large serif), with "January" in calligraphy and "2027" beneath; weekday "Wednesday" above.
-- **Tap to reveal** (modelled on the couple's petal video): at first the date is covered by a pile of satin pearl-white petals with a "Tap the petals" hint. One tap and the petals burst away from the finger, swirl round the centre and settle into a wreath tucked inside the pearl ring (≈ 2.5 s) while the date comes into focus; then real white rose petals shower down over the whole screen for about 8 s. Tapping again sends another shower. Reduced motion: the wreath and date are shown at once, no shower. The date is always available to screen readers.
+- **Tap to reveal** (modelled on the couple's petal video): at first the date is covered by a pile of satin pearl-white petals with a "Tap the petals" hint. One tap and the petals burst away from the finger, swirl round the centre and settle into a wreath tucked inside the pearl ring (≈ 2.5 s) while the date comes into focus; then real white rose petals shower down over the whole screen for about 8 s. Tapping again sends another shower. Reduced motion: the wreath and date are shown at once, no shower. The date is always available to screen readers. If the guest does not tap, it opens by itself about 2 seconds after the ring is on screen.
 - **Add to Calendar** button → a small sheet with two choices: **Google Calendar** and **Apple / Outlook (.ics file)**.
 
 **Calendar behaviour rules:**
@@ -323,6 +323,7 @@ Modelled on the couple's "arc dial" reference video, in black and white:
 - **Faces are always black and white:** a guest's own photo (made black and white in their browser before it is sent) or a black or white monogram.
 - **Background:** white roses that sway gently and shift, like the flower video behind "Order of the Day" in the couple's reference. They stay in view while the section scrolls.
 - **The form:** an almost see-through card (white at 14 %) over the swaying roses, with a fine double frame and a pearl at each corner; white boxes with black letters. **Your name** (required, ≤ 60); **How do you know the couple?** — a list of choices (`wishes.relations`) and **Other**, which opens one more box for the guest's own answer (≤ 60); **Your wish** (required, ≤ 500 with live counter); **Your photo** (optional: square, black and white, ≤ 45 KB); **Send wish**; hidden honeypot field.
+- **View all wishes:** a button under the ring (with the count) opens a pop-up card listing every wish in full, newest first — for when there are many.
 - **A new wish joins at the top:** after sending, the page scrolls to the ring, which spins round and brings the new wish up to the top.
 - **Sample blessings:** six sample wishes (`wishes.samples`, clearly marked in `content.js`, attributed to friends — no relatives), with free Unsplash portraits made black and white. They fill the wall until a real wish is saved; `showSamples: false` hides them. **Turn them off before sharing.**
 - States: idle, validating (inline errors), sending (button busy), saved, saved-pending-approval, error (with retry).
@@ -338,7 +339,7 @@ Modelled on the couple's "arc dial" reference video, in black and white:
 
 The dove brings the invitation, as in the couple's dove pictures:
 
-- **The dove:** when guests scroll to the section, a white dove sits in the middle holding the envelope ("Please join us… Angel & David · Kindly RSVP · RSVP"). A soft pulse around **RSVP** and "Tap RSVP to accept the invitation" invite the tap. (No fly-in, at the couple's request.)
+- **The dove:** when guests scroll to the section, a white dove sits in the middle holding the envelope ("Please join us… Angel & David · Kindly RSVP · RSVP"). A soft pulse around **RSVP**, a small white hand tapping beside it, and "Tap RSVP to accept the invitation" invite the tap. (No fly-in, at the couple's request.)
 - **Tap RSVP:**
   - the same dove (same colours) lets go of the envelope, lifts gently and flies away on a slanting line, up and out through the left side of the screen, along a soft wavy path, with slow, full wing beats (about one a second) as in the couple's dove video — only the one dove; the whole flight is played by the browser's compositor so it stays smooth;
   - a soft, slow harp-like melody plays (an original arpeggio in F major with a quiet bell melody, made in the browser, no sound file, about 8 s, low volume) and fades as soon as the guest scrolls;
@@ -357,12 +358,11 @@ One large card at a time, after the couple's card video ("Sun · Mono · Earth")
 
 - Each card: a big word, a small heading, the details (each with a **Location** button that opens Google Maps), "Suggestions · please confirm before booking", and a black-and-white photograph with the next one waiting, blurred, below it.
 - The black round button brings the next card (the up arrow goes back; keys and swipes too): the word dissolves into the next, the card changes colour, the photographs slide up and the details follow. A counter shows "2 / 5".
-- **Proposal — the five cards** (real places, to be confirmed by the couple):
+- **Proposal — the three cards** (real places, to be confirmed by the couple):
   1. **Arrive** (white): Cochin International Airport (about 85 km, 2–2½ hours by road), Alappuzha Railway Station, airport pickup (To be provided).
   2. **Stay** (cream): Ramada by Wyndham Alleppey (Punnamada; also the Sangeet and Reception venue), Punnamada Resort, Raheem Residency (Beach Road).
   3. **Dine** (green): The Harbour Restaurant (Beach Road), Thaff (near YMCA Bridge), Kream Korner Art Café (Mullakkal Road).
-  4. **Explore** (white): Alappuzha Beach & Lighthouse, Marari Beach, Krishnapuram Palace (Kayamkulam).
-  5. **Cruise** (pearl): houseboat cruises from the Finishing Point, Punnamada; Pathiramanal Island.
+  (Explore and Cruise were removed at the couple's request.)
 - Content in `content.js → travel.cards`; photographs are free Unsplash photos, black and white.
 
 ### 4.13 Contact
@@ -370,6 +370,7 @@ One large card at a time, after the couple's card video ("Sun · Mono · Earth")
 After the couple's "hover me" video, in black and white:
 
 - Three round buttons, each with a picture and a short name — **Bride's family**, **Groom's family** (their family photographs) and **Event coordinator** (a pearl monogram) — strung together on a pearl-and-silver-bead chain (in a row on wide screens, one under another on phones).
+- A small white hand taps beside each button, so guests on a phone know to touch it.
 - **Hover** (computer) or **tap** (phone) a button and it grows into a card: the small round picture becomes a large photograph, then the role, name, phone number and the **Call** and **WhatsApp** buttons appear. Moving away, tapping outside, × or Esc shrinks it back. One card at a time.
 - Names and numbers: To be provided. Until a number is supplied, Call and WhatsApp are shown faded with a dashed edge and do nothing; with a number, Call opens the phone and WhatsApp opens a chat with a short greeting.
 
@@ -560,7 +561,7 @@ v1 ships SVG/CSS versions of every decoration so the site is complete; realistic
 9. **Venues** — church, reception and other venue placeholders; event cards link to them.
 10. **Wishing wall** — the ring turns by itself; no card; "Other" opens its own box; a new wish appears at the top; validation works.
 11. **RSVP** — the dove sits holding the envelope; tapping RSVP sends that one dove up the page with a soft wing sound (stops on scroll); the envelope opens to the satin thank-you board; success only when saved.
-12. **Travel & Stay** — five suggestion cards (labelled), Location buttons open Google Maps, the black button changes the card smoothly; white, cream, pearl and soft green only.
+12. **Travel & Stay** — three suggestion cards (labelled), Location buttons open Google Maps, the black button changes the card smoothly; white, cream, pearl and soft green only.
 13. **Contact** — three buttons on a pearl chain; hover or tap opens each card; Call/WhatsApp work only with real numbers.
 14. **Thank you** — exact wording; handwriting reveal with static fallback; the car parks fully in view; Return to Top comes last and works.
 
