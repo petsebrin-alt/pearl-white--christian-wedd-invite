@@ -18,7 +18,7 @@ You can also double-click `site/index.html`, but a local server is closer to how
 
 The showcase pages use the invitation's own background: the pearl-white linen paper with the pearl flowers and pearl strands.
 
-- `mockup.html` shows the invitation running live inside a centred iPhone 17 Pro Max (screen 440 × 956). It has no text or buttons. Tap the seal and scroll inside the phone; refresh to replay the opening. Add `?section=rsvp` (any section id, `names` for the names screen, or `end` for the parked car) to open the phone on one section.
+- `mockup.html` shows the invitation running live inside a centred iPhone 17 Pro Max (screen 440 × 956). It has no text or buttons. The envelope opens by itself after 5 seconds; then scroll inside the phone. Refresh to replay the opening. Add `?section=rsvp` (any section id, `names` for the names screen, or `end` for the parked car) to open the phone on one section.
 - `showcase.html` shows **every section at once**, each in its own iPhone 17 Pro Max, in page order with a small caption. Each phone is live and can be scrolled.
 - Both open sections with `index.html?still#section-id`: the opening is skipped and everything is shown at rest. Guests never see this view.
 - **Both pages always show the live invitation.** Each phone loads `index.html` from the same deployment (never a copy), and `vercel.json` makes Vercel serve every file with `Cache-Control: public, max-age=0, must-revalidate`, so browsers check for a newer version on every visit; the phones also add a one-off `live=` marker to the address so `index.html` is fetched afresh even from a host without those rules. Push a section change to GitHub and, once Vercel has deployed it, it appears inside the same iPhone mockup with no extra step.
@@ -53,11 +53,11 @@ All in Alappuzha, Kerala (India Standard Time): Haldi — 24 Jan, 11:00 am, fami
 
 ## Add photographs and artwork
 
-Put files in `site/assets/images/` (or `site/assets/video/`) and reference them from `content.js`, for example `families.bride.photos` (two photos per family: parents first, then the family with siblings; the second appears with the pixel effect). Sizes and formats are listed in [THEME.md §6](THEME.md#6-asset-checklist). The opening uses `site/assets/images/lace-spray-left.webp`, `lace-spray-right.webp`, `lace-motif.webp`, `lace-pearl-trim.webp`, `dove-seal.webp` and `wedding-car.webp`. The pearl flowers (opening columns, section edges, welcome, thank-you and the car's parking place at the end) use `pearl-bloom.webp`, `pearl-bud.webp`, `pearl-spray.webp`, `pearl-drops.webp` and `pearl-sprig.webp`. The wedding events use `events/<id>.webp` as the picture behind each event (`events[].photo`, with a `position` focal point). Dress code shows `dressCode.outfits`; gifting uses `envelope-front.webp`, `envelope-flap.webp` and `dove-seal.webp`. Save the Date uses `pearl-ring.webp` (real pearls and crystals), `petals/satin-*.webp` and `petals/rose-*.webp` (the wreath and the shower). Replace those files (same names, transparent WebP) to change the artwork. After changing any file, bump the `?v=` tag in `site/index.html` so phones load the new version.
+Put files in `site/assets/images/` (or `site/assets/video/`) and reference them from `content.js`, for example `families.bride.photos` (two photos per family: parents first, then the family with siblings; the second appears with the pixel effect). Sizes and formats are listed in [THEME.md §6](THEME.md#6-asset-checklist). The opening uses `site/assets/images/lace-spray-left.webp`, `lace-spray-right.webp`, `lace-motif.webp`, `lace-pearl-trim.webp`, `dove-seal.webp` and `wedding-car.webp`. The pearl flowers (opening columns, section edges, welcome, thank-you and the car's parking place at the end) use `pearl-bloom.webp`, `pearl-bud.webp`, `pearl-spray.webp`, `pearl-drops.webp` and `pearl-sprig.webp`. The wedding events use `events/<id>.webp` as the picture behind each event (`events[].photo`, with a `position` focal point). Dress code shows `dressCode.outfits`; gifting uses `envelope-front.webp`, `envelope-flap.webp` and `dove-seal.webp`. Save the Date uses `pearl-ring.webp` (real pearls and crystals), `petals/satin-*.webp` and `petals/rose-*.webp` (the wreath and the shower; the rose petals also burst from the RSVP seal). The wishing wall's background is `white-roses.webp` (the couple's white-roses picture, mirrored so it repeats without a seam), and the sample faces are `wishes/<name>.webp` (free Unsplash portraits, made black and white). Replace those files (same names, transparent WebP) to change the artwork. After changing any file, bump the `?v=` tag in `site/index.html` so phones load the new version.
 
 ## Connect RSVP and wishes
 
-Until `backend.endpoint` is set, both forms run in **preview mode**: entries stay in the visitor's own browser and are clearly labelled as not sent.
+Until `backend.endpoint` is set, wishes and RSVP acceptances stay in the visitor's own browser. The "preview mode" notes were removed at the couple's request, so **connect the Google Sheet before sharing the invitation**, or nothing will reach the couple.
 
 To save entries to a Google Sheet:
 
@@ -65,9 +65,9 @@ To save entries to a Google Sheet:
 2. Paste in the contents of `backend/google-apps-script.gs`. Optionally set `NOTIFY_EMAIL`.
 3. Choose **Deploy → New deployment → Web app**, with *Execute as: Me* and *Who has access: Anyone*.
 4. Copy the web-app URL into `site/content.js` → `backend.endpoint`.
-5. Test one RSVP and one wish. To approve a wish, tick **Approved** in the *Wishes* sheet. Only approved wishes appear on the site. The *Wishes* sheet also keeps each guest's **Relation** and optional black-and-white **Photo** (a small image stored as text).
+5. Test one RSVP and one wish. The RSVP is one **Accept Invitation** button; to know who accepted, send each guest a personal link such as `https://…/?guest=Anu%20Thomas` (the card greets them and the *RSVPs* sheet records the name; without it the row says "Guest (name not given)"). To approve a wish, tick **Approved** in the *Wishes* sheet. Only approved wishes appear on the site. The *Wishes* sheet also keeps each guest's **Relation** and optional black-and-white **Photo** (a small image stored as text).
 
-The wishing wall shows six **sample blessings** (`wishes.samples` in `content.js`) until the first real wish appears; set `wishes.showSamples` to `false` to hide them before sharing.
+The wishing wall shows six **sample blessings** (`wishes.samples` in `content.js`) until the first real wish appears; set `wishes.showSamples` to `false` to hide them before sharing. The "How do you know the couple?" choices are `wishes.relations`; **Other** is always added last and opens a box for the guest's own answer.
 
 ## Project structure
 

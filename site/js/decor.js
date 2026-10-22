@@ -17,7 +17,7 @@
     'dress-code': [['spray', 'right', '2%', 'spray', 0.32, 0, 0.12], ['bud', 'left', '64%', 'small', 0.15, 30, 0.1]],
     'gifting': [['bloom', 'left', '8%', 'big', 0.46, 25, 0.14]],
     'venues': [['drops', 'left', '-4%', 'drop', -0.35, 0, 0.05], ['bloom', 'right', '44%', 'big', 0.46, -30, 0.14]],
-    'wishes': [['spray', 'left', '1%', 'spray', 0.32, 0, 0.12]],
+    // 'wishes': none — that section has its own white roses behind it
     'rsvp': [['bloom', 'right', '5%', 'big', 0.46, 50, 0.14]],
     'travel': [['sprig', 'left', '7%', 'small', 0.12, -20, 0.08], ['bloom', 'left', '58%', 'big', 0.46, 10, 0.14]],
     'contact': [['spray', 'right', '3%', 'spray', 0.32, 0, 0.12]]

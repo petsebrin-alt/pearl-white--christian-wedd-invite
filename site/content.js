@@ -292,19 +292,25 @@ window.WEDDING = {
     nameMax: 60,
     relationMax: 60,
     messageMax: 500,
-    // true = new wishes appear only after the couple approves them.
+    // true = new wishes appear only after the couple approves them (the
+    // guest who sent one still sees it at the top of the wall straight away).
     moderation: true,
+    // "How do you know the couple?" choices; "Other" (always last) opens a
+    // small box where guests write their own answer.
+    relations: ["Bride's family", "Groom's family", "Friend", "College friend", "School friend", "Colleague", "Church family", "Neighbour"],
     // Sample blessings so the wall is not empty in the design preview. They
     // are hidden automatically as soon as one real wish is on the wall.
     // SAMPLES — not real guests; set showSamples to false to hide them.
+    // Their faces are free stock portraits from Unsplash (unsplash.com,
+    // Unsplash License), made black and white for the wall.
     showSamples: true,
     samples: [
-      { name: "Anu", relation: "College friend", message: "Angel, from hostel nights to this day — I am so happy for you both. May your home always be full of laughter and prayer." },
-      { name: "Joel", relation: "Colleague", message: "David, congratulations! Wishing you both a lifetime of love, patience and adventures together." },
-      { name: "Merin", relation: "Church choir", message: "May the Lord bless your marriage and keep you close to Him and to each other, always." },
-      { name: "Rahul", relation: "School friend", message: "Two wonderful people, one beautiful journey. See you in Alappuzha!" },
-      { name: "Sneha", relation: "Neighbour", message: "Watching you grow up and now getting married — wishing you all the happiness in the world, Angel." },
-      { name: "Kevin", relation: "Friend", message: "Cheers to love, faith and many happy years ahead. God bless you both." }
+      { name: "Anu", photo: "assets/images/wishes/anu.webp", relation: "College friend", message: "Angel, from hostel nights to this day — I am so happy for you both. May your home always be full of laughter and prayer." },
+      { name: "Joel", photo: "assets/images/wishes/joel.webp", relation: "Colleague", message: "David, congratulations! Wishing you both a lifetime of love, patience and adventures together." },
+      { name: "Merin", photo: "assets/images/wishes/merin.webp", relation: "Church choir", message: "May the Lord bless your marriage and keep you close to Him and to each other, always." },
+      { name: "Rahul", photo: "assets/images/wishes/rahul.webp", relation: "School friend", message: "Two wonderful people, one beautiful journey. See you in Alappuzha!" },
+      { name: "Sneha", photo: "assets/images/wishes/sneha.webp", relation: "Neighbour", message: "Watching you grow up and now getting married — wishing you all the happiness in the world, Angel." },
+      { name: "Kevin", photo: "assets/images/wishes/kevin.webp", relation: "Friend", message: "Cheers to love, faith and many happy years ahead. God bless you both." }
     ]
   },
 

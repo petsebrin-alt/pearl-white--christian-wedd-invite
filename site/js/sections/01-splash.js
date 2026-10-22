@@ -2,7 +2,8 @@
    1. OPENING — modelled on the reference videos
    Closed: a full-screen envelope of four white tulle flaps dressed with the
           real pearl embroidery and beaded trim from the couple's envelope,
-          closed with the pearl dove seal. "Tap the seal to open".
+          closed with the pearl dove seal. It glows softly and opens by itself
+          5 seconds after the page appears (tapping the seal opens it sooner).
    Open:  light blooms from the seal, a sheen sweeps the lace and the pearls
           sparkle; then, as in the reference video, the side flaps fold away,
           followed by the top flap (carrying the seal) and the bottom flap,
@@ -22,15 +23,16 @@
   var root = document.documentElement;
 
   var DRIVE = 9500;   // ms from the top edge to beyond the bottom edge
-  // Envelope steps (ms after the tap) — they match the CSS timings.
+  var AUTO = 5000;    // the envelope opens by itself this long after the page appears
+  // Envelope steps (ms after it starts opening) — they match the CSS timings.
   var STEPS = { open: 1200, done: 3450 };
   var CY = 0.47;      // where the flaps meet (fraction of the height)
-  var BEAT = 450;     // pause on the revealed card before the car arrives
+  var CAR_GO = 150;   // the car sets off this soon after the flaps start to open (no waiting)
   var MON = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
   var splash, env, btn, car, mono, names, cue;
   var phase = 'idle', finished = false, carOk = false;
-  var geo = null, t0 = 0, raf = 0, safety = 0;
+  var geo = null, t0 = 0, raf = 0, safety = 0, carAnim = null;
 
   function $(id) { return document.getElementById(id); }
   function set(sel, text) {
@@ -69,15 +71,28 @@
     };
   }
 
+  function carTransform(y) { return 'translate3d(-50%, ' + y.toFixed(2) + 'px, 0)'; }
   function place(y) {
-    car.style.transform = 'translate3d(-50%, ' + y.toFixed(2) + 'px, 0)';
+    car.style.transform = carTransform(y);
+    masks(y);
+  }
+  // The monogram goes under the car and the names appear behind it.
+  function masks(y) {
     var front = y + geo.ch * 0.99;   // front bumper
     var rear = y + geo.ch * 0.01;    // rear of the car
     mono.style.setProperty('--f', (front - geo.monoTop - 12).toFixed(1) + 'px');
     names.style.setProperty('--r', (rear - geo.namesTop + 8).toFixed(1) + 'px');
   }
 
-  /* ---------- Animation loop: one constant, smooth speed ---------- */
+  /* ---------- Animation loop: one constant, smooth speed ----------
+     The car itself moves on the graphics card (Web Animations), so a busy
+     moment on the page can never make it stutter; the text masks follow the
+     animation's own clock. */
+  function sync() {
+    var p = Math.min((carAnim.currentTime || 0) / DRIVE, 1);
+    masks(geo.yStart + (geo.yEnd - geo.yStart) * p);
+    if (p < 1 && !finished) raf = requestAnimationFrame(sync);
+  }
   function frame(now) {
     var p = Math.min((now - t0) / DRIVE, 1);
     place(geo.yStart + (geo.yEnd - geo.yStart) * p);
@@ -94,13 +109,17 @@
       setTimeout(function () { env.hidden = true; showFinal(); setTimeout(finish, 450); }, 380);
       return;
     }
+    env.classList.remove('is-charging');
     env.classList.add('is-lit');
-    safety = setTimeout(finish, STEPS.done + BEAT + DRIVE + 3000);
-    setTimeout(function () { env.classList.add('is-open'); }, STEPS.open);
+    safety = setTimeout(finish, STEPS.open + DRIVE + 4000);
+    setTimeout(function () {
+      env.classList.add('is-open');
+      // The car sets off as the flaps open and comes out from under the top flap.
+      if (carOk && geo) setTimeout(drive, CAR_GO);
+    }, STEPS.open);
     setTimeout(function () {
       env.hidden = true;
-      if (!carOk || !geo) { showFinal(); setTimeout(finish, 450); return; }
-      setTimeout(drive, BEAT);
+      if (!carOk || !geo) { showFinal(); setTimeout(finish, 450); }
     }, STEPS.done);
   }
 
@@ -233,12 +252,19 @@
   }
 
   function drive() {
-    if (finished) return;
+    if (finished || phase === 'drive') return;
     measure();
     place(geo.yStart);
     phase = 'drive';
-    t0 = performance.now();
-    raf = requestAnimationFrame(frame);
+    if (car.animate) {
+      carAnim = car.animate([{ transform: carTransform(geo.yStart) }, { transform: carTransform(geo.yEnd) }],
+        { duration: DRIVE, easing: 'linear', fill: 'forwards' });
+      carAnim.onfinish = function () { masks(geo.yEnd); complete(); };
+      raf = requestAnimationFrame(sync);
+    } else {
+      t0 = performance.now();
+      raf = requestAnimationFrame(frame);
+    }
   }
 
   function complete() {
@@ -311,6 +337,8 @@
       function ready() {
         carOk = car.naturalWidth > 0;
         if (!carOk) { car.hidden = true; return; }
+        // Decode the picture now, so the first frames of the drive are not spent on it.
+        if (car.decode) car.decode().catch(function () {});
         measure();
         place(geo.yStart);
       }
@@ -350,6 +378,19 @@
 
       btn.addEventListener('click', function (e) { e.stopPropagation(); open(); });
       splash.addEventListener('click', function () { if (phase === 'idle') open(); });
+
+      // No tap needed: the envelope glows softly and opens by itself after
+      // AUTO ms (waiting a moment longer only if the car picture is still loading).
+      setTimeout(function () { if (phase === 'idle') env.classList.add('is-charging'); }, AUTO - 1600);
+      setTimeout(function autoOpen() {
+        if (phase !== 'idle') return;
+        if (!car.complete) {
+          car.addEventListener('load', function () { if (phase === 'idle') open(); }, { once: true });
+          setTimeout(function () { if (phase === 'idle') open(); }, 3000);
+          return;
+        }
+        open();
+      }, AUTO);
       cue.addEventListener('click', function () {
         setTimeout(function () {
           var t = $('welcome-title');

@@ -49,9 +49,11 @@ function doGet(e) {
 }
 
 function saveRsvp_(d) {
-  var name = clean_(d.name, 80);
+  // The RSVP card is one "Accept Invitation" button; the guest's name comes
+  // from a personal link (?guest=Name) when the couple sends one.
+  var name = clean_(d.name, 80) || 'Guest (name not given)';
   var attending = d.attending === 'yes' ? 'yes' : (d.attending === 'no' ? 'no' : '');
-  if (!name || !attending) return { ok: false, error: 'Name and attendance are required.' };
+  if (!attending) return { ok: false, error: 'Attendance is required.' };
   var guests = attending === 'yes' ? Math.max(1, Math.min(50, parseInt(d.guests, 10) || 1)) : 0;
   var events = Array.isArray(d.events) ? d.events.map(function (x) { return clean_(x, 40); }).join(', ') : '';
 

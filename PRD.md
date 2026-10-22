@@ -114,16 +114,16 @@ Family and friends of both families, many on mid-range Android phones and iPhone
 
 ### 3.2 Guest journey
 
-1. **Arrive** from a WhatsApp or SMS link → a full-screen white lace-and-pearl envelope with a pearl dove seal and "Tap the seal to open".
+1. **Arrive** from a WhatsApp or SMS link → a full-screen white lace-and-pearl envelope with a pearl dove seal and "Your invitation is opening…"; no tap is needed.
 2. **Open** → light sweeps the envelope and its four flaps fold away to reveal the card; the wedding car drives slowly down it and reveals "The Wedding of Angel & David" and the date; guests scroll on into the welcome. At the very end, after the thank-you, the wedding car drives in and parks on a slant with the couple waving.
 3. **Read** the invitation, verse and date → **Add to Calendar** from Save the Date.
 4. **Feel the anticipation** in the countdown, then **see the couple's moments together** in the gallery.
 5. **Meet the families** → optionally open either family tree.
 6. **Plan** using the events timeline → per-event calendar and location actions → venues section with directions.
 7. **Prepare** with dress-code guidance and the gifting note.
-8. **Respond** → leave a wish, then RSVP.
+8. **Respond** → leave a wish, then accept the invitation with one tap.
 9. **Logistics** → travel, accommodation and contacts.
-10. **Close** with the thank-you and **Return to Top**.
+10. **Close** with the thank-you, the parked car and **Return to Top**.
 
 **Persistent navigation:** after the splash, a slim header shows the "A & D" monogram, an **RSVP** shortcut and a **Menu** button. The menu opens a full-screen overlay listing sections 2–14.
 
@@ -141,9 +141,9 @@ Shared rules for all sections:
 
 **Purpose:** an opening that follows the couple's two reference videos: (1) a **full-screen envelope** whose four flaps open onto the card (sides first, then top with the seal and bottom); (2) their white vintage **wedding car, seen from above**, that then drives from the **top of the screen to the bottom**, revealing the names behind it.
 
-**Closed envelope:** fills the screen. Four flaps of white tulle meet under the couple's **pearl dove wax seal**. The flaps are dressed with the real material from the couple's lace-and-pearl envelope (gold reduced to white): pearl flower sprays on the side flaps, the embroidered pearl motif on the top and bottom flaps, and the envelope's pearl-beaded border as trim along every flap edge. A small note reads "Tap the seal to open".
+**Closed envelope:** fills the screen. Four flaps of white tulle meet under the couple's **pearl dove wax seal**. The flaps are dressed with the real material from the couple's lace-and-pearl envelope (gold reduced to white): pearl flower sprays on the side flaps, the embroidered pearl motif on the top and bottom flaps, and the envelope's pearl-beaded border as trim along every flap edge. A small note reads "Your invitation is opening…" with softly blinking dots.
 
-**Opening (≈ 3.5 s, starts only when the guest taps the seal):**
+**Opening (by itself, 5 s after the page appears — no tap needed; tapping the seal opens it sooner):** in the last 1.6 s before it opens, light gathers at the seal and the seal brightens; then:
 
 | Time | What happens |
 |---|---|
@@ -153,7 +153,7 @@ Shared rules for all sections:
 
 **Card:** pearl-white linen backdrop; down the left and right edges, **fine champagne stems with many small pearl-and-satin flowers**, buds, pearl sprigs and tiny pearls (small, delicate and plentiful, as in the couple's reference image with the car), leaving a clear path in the middle; an "A & D" monogram with "Angel & David" and "27 · 01 · 2027" in the centre; the front of the car peeking in from the top edge. Lettering stays in the original typography (Pinyon Script names, black ink).
 
-**Car drive (≈ 9.5 s, begins automatically ½ s after the envelope opens):**
+**Car drive (≈ 9.5 s, sets off 0.15 s after the flaps start to open — no waiting; it comes out from under the top flap as it lifts):** the car moves on the graphics card (Web Animations), so a busy moment on the phone cannot make it stutter; the text reveal follows the animation's own clock. The car picture is decoded before the drive.
 
 | Step | What happens |
 |---|---|
@@ -162,7 +162,7 @@ Shared rules for all sections:
 | 3 | Behind the car, from the top down, the text is uncovered: **The Wedding of** · **Angel & David** · **Save the Date** · **27.JAN.2027**. Nothing else is shown. |
 | 4 | The car drives out at the bottom. The opening stays as the first screen with a "View the invitation" cue; the header stays hidden until guests scroll past it. |
 
-- Tapping the seal (or anywhere on the envelope), or pressing Enter/Space on the focused seal, starts it. Nothing moves before the tap.
+- It opens by itself 5 s after the page appears (a moment longer only if the car picture is still loading, at most 3 s). Tapping the seal (or anywhere on the envelope), or Enter/Space on the focused seal, opens it sooner.
 - **Reduced motion:** the envelope fades away and the final names screen appears without the car moving.
 - **Failure safety:** if the car image fails to load, the final names screen appears without it; the opening always completes within ~15 s of the tap; if the main script fails, the opening is removed after 4 s and a static summary is shown; without JavaScript a `<noscript>` summary is shown.
 - The rest of the page is `inert` while the animation plays. Afterwards focus moves to the "View the invitation" cue, or the page scrolls to a section link (e.g. `#rsvp`) if the guest arrived with one.
@@ -315,37 +315,36 @@ At the couple's request, **only the church** of the Christian marriage ceremony 
 
 ### 4.10 Wishing wall
 
-Modelled on the couple's reference video (floating faces around a featured testimonial), in black and white:
+Modelled on the couple's "arc dial" reference video, in black and white:
 
-- **The wall (top):** a central card shows one wish — the guest's face in a ring at the top on a fine arc with ‹ › arrows, a counter ("03 / 08"), a black chip with how they know the couple, the wish, and their name in script. The faces of the other guests float gently around the card. **Tapping a face flies it into the middle** (the previous face takes its place) and the new wish appears **word by word** out of a soft blur. Arrows, swipes and an automatic turn every ≈ 6.5 s (while on screen, paused on interaction) step through all wishes.
-- **Faces are always black and white:** a guest's own photo (made black and white in their browser before it is sent) or a black or white monogram of their initials.
-- **The form (below the wall):** **Your name** (required, ≤ 60), **How do you know the couple?** (optional, ≤ 60), **Your wish** (required, ≤ 500 with live counter), **Your photo** (optional: cropped square, black and white, ≤ 45 KB), **Send wish**; hidden honeypot field.
-- **Sample blessings:** six sample wishes (`wishes.samples`, clearly marked in `content.js`, attributed to friends — no relatives) fill the wall in the design preview and are hidden automatically as soon as one real wish is on the wall; `showSamples: false` hides them. **Turn them off before sharing.**
-- States: idle, validating (inline errors), sending (button busy), saved, saved-pending-approval, error (with retry), demo.
+- **The ring:** the guests' faces sit on a large ring, like a turning globe. The face at the top is the wish being read; it is larger, with ‹ › arrows and a counter ("03 / 08") just under it.
+- **It moves by itself:** every few seconds (long enough to read the wish, 5–11 s) the ring turns and brings the next face up to the top. No tapping is needed. Faces further round are smaller and fade away, as if going round the far side.
+- **The wish, no card:** a quotation mark, the wish in small type (appearing word by word out of a soft blur), the guest's name in small capitals and how they know the couple. Long wishes show six lines and a **Read more** link.
+- **Faces are always black and white:** a guest's own photo (made black and white in their browser before it is sent) or a black or white monogram.
+- **Background:** white roses that sway gently and shift, like the flower video behind "Order of the Day" in the couple's reference. They stay in view while the section scrolls.
+- **The form:** on frosted paper over the roses, with a fine double frame and a pearl at each corner. **Your name** (required, ≤ 60); **How do you know the couple?** — a list of choices (`wishes.relations`) and **Other**, which opens one more box for the guest's own answer (≤ 60); **Your wish** (required, ≤ 500 with live counter); **Your photo** (optional: square, black and white, ≤ 45 KB); **Send wish**; hidden honeypot field.
+- **A new wish joins at the top:** after sending, the page scrolls to the ring, which spins round and brings the new wish up to the top.
+- **Sample blessings:** six sample wishes (`wishes.samples`, clearly marked in `content.js`, attributed to friends — no relatives), with free Unsplash portraits made black and white. They fill the wall until a real wish is saved; `showSamples: false` hides them. **Turn them off before sharing.**
+- States: idle, validating (inline errors), sending (button busy), saved, saved-pending-approval, error (with retry).
 
 **Demo vs connected** (see §8 for storage):
 
 | Mode | When | What guests see |
 |---|---|---|
-| Demo | `backend.endpoint` is empty (v1 default) | A visible "Preview mode" note on the form. Wishes are kept only in this browser. Confirmation reads "Preview only — your wish was kept on this device and has not been sent to Angel & David." |
-| Connected | `backend.endpoint` configured | Wish sent to the server; success only after the server confirms it saved. If moderation is on: "Thank you! Your wish has been received and will appear once approved." |
+| Demo | `backend.endpoint` is empty (v1 default) | No preview note (at the couple's request). Wishes are kept only in this browser and appear at the top of the wall there. **Connect the backend before sharing**, or wishes will not reach the couple. |
+| Connected | `backend.endpoint` configured | Saved on the server; success only after it confirms. With moderation, the guest sees their wish at the top at once ("Awaiting approval"); everyone sees it after approval. |
 
 ### 4.11 RSVP
 
-| Field | Type | Rules |
-|---|---|---|
-| Guest name | text | Required, 2–80 chars |
-| Attendance | radio: "Joyfully accepts" / "Regretfully declines" | Required |
-| Number of attendees | number stepper | Required if accepting; min 1; max = `rsvp.maxGuests` (To be provided; v1 cap 10) |
-| Events attending | checkboxes (5 events) | At least one if accepting; hidden if declining |
-| Dietary requirements | text | Optional, ≤ 200 chars |
-| Message | textarea | Optional, ≤ 500 chars |
+One invitation card with one button, as the couple asked:
 
-- Labels always visible (not placeholder-only); errors listed inline under each field and summarised at the top with links to each field; `aria-invalid` and `aria-describedby` set.
-- RSVP deadline: "To be provided" (shown under the heading when set).
-- Submission feedback: button shows "Sending…" and is disabled; success **only** after the server responds `ok: true`; failure shows an error with retry and contact fallback.
-- Demo mode: an information panel (not a success message) — "Preview only — this RSVP was not sent. RSVPs will be collected once the form is connected."
-- Duplicate responses (connected): v1 records every submission with a timestamp, so the latest response per guest is the one that counts. **Proposal:** automatic de-duplication by name once guest-list rules are known.
+- **The card:** "The wedding of", **Angel & David**, the date, "10:30 am · Our Lady of Mount Carmel Cathedral", a pearl divider, "Kindly respond by" (To be provided) and **Accept Invitation**.
+- **Personal links:** `?guest=Anu%20Thomas` adds "Dear Anu Thomas," to the card and saves the acceptance under that name. Without it the RSVP sheet records "Guest (name not given)".
+- **On Accept:** a light sweeps the card, it turns over, a pearl seal is pressed on the back with a tick, "Invitation Accepted" writes itself, white rose petals burst from the seal, then "Thank you! We look forward to celebrating with you on 27 January 2027."
+- The acceptance is remembered on the device: a later visit shows the accepted side, with "See the invitation again" to turn it back.
+- There is no decline button, guest count, event list or message. Guests who cannot come use the Contact section. **Proposal:** add a small "Regretfully decline" link if the couple wants one.
+- Success shows **only** after the save is confirmed; a failure shows an error with retry and the contact fallback.
+- Demo mode keeps the acceptance in this browser only (no preview note, at the couple's request).
 
 ### 4.12 Transportation and accommodation
 
@@ -365,8 +364,8 @@ Placeholder cards for: **Travel guidance, Parking, Pickup and shuttle arrangemen
 - Pearl flowers above the line.
 - "Thank you for blessing our journey." — **Proposal:** gentle handwriting reveal (SVG stroke draw ≈ 2.4 s, then the fill fades in). Static readable text is always present for screen readers and reduced-motion users.
 - "Angel & David" and the date.
-- **Return to Top** button → smooth scroll to the welcome (instant for reduced motion) and focus moves to the top.
-- **Parking place** (decorative), at the very end of the page as in the last frame of the reference video: once it comes into view, the wedding car drives in from the left, swings round and stops **on a slant** (about 32°) at the bottom left, partly beyond the page edge, with the couple waving to the guests; then the "A & D" monogram and pearl flowers settle in beside it and a few pearl glints twinkle around the couple. It plays once per visit; reduced motion shows it parked.
+- **Parking place** (decorative), as in the last frame of the reference video: once it comes into view, the wedding car drives in from the left, swings round and stops **on a slant** (about 32°) at the left, fully in view, with the couple waving to the guests; then the "A & D" monogram and pearl flowers settle in beside it and a few pearl glints twinkle around the couple. It plays once per visit; reduced motion shows it parked.
+- **Return to Top** button at the very end, after the parked car → smooth scroll to the welcome (instant for reduced motion) and focus moves to the top.
 
 ---
 
@@ -385,7 +384,7 @@ Full details in [THEME.md](THEME.md). Summary:
 
 | # | Interaction | Trigger | Duration / easing | Reduced motion | Fallback |
 |---|---|---|---|---|---|
-| A1 | Light effect and four-flap envelope opening (≈ 3.5 s), then the car drive | Tap the seal / Enter / Space | ≈ 9.5 s; one constant, smooth speed top to bottom (no easing); text uncovered from the top down behind the car | Final screen appears instantly | Completes within ~12.5 s; no car image → final screen; script-failure removal at 4 s |
+| A1 | Light effect and four-flap envelope opening (≈ 3.5 s), with the car setting off as the flaps open | Automatically 5 s after the page appears (or a tap / Enter / Space) | ≈ 9.5 s; one constant, smooth speed top to bottom (no easing); text uncovered from the top down behind the car | Final screen appears instantly | Completes within ~12.5 s; no car image → final screen; script-failure removal at 4 s |
 | A2 | Section reveal | Scroll into view (IntersectionObserver) | 1 s fade-up 22 px with a soft focus-pull (blur 5 px → 0) | Instant | Content visible if observer unsupported |
 | A2b | Car parks at the end | Parking place 45 % in view (once) | 3.2 s drive-in from the left, turning from 80° to a 32° slant and slowing to a stop; monogram fades in after; glints 3 × 1.4 s | Car shown parked | No car image → monogram and flowers only |
 | A2c | Edge flowers drift | Scroll | Linked to the scroll (5–16 % of the scroll distance) | None | Static flowers |
@@ -397,7 +396,10 @@ Full details in [THEME.md](THEME.md). Summary:
 | A4 | Family-tree floral reveal | Open overlay | 700 ms branch draw + 60 ms staggered nodes | None | Static tree |
 | A5 | Pearl timeline sheen | Event card enters view | 500 ms | None | Static pearls |
 | A6 | Envelope opening | Tap button | Seal 200 ms, flap 500 ms, card 600 ms | Card shown open | Message always in DOM |
-| A7 | Wish placed | Successful save | 450 ms slide/settle | None | — |
+| A7 | Wishing wall ring turns | Automatically while on screen (5–11 s per wish), or ‹ › / swipe | 1.3 s ease-in-out turn along the ring; the old wish blurs out, the new one appears word by word (45 ms per word) | No automatic turn; arrows change the wish at once | Text always in the DOM |
+| A7b | New wish joins | Successful save | Scroll to the ring, then it spins up to 3 places to bring the new wish to the top, with a soft glow | Shown at the top at once | — |
+| A7c | Roses sway | While the section is on screen | Two rose layers drift and sway (11 s and 15 s, alternating) with a light 5 s breeze | Still roses | Plain linen if the image fails |
+| A7d | RSVP accepted | Tap **Accept Invitation** | Light sweep 0.75 s; card turns 1.2 s; seal stamp 0.55 s; tick 0.6 s; "Invitation Accepted" written 1.4 s; 22 rose petals 2.6–3.8 s | Accepted side shown at once | Text always in the DOM |
 | A8 | Overlay open/close | Button | 250 ms fade + 12 px rise | Instant | `<dialog>` fallback to fixed overlay |
 | A9 | Handwriting reveal | Thank-you enters view | 2.4 s stroke + 400 ms fill | Static text | Static text |
 | A10 | Return to top | Tap | Native smooth scroll | Instant jump | — |
@@ -429,8 +431,8 @@ v1 ships SVG/CSS versions of every decoration so the site is complete; realistic
 |---|---|
 | `id` | server-generated |
 | `submittedAt` | ISO timestamp (server) |
-| `name` | string |
-| `attending` | `"yes"` / `"no"` |
+| `name` | string (from the `?guest=` link; "Guest (name not given)" without one) |
+| `attending` | `"yes"` (the card only accepts) |
 | `guests` | integer |
 | `events` | string[] (event ids) |
 | `dietary` | string (optional) |
@@ -468,7 +470,7 @@ v1 ships SVG/CSS versions of every decoration so the site is complete; realistic
 - Inputs are trimmed and length-limited client-side and server-side; displayed wishes are rendered as text (never as HTML) to prevent script injection.
 - A hidden honeypot field rejects simple spam bots (nothing is saved and no success is shown).
 - Personal data is stored only in the couple's backend; nothing is sent to analytics.
-- Demo mode stores wishes and RSVPs in `localStorage` on the guest's own device, labelled "Preview only".
+- Demo mode stores wishes and RSVPs in `localStorage` on the guest's own device. At the couple's request no preview note is shown, so the backend must be connected before the invitation is shared.
 
 ### 8.4 Notifications (To be provided)
 
@@ -530,7 +532,7 @@ v1 ships SVG/CSS versions of every decoration so the site is complete; realistic
 
 ### Per section
 
-1. **Splash** — full-screen lace-and-pearl envelope with the dove seal and "Tap the seal to open" visible at 320 × 640 and up; nothing moves before the tap; light effect, then flaps open in the reference order (sides, then top with seal and bottom) in ≈ 3.5 s; the car then drives top → bottom at a constant speed revealing only The Wedding of · Angel & David · Save the Date · date; reduced motion skips all movement; guests always get in even if an image or script fails.
+1. **Splash** — full-screen lace-and-pearl envelope with the dove seal and "Your invitation is opening…" visible at 320 × 640 and up; it opens by itself after 5 s with no tap; light effect, then flaps open in the reference order (sides, then top with seal and bottom) in ≈ 3.5 s; the car then drives top → bottom at a constant speed revealing only The Wedding of · Angel & David · Save the Date · date; reduced motion skips all movement; guests always get in even if an image or script fails.
 2. **Welcome** — names most prominent; cross, message, date, verse with reference and translation shown.
 3. **Save the Date** — "27" is the focal element; Add to Calendar offers Google and .ics; the entry is all-day while the time is unconfirmed.
 4. **Countdown** — pending state shows days + explanation; live state ticks each second once time and timezone are set; ended message appears after the time.
@@ -539,11 +541,11 @@ v1 ships SVG/CSS versions of every decoration so the site is complete; realistic
 7. **Dress code** — black & white shown as Proposal; per-event guidance placeholders; illustrations present.
 8. **Gifting** — envelope opens/closes; message wording exact; no registry.
 9. **Venues** — church, reception and other venue placeholders; event cards link to them.
-10. **Wishing wall** — validation; demo labelled; View All Wishes overlay full-viewport, scrollable, closable.
-11. **RSVP** — all fields; validation; success only when saved; demo clearly not a success.
+10. **Wishing wall** — the ring turns by itself; no card; "Other" opens its own box; a new wish appears at the top; validation works.
+11. **RSVP** — one card, one **Accept Invitation** button; the acceptance animation plays; success only when saved.
 12. **Travel** — seven placeholder categories; nothing invented.
 13. **Contact** — three cards; call/WhatsApp only with real numbers.
-14. **Thank you** — exact wording; handwriting reveal with static fallback; Return to Top works.
+14. **Thank you** — exact wording; handwriting reveal with static fallback; the car parks fully in view; Return to Top comes last and works.
 
 ---
 

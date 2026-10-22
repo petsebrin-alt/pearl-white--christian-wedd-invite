@@ -242,7 +242,7 @@
   height: var(--trim);
   margin-top: calc(var(--trim) / -2);
   transform-origin: 0 50%;
-  background: url("../assets/images/lace-pearl-trim.webp?v=20261021w") repeat-x 0 50% / auto 100%;
+  background: url("../assets/images/lace-pearl-trim.webp?v=20261022b") repeat-x 0 50% / auto 100%;
 }
 
 /* Light: a glow from the seal, a sheen sweeping the lace, pearls sparkling. */
@@ -335,6 +335,17 @@
 
 /* ----- Opening sequence (classes added by 01-splash.js) ----- */
 .op-envelope.is-lit .op-hint { opacity: 0; }
+/* No tap needed: in the last moments before it opens by itself, light gathers
+   at the seal and a soft sheen crosses the lace (then .is-lit takes over). */
+.op-dots i { font-style: normal; opacity: .2; }
+.motion-ok .op-dots i { animation: op-dot 1.4s ease-in-out infinite; }
+.motion-ok .op-dots i:nth-child(2) { animation-delay: .2s; }
+.motion-ok .op-dots i:nth-child(3) { animation-delay: .4s; }
+@keyframes op-dot { 0%, 100% { opacity: .2; } 40% { opacity: 1; } }
+.op-envelope.is-charging .env__glow { animation: env-charge 1.6s ease-in both; }
+@keyframes env-charge { from { opacity: 0; transform: translate(-50%, -50%) scale(.2); } to { opacity: .7; transform: translate(-50%, -50%) scale(1.15); } }
+.op-envelope.is-charging .op-seal { animation: seal-charge 1.6s ease-in-out both; }
+@keyframes seal-charge { 0% { transform: translate(-50%, -50%) scale(1); filter: brightness(1); } 100% { transform: translate(-50%, -50%) scale(1.04); filter: brightness(1.12) drop-shadow(0 0 14px rgba(255, 255, 255, .95)); } }
 .op-envelope.is-lit .op-seal { animation: seal-press .5s cubic-bezier(.3, .7, .3, 1) both; pointer-events: none; }
 .op-envelope.is-lit .op-seal::before { animation: none; opacity: 0; }
 @keyframes seal-press { 0% { transform: translate(-50%, -50%) scale(1); } 35% { transform: translate(-50%, -50%) scale(.92); } 100% { transform: translate(-50%, -50%) scale(1.03); } }
@@ -702,7 +713,7 @@
   height: 12px;
   margin-top: -6px;
   transform-origin: 0 50%;
-  background: url("../assets/images/bead-chain.webp?v=20261021w") repeat-x left center / 24px 12px;
+  background: url("../assets/images/bead-chain.webp?v=20261022b") repeat-x left center / 24px 12px;
   filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18));
 }
 .cd-tile { display: flex; flex-direction: column; align-items: center; gap: .25rem; min-width: 0; }
@@ -1211,24 +1222,78 @@
 .vx-btn { margin-top: 1.2rem; }
 
 /* =============================================================================
-   10. WISHING WALL — floating faces around a central wish (couple's reference
-   video); all faces black and white; the form below
+   10. WISHING WALL — a ring of black-and-white faces that turns like a globe
+   (couple's "arc dial" video) over white roses that sway gently (couple's
+   "Order of the Day" video); the form below on frosted paper
    ========================================================================== */
-.ww { position: relative; max-width: 54rem; margin: 0 auto 2rem; padding: 3.2rem 0 5rem; min-height: 30rem; }
-.ww-orbit { position: absolute; inset: 0; pointer-events: none; }
-.ww-slot {
+#wishes { isolation: isolate; }
+
+/* ---------- White roses behind the whole section ----------
+   The stage stays in view while the section scrolls past it; two layers of
+   roses drift and sway slowly, the second fading in and out, so the flowers
+   seem to move like a video. Washed pale, as in the reference. */
+.ww-bg {
   position: absolute;
-  width: var(--sz); height: var(--sz);
-  margin: calc(var(--sz) / -2) 0 0 calc(var(--sz) / -2);
-  padding: 0; border: 0; background: none; border-radius: 50%;
-  cursor: pointer; pointer-events: auto;
-  -webkit-tap-highlight-color: transparent;
-  transition: transform .3s var(--ease-settle);
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;   /* older browsers; the line below keeps the roses' stage sticky */
+  overflow: clip;
+  pointer-events: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
 }
-.ww-slot:hover { transform: scale(1.1); }
-.ww-slot:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
-.motion-ok .ww-slot > .ww-av { animation: ww-float 6s ease-in-out var(--d) infinite alternate; }
-@keyframes ww-float { from { transform: translateY(-5px); } to { transform: translateY(6px); } }
+.ww-bg__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+.ww-bg__roses {
+  position: absolute;
+  inset: -7%;
+  background: url("../assets/images/white-roses.webp?v=20261022b") 8% 50% / auto 100% repeat-x;
+  will-change: transform, opacity;
+}
+.ww-bg__roses--b { opacity: .3; background-position: 62% 20%; transform: rotate(180deg) scale(1.14); }
+.ww-bg__stage::after {   /* the pale wash, a little stronger in the middle */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 75% 60% at 50% 48%, rgba(250, 248, 244, .5), rgba(250, 248, 244, 0) 100%),
+    rgba(247, 245, 240, .34);
+}
+.motion-ok .ww-bg__stage { animation: ww-breeze 5.2s ease-in-out infinite alternate; }
+.motion-ok .ww-bg__roses--a { animation: ww-sway-a 11s ease-in-out infinite alternate; }
+.motion-ok .ww-bg__roses--b { animation: ww-sway-b 15s ease-in-out infinite alternate; }
+@keyframes ww-breeze {          /* the light shiver of flowers in a breeze */
+  from { transform: rotate(-.22deg) translate3d(-2px, 1px, 0); }
+  to   { transform: rotate(.22deg) translate3d(2px, -1px, 0); }
+}
+@keyframes ww-sway-a {
+  0%   { transform: translate3d(-1.4%, .8%, 0) rotate(-.6deg) scale(1.02); }
+  50%  { transform: translate3d(.4%, -.9%, 0) rotate(.25deg) scale(1.06); }
+  100% { transform: translate3d(1.3%, .5%, 0) rotate(.7deg) scale(1.03); }
+}
+@keyframes ww-sway-b {
+  0%   { opacity: 0; transform: translate3d(1.2%, -1%, 0) rotate(180.7deg) scale(1.14); }
+  55%  { opacity: .55; }
+  100% { opacity: .12; transform: translate3d(-1.6%, 1.1%, 0) rotate(179.3deg) scale(1.09); }
+}
+
+/* ---------- The ring of faces ---------- */
+.ww { position: relative; max-width: 40rem; min-height: var(--ww-min, 26rem); margin: 0 auto 2.75rem; }
+/* no card: only a soft white glow behind the words so they read over the roses */
+.ww::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 4%;
+  width: min(118%, 46rem);
+  height: 96%;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(252, 251, 248, .94), rgba(252, 251, 248, .76) 52%, rgba(252, 251, 248, 0));
+  pointer-events: none;
+}
+.ww-ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.ww-ring path { fill: none; stroke: url(#ww-ring-fade); stroke-width: 1; }
+.ww-faces { position: absolute; inset: 0; pointer-events: none; }
+.ww-dot { position: absolute; left: 0; top: 0; will-change: transform, opacity; }
 /* a face: always black and white */
 .ww-av {
   position: relative;
@@ -1237,106 +1302,208 @@
   border-radius: 50%;
   overflow: hidden;
   background: #fff;
-  box-shadow: 0 0 0 2px #fff, 0 0 0 3px #d9d3c7, 0 8px 16px -8px rgba(30, 25, 20, .45);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(150, 140, 125, .4), 0 14px 22px -12px rgba(30, 25, 20, .55);
 }
 .ww-av img { width: 100%; height: 100%; max-width: none; object-fit: cover; filter: grayscale(1) contrast(1.04); }
-.ww-av span { font-family: var(--font-display); font-weight: 600; font-size: calc(var(--sz, 48px) * .36); letter-spacing: .04em; line-height: 1; }
+.ww-av span { font-family: var(--font-display); font-weight: 600; font-size: 2.1rem; letter-spacing: .04em; line-height: 1; }
 .ww-av--ink { background: radial-gradient(circle at 35% 30%, #3a3936, #121212 70%); color: #fff; }
 .ww-av--pearl { background: radial-gradient(circle at 34% 28%, #fff 0 18%, #f6f3ee 40%, #e6e0d6 85%); color: var(--ink); }
-.ww-av--empty { background: #faf8f4; color: var(--muted); }
-.ww-av--empty svg { width: 40%; height: 40%; }
-/* the card in the middle */
-.ww-card {
-  position: relative;
-  z-index: 1;
-  width: min(74%, 30rem);
-  margin: 0 auto;
-  padding: 3.8rem clamp(1rem, 4vw, 2rem) 1.6rem;
-  text-align: center;
-  background: #fff var(--paper-noise);
-  border-radius: 18px;
-  box-shadow: 0 26px 46px -28px rgba(40, 34, 24, .5), 0 1px 3px rgba(40, 34, 24, .06);
-}
-.ww-head { position: absolute; left: 0; right: 0; top: -2.6rem; height: 5.2rem; display: flex; align-items: center; justify-content: center; }
-.ww-arc { position: absolute; left: 6%; right: 6%; top: .2rem; width: 88%; height: 3rem; overflow: visible; }
-.ww-arc path { fill: none; stroke: #bdb5a8; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
-.ww-face { position: relative; z-index: 1; display: block; width: 5.2rem; height: 5.2rem; --sz: 5.2rem; }
-.ww-face .ww-av { box-shadow: 0 0 0 3px #fff, 0 0 0 4px #cfc7b8, 0 12px 22px -10px rgba(30, 25, 20, .5); }
-.ww-arrow {
-  position: absolute; top: 1.7rem;
-  width: 36px; height: 36px;
-  display: grid; place-items: center;
-  padding: 0; border: 1px solid #cfc8bb; border-radius: 50%;
-  background: #fff; color: var(--ink); cursor: pointer;
-  transition: transform .2s;
-}
-.ww-arrow svg { width: 18px; height: 18px; }
-.ww-arrow--prev { left: 3%; }
-.ww-arrow--next { right: 3%; }
-.ww-arrow:active { transform: scale(.92); }
-.ww-count { margin: 0 0 .2rem; font: 500 .6875rem/1 var(--font-body); letter-spacing: .14em; color: var(--muted); }
-.ww-quote { position: absolute; left: 1rem; top: 3.4rem; font-family: var(--font-display); font-size: 4.5rem; line-height: 1; color: #ece7de; pointer-events: none; }
-.ww-rel { display: inline-block; margin: .5rem 0 .4rem; padding: .3rem .8rem; border-radius: 999px; background: var(--ink); color: #fff; font: 500 .6875rem/1 var(--font-body); letter-spacing: .12em; text-transform: uppercase; }
-.ww-msg { position: relative; margin: .4rem 0 .9rem; font-family: var(--font-display); font-weight: 500; font-size: clamp(1.25rem, 1.1rem + .7vw, 1.55rem); line-height: 1.38; color: var(--ink); overflow-wrap: anywhere; }
-.ww-msg.is-long { font-size: clamp(1.05rem, 1rem + .4vw, 1.25rem); }
-.ww-name { margin: 0; font-family: var(--font-script); font-size: 2rem; line-height: 1.1; color: var(--ink); overflow-wrap: anywhere; }
-.ww-meta { min-height: 1em; margin: .25rem 0 0; font: 500 .6875rem/1.3 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
-/* the new wish appears word by word out of a soft blur */
-.ww-w { display: inline-block; transition: opacity .5s ease, filter .6s ease, transform .6s ease; transition-delay: calc(var(--i) * 35ms); }
-.motion-ok .ww.is-out .ww-w, .motion-ok .ww.is-out .ww-name, .motion-ok .ww.is-out .ww-rel, .motion-ok .ww.is-out .ww-meta { opacity: 0; filter: blur(5px); transition-duration: .25s; transition-delay: 0s; }
-.motion-ok .ww.is-in-start .ww-w, .motion-ok .ww.is-in-start .ww-name, .motion-ok .ww.is-in-start .ww-rel, .motion-ok .ww.is-in-start .ww-meta { opacity: 0; filter: blur(8px); transform: translateY(6px); transition: none; }
-.ww-name, .ww-rel, .ww-meta { transition: opacity .7s ease .35s, filter .7s ease .35s, transform .7s ease .35s; }
-/* faces flying between the orbit and the middle */
-.ww-fly { position: absolute; z-index: 5; pointer-events: none; transform-origin: 0 0; }
-@media (max-width: 599px) {
-  .ww { padding-top: 3.4rem; }
-  .ww-slot { --sz: min(var(--sz), 11vw); }
-  .ww-card { width: 74%; }
-  .ww-arrow { width: 32px; height: 32px; }
+.ww-dot.is-top .ww-av { box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(18, 18, 18, .35), 0 18px 28px -14px rgba(30, 25, 20, .6); }
+/* a new wish arrives at the top with a little glow */
+.motion-ok .ww-dot.is-new .ww-av { animation: ww-new 2.4s ease-out .9s both; }
+@keyframes ww-new {
+  0%   { box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(18, 18, 18, .35), 0 0 0 0 rgba(255, 255, 255, .95); }
+  45%  { box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(18, 18, 18, .35), 0 0 0 18px rgba(255, 255, 255, 0); }
+  100% { box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(18, 18, 18, .35), 0 18px 28px -14px rgba(30, 25, 20, .6); }
 }
 
-/* The form, below the wall */
-.wish-form { display: grid; gap: 1.2rem; max-width: 34rem; margin: 0 auto; padding: 2.25rem 1.5rem 1.9rem; }
-@media (min-width: 600px) { .wish-form { padding: 2.75rem 2.4rem 2.2rem; } }
-.wish-form > *, .wish-form .field { position: relative; z-index: 1; }
-.wish-form__title { margin: 0; text-align: center; font-size: 1.6rem; }
+/* arrows and the counter, just under the face at the top */
+.ww-nav { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; gap: .55rem; padding-top: calc(var(--ww-under, 5rem) + .65rem); }
+.ww-arrow {
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  padding: 0;
+  border: 1px solid rgba(18, 18, 18, .32);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .85);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 8px 16px -12px rgba(30, 25, 20, .7);
+  transition: transform .2s, background-color .2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.ww-arrow svg { width: 20px; height: 20px; }
+.ww-arrow:hover { background: #fff; }
+.ww-arrow:active { transform: scale(.92); }
+.ww-count { min-width: 4.6em; margin: 0; text-align: center; font: 500 .6875rem/1 var(--font-body); letter-spacing: .16em; color: var(--muted); }
+
+/* the wish: a quotation mark, the words, the name — smaller, no card */
+.ww-text { position: relative; z-index: 2; width: min(100%, var(--ww-text, 22rem)); margin: 1.6rem auto 0; padding-bottom: 1rem; text-align: center; }
+.ww-quote { position: absolute; left: -.35rem; top: -1.85rem; font-family: var(--font-display); font-size: 3.8rem; line-height: 1; color: rgba(18, 18, 18, .2); pointer-events: none; }
+.ww-msg {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.04rem, .98rem + .3vw, 1.2rem);
+  line-height: 1.5;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6;
+  overflow: hidden;
+}
+.ww.is-open .ww-msg { display: block; -webkit-line-clamp: unset; }
+.ww-more {
+  min-height: 32px;
+  margin-top: .2rem;
+  padding: 0 .5rem;
+  border: 0;
+  background: none;
+  font: 500 .6875rem/1 var(--font-body);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.ww-name { margin: .95rem 0 0; font: 500 .75rem/1.3 var(--font-body); letter-spacing: .16em; text-transform: uppercase; color: var(--ink); overflow-wrap: anywhere; }
+.ww-rel { margin: .3rem 0 0; font: 400 .75rem/1.35 var(--font-body); letter-spacing: .04em; color: var(--muted); }
+/* the new wish appears word by word out of a soft blur, as in the video */
+.ww-w { display: inline-block; transition: opacity .5s ease, filter .6s ease, transform .6s ease; transition-delay: calc(var(--i) * 45ms); }
+.motion-ok .ww.is-out .ww-w, .motion-ok .ww.is-out .ww-name, .motion-ok .ww.is-out .ww-rel, .motion-ok .ww.is-out .ww-more { opacity: 0; filter: blur(5px); transition-duration: .3s; transition-delay: 0s; }
+.motion-ok .ww.is-in-start .ww-w, .motion-ok .ww.is-in-start .ww-name, .motion-ok .ww.is-in-start .ww-rel, .motion-ok .ww.is-in-start .ww-more { opacity: 0; filter: blur(8px); transform: translateY(6px); transition: none; }
+.ww-name, .ww-rel, .ww-more { transition: opacity .7s ease .45s, filter .7s ease .45s, transform .7s ease .45s; }
+
+/* ---------- The form, on frosted paper over the roses ---------- */
+.wish-form {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 1.15rem;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: 2.6rem 1.55rem 2.1rem;
+  border: 1px solid rgba(255, 255, 255, .95);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, .7);
+  -webkit-backdrop-filter: blur(14px) saturate(1.04);
+  backdrop-filter: blur(14px) saturate(1.04);
+  box-shadow: 0 34px 60px -38px rgba(40, 34, 24, .55), 0 2px 6px -2px rgba(40, 34, 24, .08);
+}
+@media (min-width: 600px) { .wish-form { padding: 3rem 2.6rem 2.4rem; } }
+.wish-form > * { position: relative; z-index: 1; }
+.wish-form__eyebrow { margin: 0 0 -.6rem; text-align: center; font: 500 .6875rem/1.4 var(--font-body); letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+.wish-form__title { margin: 0 0 .2rem; text-align: center; font-size: 1.75rem; }
+.wish-form .input, .wish-form .textarea { background-color: rgba(255, 255, 255, .86); }
+/* "Other": one more box opens for the guest's own answer */
+.motion-ok .ww-other:not([hidden]) { animation: ww-other-in .45s var(--ease-settle) both; }
+@keyframes ww-other-in { from { opacity: 0; transform: translateY(-8px); } }
 .ww-pick { display: flex; align-items: center; flex-wrap: wrap; gap: .75rem; }
 .ww-pick__preview { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; overflow: hidden; background: #faf8f4; color: #a59d8f; box-shadow: 0 0 0 2px #fff, 0 0 0 3px #d9d3c7; }
 .ww-pick__preview svg { width: 24px; height: 24px; }
 .ww-pick__preview img { width: 100%; height: 100%; max-width: none; object-fit: cover; filter: grayscale(1); }
 .ww-pick label { cursor: pointer; }
 .ww-pick:has(input:focus-visible) label { outline: 2px solid var(--focus); outline-offset: 3px; }
-.dlg--wishes .dlg__body > * { max-width: 50rem; margin-inline: auto; }
 
-/* Pearl-edged note card */
-.note {
-  position: relative;
-  background: #fff var(--paper-noise);
-  border-radius: 4px;
-  box-shadow: var(--shadow-card);
-}
-.note::before {
+/* =============================================================================
+   11. RSVP — one invitation card and one button. On "Accept Invitation" a
+   light sweeps the card, it turns over, a pearl seal is pressed on the back
+   with a tick, "Invitation Accepted" writes itself and rose petals burst out
+   ========================================================================== */
+.rsvp-stage { position: relative; max-width: 30rem; margin: 0 auto; perspective: 1600px; }
+/* a soft light gathers behind the card as it turns */
+.rsvp-stage::before {
   content: "";
   position: absolute;
-  inset: 7px;
+  inset: -18% -25%;
+  z-index: -1;
+  opacity: 0;
+  background: radial-gradient(closest-side, rgba(255, 255, 255, .95), rgba(255, 255, 255, .5) 55%, rgba(255, 255, 255, 0));
   pointer-events: none;
-  background:
-    radial-gradient(circle at 40% 35%, #fff 0 .9px, #ece6db 1.8px, #cfc6b6 2.9px, transparent 3.2px) top left / 10px 8px repeat-x,
-    radial-gradient(circle at 40% 35%, #fff 0 .9px, #ece6db 1.8px, #cfc6b6 2.9px, transparent 3.2px) bottom left / 10px 8px repeat-x,
-    radial-gradient(circle at 40% 35%, #fff 0 .9px, #ece6db 1.8px, #cfc6b6 2.9px, transparent 3.2px) top left / 8px 10px repeat-y,
-    radial-gradient(circle at 40% 35%, #fff 0 .9px, #ece6db 1.8px, #cfc6b6 2.9px, transparent 3.2px) top right / 8px 10px repeat-y;
 }
-/* =============================================================================
-   11. RSVP
-   ========================================================================== */
-.rsvp-deadline { text-align: center; margin: -1rem 0 1.75rem; display: flex; gap: .5rem; justify-content: center; align-items: center; flex-wrap: wrap; }
-.rsvp-rules { text-align: center; color: var(--muted); }
-.rsvp-card { padding: clamp(2.1rem, 6vw, 3.2rem) clamp(1.35rem, 5.5vw, 3rem); }
-.rsvp-card .form, .rsvp-done { position: relative; z-index: 1; }
-.rsvp-attend { display: grid; gap: 1.35rem; }
-.rsvp-thanks { text-align: center; }
-.rsvp-thanks__title { font-size: clamp(2.3rem, 2rem + 1.5vw, 3rem); color: var(--ink); margin: .75rem 0 .5rem; overflow-wrap: anywhere; }
-.rsvp-done .btn-row { margin-top: 1.25rem; }
+.motion-ok .rsvp-stage.is-animating::before { animation: rsvp-glow 3s ease-out both; }
+@keyframes rsvp-glow { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: .35; } }
+.rsvp-card { position: relative; display: grid; transform-style: preserve-3d; }
+.motion-ok .rsvp-card { transition: transform .9s cubic-bezier(.45, .05, .25, 1); }
+.rsvp-stage.is-accepted .rsvp-card { transform: rotateY(180deg); }
+.motion-ok .rsvp-stage.is-animating .rsvp-card { animation: rsvp-turn 1.2s cubic-bezier(.45, .05, .25, 1) .35s both; }
+@keyframes rsvp-turn {
+  0%   { transform: rotateY(0deg); }
+  50%  { transform: translateY(-10px) rotateY(90deg) scale(1.04); }
+  100% { transform: rotateY(180deg); }
+}
+.rsvp-side {
+  grid-area: 1 / 1;          /* both sides share one place, so the card keeps one size */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: clamp(2.6rem, 8vw, 3.4rem) clamp(1.5rem, 6vw, 2.8rem);
+  border-radius: 6px;
+  background: #fff var(--paper-noise);
+  box-shadow: 0 34px 60px -38px rgba(40, 34, 24, .5), 0 2px 6px -2px rgba(40, 34, 24, .08);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.rsvp-side--back { transform: rotateY(180deg); }
+.rsvp-side > * { position: relative; z-index: 1; }
+
+/* the front: the invitation */
+.rsvp-dear { margin: 0 0 .5rem; font-family: var(--font-display); font-style: italic; font-size: 1.2rem; color: var(--charcoal); overflow-wrap: anywhere; }
+.rsvp-kicker { margin: 0 0 .25rem; font: 500 .6875rem/1.4 var(--font-body); letter-spacing: .26em; text-transform: uppercase; color: var(--muted); }
+.rsvp-names { margin: 0; font-size: clamp(2.3rem, 1.6rem + 4vw, 3.6rem); white-space: nowrap; color: var(--ink); }
+.rsvp-names .amp { font-size: .45em; color: var(--muted); }
+.rsvp-date { margin: .55rem 0 .2rem; font-family: var(--font-display); font-size: 1.2rem; letter-spacing: .04em; color: var(--ink); font-variant-numeric: lining-nums; }
+.rsvp-place { margin: 0; font: 400 .8125rem/1.5 var(--font-body); letter-spacing: .04em; color: var(--muted); }
+.rsvp-side .ornament-divider { margin: 1.25rem auto; }
+.rsvp-by { display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; align-items: center; margin: 0 0 1.6rem; font-size: .95rem; }
+.rsvp-accept { min-height: 56px; padding: .95rem clamp(1.4rem, 6vw, 2.3rem); font-size: .875rem; white-space: nowrap; }
+.rsvp-side [data-status]:not(:empty) { width: 100%; margin-top: 1.1rem; text-align: left; }
+/* the light sweeping across the card as it is accepted */
+.rsvp-side--front .rsvp-sheen { position: absolute; inset: 0; z-index: 2; overflow: hidden; border-radius: inherit; pointer-events: none; }
+.rsvp-sheen::before {
+  content: "";
+  position: absolute;
+  top: -20%; bottom: -20%;
+  left: 0;
+  width: 45%;
+  transform: translateX(-140%) skewX(-18deg);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .9) 50%, rgba(255, 255, 255, 0));
+}
+.motion-ok .is-animating .rsvp-sheen::before { animation: rsvp-sheen .75s ease-in both; }
+@keyframes rsvp-sheen { to { transform: translateX(330%) skewX(-18deg); } }
+
+/* the back: accepted */
+.rsvp-seal {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 84px; height: 84px;
+  margin-bottom: 1.2rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff 0 18%, #f6f3ee 42%, #e2dbcf 88%);
+  box-shadow: 0 0 0 3px #fff, 0 0 0 4px rgba(18, 18, 18, .22), 0 16px 26px -14px rgba(30, 25, 20, .55), inset -3px -4px 8px rgba(150, 135, 110, .25);
+}
+.rsvp-seal::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; border: 1.5px dotted rgba(18, 18, 18, .3); }
+.rsvp-seal svg { width: 40px; height: 40px; fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.motion-ok .is-animating .rsvp-seal { animation: rsvp-stamp .55s cubic-bezier(.3, 1.6, .5, 1) 1.3s both; }
+@keyframes rsvp-stamp { from { opacity: 0; transform: scale(1.9); } to { opacity: 1; transform: scale(1); } }
+.motion-ok .is-animating .rsvp-seal path { animation: rsvp-tick .6s ease-out 1.75s both; }
+@keyframes rsvp-tick { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.rsvp-done { margin: 0 0 .7rem; font-size: clamp(2.4rem, 2rem + 2vw, 3rem); color: var(--ink); }
+.rsvp-done span { display: inline-block; padding: 0 .2em; }
+.motion-ok .is-animating .rsvp-done span { animation: hw-write 1.4s cubic-bezier(.45, .05, .35, 1) 1.9s both; }
+.rsvp-thanks { max-width: 22rem; margin: 0 auto .7rem; font-family: var(--font-display); font-size: 1.15rem; line-height: 1.5; color: var(--charcoal); }
+.motion-ok .is-animating .rsvp-thanks, .motion-ok .is-animating .rsvp-again { animation: rsvp-fade .8s ease 2.7s both; }
+@keyframes rsvp-fade { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } }
+.rsvp-again { font-size: .875rem; color: var(--muted); }
+/* white rose petals bursting from the seal */
+.rsvp-burst { position: absolute; inset: 0; z-index: 4; pointer-events: none; }
+.rsvp-petal { position: absolute; width: 30px; height: auto; max-width: none; pointer-events: none; will-change: transform, opacity; filter: drop-shadow(0 4px 5px rgba(60, 50, 35, .28)) drop-shadow(0 0 1px rgba(60, 50, 35, .3)); }
 
 /* =============================================================================
    12. TRANSPORTATION AND ACCOMMODATION
@@ -1376,7 +1543,7 @@
 /* =============================================================================
    14. THANK YOU
    ========================================================================== */
-.section--thanks { padding-bottom: 0; overflow: clip; }   /* the parked car ends the page: nothing scrolls below it */
+.section--thanks { padding-bottom: clamp(3rem, 8vw, 4.5rem); overflow: clip; }
 .thanks { text-align: center; }
 /* Pearl flowers above the line */
 .thanks__flowers { position: relative; width: min(300px, 80%); height: clamp(96px, 26vw, 130px); margin: 0 auto 1.25rem; }
@@ -1408,26 +1575,24 @@
 .thanks__names { margin: 1.4rem 0 .2rem; font-size: clamp(2.4rem, 2rem + 2vw, 3.2rem); color: var(--ink); }
 .thanks__names .amp { font-size: .45em; color: var(--muted); }
 .thanks__date { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: .08em; color: var(--charcoal); margin-bottom: 2rem; font-variant-numeric: lining-nums; }
-.thanks__cross { margin-top: 3rem; color: var(--muted); }
+.thanks__cross { margin-top: .5rem; color: var(--muted); }
 .thanks__cross svg { width: 16px; height: 24px; margin: 0 auto; }
 
 /* ---------- The parking place: the end of the invitation ----------
    As in the last frame of the reference video: the wedding car parked on a
-   slant at the bottom left, partly beyond the bottom edge, the couple waving
-   to the guests; the monogram with pearl flowers beside it. The car drives
-   in from the left, swings round and stops (14-thank-you.js). */
+   slant at the left, the couple waving to the guests; the monogram with
+   pearl flowers beside it. The car drives in from the left, swings round and
+   stops (14-thank-you.js). Return to Top follows it, at the very end. */
 .parking {
   position: relative;
   width: min(100%, 30rem);
   aspect-ratio: 11 / 12;
-  margin: clamp(1.5rem, 5vw, 2.5rem) auto 0;
-  /* Only the bottom edge clips: the car is partly parked beyond it */
-  clip-path: inset(-300% -100% 0 -100%);
+  margin: 0 auto;
 }
 .parking__car {
   position: absolute;
   left: 9%;
-  top: 33%;
+  top: 15%;
   width: 46%;
   transform: rotate(-32deg);
   transform-origin: 50% 50%;
@@ -1448,6 +1613,7 @@
 }
 .parking__mono i { margin: .5em .1em 0; font-family: var(--font-display); font-size: .3em; color: var(--muted); }
 .parking__drops { position: relative; width: 16%; height: auto; margin: .4rem 0 0 30%; transform: rotate(4deg); }
+.thanks__end { margin-top: clamp(.5rem, 3vw, 1.5rem); }
 
 /* Arrival: in from the left along its heading, turning into the slant, and stopping */
 .motion-ok .parking.is-waiting .parking__car { opacity: 0; }

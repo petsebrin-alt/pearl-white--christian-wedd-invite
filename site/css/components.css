@@ -78,6 +78,19 @@
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-card);
 }
+/* Classic card: a fine inner frame with a small pearl at each corner */
+.classic::before { content: ""; position: absolute; inset: 9px; border: 1px solid rgba(18, 18, 18, .16); border-radius: 3px; pointer-events: none; }
+.classic::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 40% 35%, #fff 0 1.3px, #ece6db 2.6px, #c4baa9 4px, transparent 4.5px) left top / 10px 10px no-repeat,
+    radial-gradient(circle at 40% 35%, #fff 0 1.3px, #ece6db 2.6px, #c4baa9 4px, transparent 4.5px) right top / 10px 10px no-repeat,
+    radial-gradient(circle at 40% 35%, #fff 0 1.3px, #ece6db 2.6px, #c4baa9 4px, transparent 4.5px) left bottom / 10px 10px no-repeat,
+    radial-gradient(circle at 40% 35%, #fff 0 1.3px, #ece6db 2.6px, #c4baa9 4px, transparent 4.5px) right bottom / 10px 10px no-repeat;
+}
 /* Blind-embossed inner border */
 .paper--embossed::before {
   content: "";
@@ -428,6 +441,20 @@ dialog.dlg--sheet[open] { align-items: flex-end; }
   transition: border-color .2s, box-shadow .2s;
 }
 .textarea { min-height: 120px; resize: vertical; }
+/* A drop-down that matches the text boxes (the grey placeholder turns ink once chosen) */
+.select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 2.75rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24'%3E%3Cpath d='M6 9.5l6 6 6-6' fill='none' stroke='%23121212' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 14px 14px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.select.is-chosen { color: var(--ink); }
+.select option { color: var(--ink); }
 .input:focus, .textarea:focus { outline: none; border-color: var(--ink); box-shadow: 0 0 0 1px var(--ink), 0 0 0 4px rgba(18, 18, 18, .08); }
 .field.is-invalid .input, .field.is-invalid .textarea { border-color: var(--error); box-shadow: 0 0 0 1px var(--error); }
 .field__error {

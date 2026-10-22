@@ -28,12 +28,12 @@
         AD.orn.divider('reveal') +
         '<p class="thanks__names script reveal">' + AD.esc(c.bride) + ' <span class="amp">&amp;</span> ' + AD.esc(c.groom) + '</p>' +
         (AD.has(date) ? '<p class="thanks__date reveal">' + AD.esc(AD.formatDateShort(date)) + '</p>' : '') +
-        '<div class="btn-row reveal"><a class="btn btn--secondary" href="#welcome" data-top>' + AD.icon('up') + 'Return to Top</a></div>' +
         '<div class="thanks__cross reveal">' + AD.orn.cross() + '</div>' +
       '</div>' +
       // The end of the invitation (as in the reference video's last frame):
-      // the wedding car drives in and parks on a slant at the bottom left,
-      // the couple waving, beside the monogram and pearl flowers.
+      // the wedding car drives in and parks on a slant at the left, the
+      // couple waving, beside the monogram and pearl flowers; Return to Top
+      // comes last, under the car.
       '<div class="parking" aria-hidden="true">' +
         '<div class="parking__mark">' +
           AD.florals.img('spray', 'parking__spray') +
@@ -41,10 +41,12 @@
           AD.florals.img('drops', 'parking__drops') +
         '</div>' +
         '<div class="parking__car">' +
-          '<img src="assets/images/wedding-car.webp?v=20261021w" width="720" height="1219" alt="" decoding="async">' +   // already cached from the opening
+          '<img src="assets/images/wedding-car.webp?v=20261022b" width="720" height="1219" alt="" decoding="async">' +   // already cached from the opening
           '<span class="parking__glint parking__glint--1"></span><span class="parking__glint parking__glint--2"></span><span class="parking__glint parking__glint--3"></span>' +
         '</div>' +
-      '</div>';
+      '</div>' +
+      // The very end, after the parked car
+      '<div class="btn-row thanks__end reveal"><a class="btn btn--secondary" href="#welcome" data-top>' + AD.icon('up') + 'Return to Top</a></div>';
     },
     init: function (el) {
       var line = el.querySelector('.thanks__line');

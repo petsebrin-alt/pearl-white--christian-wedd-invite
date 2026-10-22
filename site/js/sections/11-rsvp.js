@@ -1,219 +1,157 @@
 /* =============================================================================
-   11. RSVP
-   Success is shown ONLY after the server confirms it saved the response.
-   Demo mode shows an information panel, never a success message.
+   11. RSVP — one invitation card and one button. The guest taps "Accept
+   Invitation": a light sweeps the card, it turns over, a pearl seal is
+   pressed on the back with a tick, "Invitation Accepted" writes itself and
+   white rose petals burst from the seal.
+   A personal link can carry the guest's name (…/?guest=Anu%20Thomas): the
+   card then greets them and the acceptance is saved under that name.
+   The acceptance is remembered on this device, so on a later visit the card
+   shows the accepted side (the card can be turned back to see it again).
+   Saved by AD.store: in this browser until the Google Sheet is connected.
    ========================================================================== */
 (function () {
   'use strict';
   var AD = window.AD;
-  var DEFAULT_MAX = 10;
+  var KEY = 'ad-rsvp-accepted';
+  var V = '?v=20261022b';
+  var PETALS = 6;   // rose petal pictures in assets/images/petals/
+
+  function guestName() {
+    try {
+      var n = new URLSearchParams(window.location.search).get('guest');
+      return n ? n.replace(/\s+/g, ' ').trim().slice(0, 80) : '';
+    } catch (e) { return ''; }
+  }
+  function remembered() {
+    try { return JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { return null; }
+  }
+  function remember(v) {
+    try { if (v) localStorage.setItem(KEY, JSON.stringify(v)); else localStorage.removeItem(KEY); } catch (e) {}
+  }
 
   AD.register('rsvp', {
     render: function (C) {
       var R = C.rsvp || {};
-      var max = R.maxGuestsPerInvite || DEFAULT_MAX;
-      var events = C.events || [];
-      var connected = AD.store.isConnected();
-
+      var date = AD.weddingDate();
+      var cer = (C.events || []).filter(function (e) { return e.id === 'ceremony'; })[0];
+      var church = cer && (C.venues || []).filter(function (v) { return v.id === cer.venueId; })[0];
+      var guest = guestName();
       return '<div class="container container--narrow">' +
         AD.sectionHead({
           id: 'rsvp', eyebrow: 'RSVP', title: 'Kindly Respond',
           intro: 'Please let us know if you can join us.'
         }) +
-        '<p class="rsvp-deadline reveal">Kindly respond by ' + (AD.has(R.deadline) ? '<strong>' + AD.esc(AD.formatDate(R.deadline)) + '</strong>' : AD.tbp('RSVP deadline')) + '</p>' +
-        (AD.has(R.guestRulesNote) ? '<p class="rsvp-rules reveal">' + AD.esc(R.guestRulesNote) + '</p>' : '') +
-        '<div class="rsvp-card paper paper--embossed reveal" data-delay="1">' +
-          '<form class="form" id="rsvp-form" novalidate>' +
-            '<div data-errors hidden></div>' +
-            '<div class="field">' +
-              '<label class="field__label" for="rsvp-name">Guest name</label>' +
-              '<input class="input" id="rsvp-name" name="name" type="text" autocomplete="name" maxlength="80" required aria-describedby="rsvp-name-hint rsvp-name-err">' +
-              '<p class="field__hint" id="rsvp-name-hint">As written on your invitation.</p>' +
-              '<p class="field__error" id="rsvp-name-err" hidden></p>' +
+        '<div class="rsvp-stage reveal" data-stage>' +
+          '<div class="rsvp-card" data-card>' +
+            // Front: the invitation and the one button
+            '<form class="rsvp-side rsvp-side--front classic" data-front novalidate>' +
+              '<span class="rsvp-sheen" aria-hidden="true"></span>' +
+              (guest ? '<p class="rsvp-dear">Dear ' + AD.esc(guest) + ',</p>' : '') +
+              '<p class="rsvp-kicker">The wedding of</p>' +
+              '<p class="rsvp-names script">' + AD.esc(C.couple.bride) + ' <span class="amp">&amp;</span> ' + AD.esc(C.couple.groom) + '</p>' +
+              (AD.has(date) ? '<p class="rsvp-date">' + AD.esc(AD.formatDate(date)) + '</p>' : '') +
+              (cer && AD.has(cer.startTime) && church ? '<p class="rsvp-place">' + AD.esc(AD.formatTime(cer.startTime)) + ' · ' + AD.esc(church.name) + '</p>' : '') +
+              AD.orn.divider() +
+              '<p class="rsvp-by">Kindly respond by ' + (AD.has(R.deadline) ? '<strong>' + AD.esc(AD.formatDate(R.deadline)) + '</strong>' : AD.tbp('RSVP deadline')) + '</p>' +
+              '<div class="hp-field" aria-hidden="true"><label for="rsvp-website">Website</label><input id="rsvp-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>' +
+              '<button class="btn btn--primary rsvp-accept" type="submit">' + AD.icon('check') + '<span>Accept Invitation</span></button>' +
+              '<div data-status aria-live="polite"></div>' +
+            '</form>' +
+            // Back: accepted
+            '<div class="rsvp-side rsvp-side--back classic" data-back tabindex="-1" aria-hidden="true">' +
+              '<span class="rsvp-seal" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 12.6l4 4L18.2 8" pathLength="1"/></svg></span>' +
+              '<p class="rsvp-done script"><span>Invitation Accepted</span></p>' +
+              '<p class="rsvp-thanks" data-thanks></p>' +
+              '<button class="link-btn rsvp-again" type="button" data-again>See the invitation again</button>' +
             '</div>' +
-            '<fieldset class="field" id="rsvp-attending-group" aria-describedby="rsvp-attending-err">' +
-              '<legend class="field__label">Will you attend?</legend>' +
-              '<div class="choice-pills">' +
-                '<label class="choice"><input type="radio" name="attending" value="yes" id="rsvp-attending"><span>Joyfully accepts</span></label>' +
-                '<label class="choice"><input type="radio" name="attending" value="no"><span>Regretfully declines</span></label>' +
-              '</div>' +
-              '<p class="field__error" id="rsvp-attending-err" hidden></p>' +
-            '</fieldset>' +
-            '<div class="rsvp-attend" data-attend hidden>' +
-              '<div class="field">' +
-                '<label class="field__label" for="rsvp-guests">Number of attendees</label>' +
-                '<p class="field__hint" id="rsvp-guests-hint">Including yourself. ' +
-                  (R.maxGuestsPerInvite ? 'Up to ' + max + ' per invitation.' : 'Guest limit ' + AD.tbp('Guest limit')) + '</p>' +
-                '<div class="stepper">' +
-                  '<button type="button" data-step="-1" aria-label="Decrease number of attendees">−</button>' +
-                  '<input id="rsvp-guests" name="guests" type="number" inputmode="numeric" min="1" max="' + max + '" value="1" aria-describedby="rsvp-guests-hint rsvp-guests-err">' +
-                  '<button type="button" data-step="1" aria-label="Increase number of attendees">+</button>' +
-                '</div>' +
-                '<p class="field__error" id="rsvp-guests-err" hidden></p>' +
-              '</div>' +
-              '<fieldset class="field" aria-describedby="rsvp-events-err">' +
-                '<legend class="field__label">Events you will attend</legend>' +
-                '<div class="checks">' + events.map(function (ev, i) {
-                  return '<label class="check"><input type="checkbox" name="events" value="' + AD.esc(ev.id) + '"' + (i === 0 ? ' id="rsvp-events"' : '') + '>' +
-                    '<span>' + AD.esc(ev.name) + '</span></label>';
-                }).join('') + '</div>' +
-                '<p class="field__error" id="rsvp-events-err" hidden></p>' +
-              '</fieldset>' +
-              '<div class="field">' +
-                '<label class="field__label" for="rsvp-diet">Dietary requirements <span class="opt">(optional)</span></label>' +
-                '<input class="input" id="rsvp-diet" name="dietary" type="text" maxlength="200" placeholder="e.g. vegetarian, nut allergy">' +
-              '</div>' +
-            '</div>' +
-            '<div class="field">' +
-              '<label class="field__label" for="rsvp-message">Message for the couple <span class="opt">(optional)</span></label>' +
-              '<textarea class="textarea" id="rsvp-message" name="message" rows="3" maxlength="500"></textarea>' +
-            '</div>' +
-            '<div class="hp-field" aria-hidden="true"><label for="rsvp-website">Website</label><input id="rsvp-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>' +
-            '<button class="btn btn--primary btn--block" type="submit">' + AD.icon('envelope') + '<span>Send RSVP</span></button>' +
-            '<div data-status aria-live="polite"></div>' +
-            (connected ? '' :
-              '<p class="mode-note">' + AD.icon('info') + '<span><strong>Preview mode:</strong> this form is not yet connected, so responses are not sent to the couple.</span></p>') +
-          '</form>' +
-          '<div class="rsvp-done" data-done hidden tabindex="-1"></div>' +
+          '</div>' +
+          '<div class="rsvp-burst" data-burst aria-hidden="true"></div>' +
         '</div>' +
       '</div>';
     },
 
     init: function (el, C) {
-      var R = C.rsvp || {};
-      var max = R.maxGuestsPerInvite || DEFAULT_MAX;
-      var form = el.querySelector('#rsvp-form');
-      var done = el.querySelector('[data-done]');
-      var attendWrap = form.querySelector('[data-attend]');
-      var guests = form.querySelector('#rsvp-guests');
-      var nameI = form.querySelector('#rsvp-name');
-      var errors = form.querySelector('[data-errors]');
-      var status = form.querySelector('[data-status]');
-      var submit = form.querySelector('button[type="submit"]');
-      var tried = false;
+      var stage = el.querySelector('[data-stage]'), front = el.querySelector('[data-front]'), back = el.querySelector('[data-back]');
+      var thanks = el.querySelector('[data-thanks]'), status = el.querySelector('[data-status]'), burst = el.querySelector('[data-burst]');
+      var btn = front.querySelector('.rsvp-accept');
+      var date = AD.weddingDate();
+      var still = AD.reducedMotion();
 
-      function attending() {
-        var r = form.querySelector('input[name="attending"]:checked');
-        return r ? r.value : '';
+      function setThanks(name) {
+        thanks.textContent = 'Thank you' + (name ? ', ' + name : '') + '! We look forward to celebrating with you' +
+          (AD.has(date) ? ' on ' + AD.formatDateShort(date) : '') + '.';
       }
-      function setGroupError(id, msg) {
-        var g = document.getElementById(id);
-        var err = g.querySelector('.field__error');
-        g.classList.toggle('is-invalid', !!msg);
-        err.hidden = !msg;
-        err.innerHTML = msg ? AD.icon('alert') + '<span>' + AD.esc(msg) + '</span>' : '';
+      function showSide(accepted, animate) {
+        stage.classList.toggle('is-accepted', accepted);
+        stage.classList.toggle('is-animating', !!animate);
+        back.setAttribute('aria-hidden', accepted ? 'false' : 'true');
+        front.setAttribute('aria-hidden', accepted ? 'true' : 'false');
+        front.inert = accepted; back.inert = !accepted;
       }
 
-      form.addEventListener('change', function (e) {
-        if (e.target.name === 'attending') {
-          attendWrap.hidden = attending() !== 'yes';
+      // White rose petals burst from the seal and drift down.
+      function petals() {
+        if (still || !Element.prototype.animate) return;
+        var s = back.querySelector('.rsvp-seal').getBoundingClientRect(), b = stage.getBoundingClientRect();
+        var cx = s.left + s.width / 2 - b.left, cy = s.top + s.height / 2 - b.top;
+        for (var i = 0; i < 22; i++) {
+          var p = document.createElement('img');
+          p.src = 'assets/images/petals/rose-' + (1 + (i % PETALS)) + '.webp' + V;
+          p.alt = ''; p.className = 'rsvp-petal';
+          p.style.left = cx + 'px'; p.style.top = cy + 'px';
+          burst.appendChild(p);
+          var ang = (i / 22) * Math.PI * 2 + Math.random() * .4, dist = 90 + Math.random() * 120;
+          var dx = Math.cos(ang) * dist, dy = Math.sin(ang) * dist * .75;
+          var rot = (Math.random() - .5) * 540, sz = .55 + Math.random() * .55;
+          p.animate([
+            { transform: 'translate(-50%,-50%) translate(0,0) rotate(0deg) scale(' + (sz * .3) + ')', opacity: 0 },
+            { transform: 'translate(-50%,-50%) translate(' + dx * .7 + 'px,' + (dy * .7 - 30) + 'px) rotate(' + rot * .4 + 'deg) scale(' + sz + ')', opacity: 1, offset: .3 },
+            { transform: 'translate(-50%,-50%) translate(' + dx + 'px,' + (dy + 190) + 'px) rotate(' + rot + 'deg) scale(' + sz + ')', opacity: 0 }
+          ], { duration: 2600 + Math.random() * 1200, delay: Math.random() * 160, easing: 'cubic-bezier(.2,.6,.35,1)', fill: 'both' })
+            .finished.then(function (a) { return function () { a.remove(); }; }(p));
         }
-        if (tried) validate();
-      });
-      nameI.addEventListener('input', function () { if (tried) validate(); });
-
-      AD.$$('[data-step]', form).forEach(function (b) {
-        b.addEventListener('click', function () {
-          var v = parseInt(guests.value, 10) || 1;
-          v = Math.min(max, Math.max(1, v + Number(b.getAttribute('data-step'))));
-          guests.value = v;
-          AD.announce(v + (v === 1 ? ' attendee' : ' attendees'));
-          if (tried) validate();
-        });
-      });
-
-      function validate() {
-        var errs = [];
-        var n = nameI.value.trim();
-        var ne = !n ? 'Please enter your name.' : (n.length < 2 ? 'Please enter your full name.' : '');
-        AD.form.setError(nameI, ne);
-        if (ne) errs.push({ id: 'rsvp-name', msg: ne });
-
-        var a = attending();
-        var ae = a ? '' : 'Please let us know whether you can attend.';
-        var g = form.querySelector('#rsvp-attending-group');
-        g.classList.toggle('is-invalid', !!ae);
-        var aerr = g.querySelector('.field__error');
-        aerr.hidden = !ae;
-        aerr.innerHTML = ae ? AD.icon('alert') + '<span>' + ae + '</span>' : '';
-        if (ae) errs.push({ id: 'rsvp-attending', msg: ae });
-
-        if (a === 'yes') {
-          var v = Number(guests.value);
-          var ge = (!Number.isInteger(v) || v < 1) ? 'Please enter at least 1 attendee.' : (v > max ? 'Please enter no more than ' + max + ' attendees.' : '');
-          AD.form.setError(guests, ge);
-          if (ge) errs.push({ id: 'rsvp-guests', msg: ge });
-          var picked = AD.$$('input[name="events"]:checked', form).length;
-          var ee = picked ? '' : 'Please choose at least one event.';
-          var evField = form.querySelector('#rsvp-events').closest('.field');
-          evField.classList.toggle('is-invalid', !!ee);
-          var eerr = evField.querySelector('.field__error');
-          eerr.hidden = !ee;
-          eerr.innerHTML = ee ? AD.icon('alert') + '<span>' + ee + '</span>' : '';
-          if (ee) errs.push({ id: 'rsvp-events', msg: ee });
-        } else {
-          AD.form.setError(guests, '');
-        }
-        return errs;
       }
 
-      function showDone(html) {
-        done.innerHTML = html;
-        form.hidden = true;
-        done.hidden = false;
-        done.focus({ preventScroll: true });
-        done.scrollIntoView({ block: 'center', behavior: AD.reducedMotion() ? 'auto' : 'smooth' });
-        var again = done.querySelector('[data-again]');
-        if (again) again.addEventListener('click', function () {
-          done.hidden = true;
-          form.hidden = false;
-          nameI.focus();
-        });
+      function accept(name) {
+        setThanks(name);
+        showSide(true, !still);
+        if (still) { back.focus({ preventScroll: true }); return; }
+        setTimeout(petals, 1250);
+        setTimeout(function () { back.focus({ preventScroll: true }); stage.classList.remove('is-animating'); }, 3200);
       }
 
-      form.addEventListener('submit', function (e) {
+      // A guest who has already accepted on this device sees the accepted side.
+      var had = remembered();
+      if (had) { setThanks(had.name); showSide(true, false); }
+      else showSide(false, false);
+
+      front.addEventListener('submit', function (e) {
         e.preventDefault();
-        tried = true;
         status.innerHTML = '';
-        var errs = validate();
-        AD.form.errorSummary(errors, errs);
-        if (errs.length) { errors.querySelector('.status').focus(); return; }
-
-        var a = attending();
-        var payload = {
-          name: nameI.value.trim(),
-          attending: a,
-          guests: a === 'yes' ? Number(guests.value) : 0,
-          events: a === 'yes' ? AD.$$('input[name="events"]:checked', form).map(function (c) { return c.value; }) : [],
-          dietary: a === 'yes' ? form.querySelector('#rsvp-diet').value.trim() : '',
-          message: form.querySelector('#rsvp-message').value.trim(),
-          website: form.querySelector('#rsvp-website').value
-        };
-        submit.classList.add('is-busy');
-        submit.disabled = true;
-        AD.store.submit('rsvp', payload).then(function (r) {
-          submit.classList.remove('is-busy');
-          submit.disabled = false;
+        var name = guestName();
+        var prev = remembered();
+        if (prev) { accept(prev.name || name); return; }   // already sent from this device: only the card turns again
+        btn.classList.add('is-busy');
+        btn.disabled = true;
+        AD.store.submit('rsvp', {
+          name: name, attending: 'yes', guests: 1, events: [], dietary: '', message: '',
+          website: front.querySelector('#rsvp-website').value
+        }).then(function (r) {
+          btn.classList.remove('is-busy');
+          btn.disabled = false;
           if (!r.ok) {
             status.innerHTML = '<div class="status status--error" role="alert">' + AD.icon('alert') +
-              '<div><p><strong>Your RSVP was not sent.</strong> ' + AD.esc(r.error || '') + '</p><p>Please try again. If the problem continues, contact the family through the Contact section.</p></div></div>';
+              '<div><p><strong>Your response was not sent.</strong> ' + AD.esc(r.error || '') + '</p><p>Please try again. If the problem continues, contact the family through the Contact section.</p></div></div>';
             return;
           }
-          if (r.demo) {
-            showDone('<div class="status status--demo">' + AD.icon('info') + '<div>' +
-              '<p><strong>Preview only — this RSVP was not sent.</strong></p>' +
-              '<p>RSVPs will be collected once the form is connected. Nothing has been shared with ' + AD.esc(C.couple.bride) + ' &amp; ' + AD.esc(C.couple.groom) + '.</p></div></div>' +
-              '<div class="btn-row"><button class="btn btn--secondary" type="button" data-again>Back to the form</button></div>');
-            return;
-          }
-          var who = AD.esc(payload.name);
-          showDone('<div class="rsvp-thanks">' + AD.orn.divider() +
-            '<p class="rsvp-thanks__title script">Thank you, ' + who + '</p>' +
-            '<p>' + (a === 'yes'
-              ? 'Your RSVP has been received. We look forward to celebrating with you.'
-              : 'Your RSVP has been received. You will be missed — thank you for your blessings.') + '</p>' +
-            '<div class="btn-row"><button class="btn btn--secondary" type="button" data-again>Update my response</button></div></div>');
+          remember({ name: name, at: new Date().toISOString() });
+          accept(name);
         });
+      });
+
+      el.querySelector('[data-again]').addEventListener('click', function () {
+        showSide(false, false);
+        btn.focus({ preventScroll: true });
       });
     }
   });

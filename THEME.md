@@ -128,7 +128,9 @@ Shadows: soft and low — `0 1px 2px rgba(18,18,18,.06), 0 12px 32px -12px rgba(
 - Durations: micro 150–250 ms, reveals 400–700 ms, splash total ≈ 2.2 s.
 - Easing: `cubic-bezier(.22,.61,.36,1)` for settling; `cubic-bezier(.65,0,.35,1)` for cloth pulling.
 - Scroll-linked, at one steady rate (no easing): the gentle drift of the edge flowers.
-- Parking at the end: the car drives in from the left over 3.2 s, turning into a 32° slant and slowing to a stop (once per visit).
+- Parking at the end: the car drives in from the left over 3.2 s, turning into a 32° slant and slowing to a stop (once per visit), fully in view; Return to Top comes after it.
+- Wishing wall: the ring of faces turns for 1.3 s every 5–11 s (long enough to read); the white roses behind sway in slow 11–15 s cycles with a light 5 s breeze.
+- RSVP: one tap on Accept Invitation plays a ≈ 4 s sequence (light, turn, seal, tick, writing, petals).
 - Reveals: content rises slightly and comes into focus (blur → sharp) over about 1 s; small heading lines appear letter by letter (55 ms per letter) out of a soft blur, as in the couple's slideshow video.
 - Welcome photo: the black-and-white couple photo drifts at one steady speed (16 s) and moves at 22 % of the scroll (parallax); the names come into focus over about 2 s. Several photos crossfade every 7 s (1.8 s fade).
 - `prefers-reduced-motion: reduce` replaces every movement with a short cross-fade or an instant state change; the car is simply shown parked at the end.
@@ -169,6 +171,8 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | R1k | Outfit photographs chosen by the couple (2 for her, 2 for him; phone number on one painted out) | Dress code | WebP, 720 × 900 (4:5), 9–30 KB — `dress/her-1/2.webp`, `dress/him-1/2.webp` | Done |
 | R1l | Envelope (pocket and flap) modelled on the couple's photo: pearl-ivory paper with folds, pearl trim along the flap, baby's breath sprig; the dove wax seal (R2c) on top | Gifting | WebP with alpha, 1280 × 880 and 1280 × 592 — `envelope-front.webp`, `envelope-flap.webp` | Done |
 | R1m | Event pictures chosen by the couple, black and white (Haldi, Mehendi and Reception are illustrations; Sangeet and Wedding are photographs) | Wedding events (photo card) | WebP, ≤ 1100–1400 px, 35–235 KB — `events/<id>.webp` | Done |
+| R1n | White roses (the couple's picture, made neutral pearl-white, mirrored side by side so it repeats without a seam) | Wishing wall background | WebP, 1122 × 1000, 47 KB — `white-roses.webp` | Done |
+| R1o | Sample guest faces ×6 (free Unsplash portraits, cropped to the face, black and white) | Wishing wall sample blessings | WebP, 240 × 240, 4–8 KB — `wishes/<name>.webp` | Done (replace or hide with the samples) |
 | R1d | Couple photograph, black and white (sample supplied for the design; carries a photographer's "Maab Road" tag) | Welcome | WebP, 736 × 1104, 72 KB — `couple-bw.webp` | To be replaced with Angel & David's own photograph |
 | R2 | Floral corner — white flowers, olive leaves, pearls | Welcome, thank-you | WebP with alpha, 900 × 900, ≤ 120 KB | Recommended |
 | R3 | Pearl strand (draped) | Countdown, dividers | WebP with alpha, 1600 × 300, ≤ 60 KB | Recommended |
@@ -204,7 +208,8 @@ Status key: **Built** = created in code for v1 · **Placeholder** = framed place
 | M10 | Glass gallery cube: photo cube opens into a curved band and a flat wall as guests scroll; full-size viewer | Couple gallery | CSS 3D (`matrix3d` per tile from quaternions) + `js/sections/04b-gallery.js` | Built |
 | M11 | Switching tabs card: event menu, details blur out/in, photo cross-fades with a soft zoom; arrows, swipe, keys | Wedding events | CSS + `js/sections/06-events.js` | Built |
 | M12 | Venue: "We are gathered / HERE TOGETHER" written in; the Kerala church line drawing draws itself with the scroll | The venue | CSS (stroke-dashoffset from a scroll variable) + `js/sections/09-venues.js` | Built |
-| M13 | Wishing wall: floating black-and-white faces; tapped face flies to the middle, wish appears word by word; auto-turn | Wishing wall | Web Animations API + `js/sections/10-wishes.js` | Built |
+| M13 | Wishing wall: black-and-white faces on a ring that turns by itself like a globe, bringing each face to the top; the wish appears word by word under it (no card); a new wish spins in at the top; white roses swaying behind | Wishing wall | requestAnimationFrame + CSS keyframes, `js/sections/10-wishes.js` | Built |
+| M14 | RSVP: Accept Invitation — light sweep, the card turns over, a pearl seal stamps with a tick, "Invitation Accepted" writes itself, rose petals burst | RSVP | CSS 3D turn + Web Animations API, `js/sections/11-rsvp.js` | Built |
 | M7 | Tap the petals: satin petals burst, swirl and settle into a wreath, the date appears, real rose petals shower down | Save the Date | Web Animations API, `js/sections/03-save-the-date.js` | Built |
 | M6 | Black-and-white couple photo: slides down from the top into place when guests reach it, then the text appears letter by letter; slow drift and parallax; names focusing in | Welcome | CSS + `js/sections/02-welcome.js` | Built |
 | M2 | Handwriting reveal "Thank you for blessing our journey." | Thank you | SVG stroke animation | Built |
