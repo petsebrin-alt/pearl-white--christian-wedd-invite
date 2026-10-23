@@ -233,7 +233,7 @@
   height: var(--trim);
   margin-top: calc(var(--trim) / -2);
   transform-origin: 0 50%;
-  background: url("../assets/images/lace-pearl-trim.webp?v=20261023a") repeat-x 0 50% / auto 100%;
+  background: url("../assets/images/lace-pearl-trim.webp?v=20261023d") repeat-x 0 50% / auto 100%;
 }
 
 /* Light: a glow from the seal, a sheen sweeping the lace, pearls sparkling. */
@@ -700,7 +700,7 @@
   height: 12px;
   margin-top: -6px;
   transform-origin: 0 50%;
-  background: url("../assets/images/bead-chain.webp?v=20261023a") repeat-x left center / 24px 12px;
+  background: url("../assets/images/bead-chain.webp?v=20261023d") repeat-x left center / 24px 12px;
   filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18));
 }
 .cd-tile { display: flex; flex-direction: column; align-items: center; gap: .25rem; min-width: 0; }
@@ -1233,7 +1233,7 @@
 .ww-bg__roses {
   position: absolute;
   inset: -7%;
-  background: url("../assets/images/white-roses.webp?v=20261023a") 8% 50% / auto 100% repeat-x;
+  background: url("../assets/images/white-roses.webp?v=20261023d") 8% 50% / auto 100% repeat-x;
   will-change: transform, opacity;
 }
 .ww-bg__roses--b { opacity: .3; background-position: 62% 20%; transform: rotate(180deg) scale(1.14); }
@@ -1363,32 +1363,61 @@
 .motion-ok .ww.is-in-start .ww-w, .motion-ok .ww.is-in-start .ww-name, .motion-ok .ww.is-in-start .ww-rel, .motion-ok .ww.is-in-start .ww-more { opacity: 0; filter: blur(8px); transform: translateY(6px); transition: none; }
 .ww-name, .ww-rel, .ww-more { transition: opacity .7s ease .45s, filter .7s ease .45s, transform .7s ease .45s; }
 
-/* ---------- The form, on frosted paper over the roses ---------- */
-.wish-form {
+/* ---------- The form: a small square card in the couple's flower frame ----------
+   Pearl paper, a fine gold frame line, the white paper flowers with gold
+   centres at two corners (from the couple's picture), and only four rows:
+   name, wish, photo, send. Everything is placed in % of the square, so it
+   keeps its shape on every screen. */
+.wf { position: relative; z-index: 1; width: min(100%, 27rem); margin: 0 auto; }
+.wf__card {
   position: relative;
-  z-index: 1;
-  display: grid;
-  gap: 1.15rem;
-  max-width: 34rem;
-  margin: 0 auto;
-  padding: 2.6rem 1.55rem 2.1rem;
-  /* almost see-through, so the swaying roses show behind the words */
-  border: 1px solid rgba(255, 255, 255, .75);
-  border-radius: 6px;
-  background: rgba(255, 255, 255, .14);
-  box-shadow: 0 30px 60px -44px rgba(40, 34, 24, .45);
+  aspect-ratio: 1;
+  container-type: inline-size;
+  background: #e1dfd9;
+  border-radius: 4px;
+  box-shadow: 0 34px 60px -36px rgba(40, 34, 24, .55), 0 2px 8px -2px rgba(40, 34, 24, .12), inset 0 0 0 1px rgba(255, 255, 255, .6);
 }
-@media (min-width: 600px) { .wish-form { padding: 3rem 2.6rem 2.4rem; } }
-.wish-form > * { position: relative; z-index: 1; }
-.wish-form__eyebrow { margin: 0 0 -.6rem; text-align: center; font: 500 .6875rem/1.4 var(--font-body); letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
-.wish-form__title { margin: 0 0 .2rem; text-align: center; font-size: 1.75rem; }
-/* white boxes with black letters over the roses */
-.wish-form .input, .wish-form .textarea { background-color: rgba(255, 255, 255, .94); border-color: rgba(18, 18, 18, .55); }
-.wish-form .field__hint, .wish-form .field__counter, .wish-form .field__label .opt { color: var(--ink); }
-.wish-form .ww-pick__preview { background: #fff; }
-/* "Other": one more box opens for the guest's own answer */
-.motion-ok .ww-other:not([hidden]) { animation: ww-other-in .45s var(--ease-settle) both; }
-@keyframes ww-other-in { from { opacity: 0; transform: translateY(-8px); } }
+.wf__frame { position: absolute; top: 12.5%; left: 12.4%; right: 6%; bottom: 8.9%; border: 1.5px solid rgba(184, 154, 99, .82); pointer-events: none; }
+.wf__fl { position: absolute; width: 40%; height: auto; max-width: none; pointer-events: none; user-select: none; }
+.wf__fl--tl { left: 0; top: 0; border-top-left-radius: 4px; }
+.wf__fl--br { right: 0; bottom: 0; border-bottom-right-radius: 4px; }
+.wf__title {
+  position: absolute; left: 31%; right: 8%; top: 13%; height: 19%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0;
+  font-weight: 500;
+  font-size: clamp(1.1rem, 6cqw, 1.75rem);
+  text-align: center;
+  color: var(--ink);
+}
+.wf__rows {
+  position: absolute; left: 16.5%; right: 9.5%; top: 33%; bottom: 21%;
+  display: grid; grid-template-rows: auto 1fr auto; gap: 2.4cqw;
+}
+.wf__rows .field { gap: 0; min-height: 0; }
+.wf__card .field__error { display: none !important; }   /* the messages show under the card */
+.wf__card .input, .wf__card .textarea {
+  min-height: 0;
+  padding: .4rem .75rem;
+  border: 1px solid rgba(18, 18, 18, .28);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, .78);
+  font-size: 1rem;           /* 16px: phones do not zoom in on it */
+}
+.wf__card .input { height: 11cqw; }
+.wf__card .textarea { height: 100%; resize: none; line-height: 1.4; }
+.wf__card .input::placeholder, .wf__card .textarea::placeholder { color: #8a847a; font-family: var(--font-display); font-style: italic; font-size: 1.05rem; }
+.wf__card .field.is-invalid .input, .wf__card .field.is-invalid .textarea { border-color: var(--error); }
+.wf__card .ww-pick { display: flex; flex-direction: row; align-items: center; gap: 2.4cqw; flex-wrap: nowrap; }
+.wf__card .ww-pick__preview { width: 9.5cqw; height: 9.5cqw; flex: none; background: #fff; }
+.wf__card .ww-pick__preview svg { width: 50%; height: 50%; }
+.wf__pick { display: inline-flex; align-items: center; gap: .4rem; min-height: 36px; font: 500 .6875rem/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.wf__pick svg { width: 1rem; height: 1rem; }
+.wf__card .ww-pick:has(input:focus-visible) .wf__pick { outline: 2px solid var(--focus); outline-offset: 3px; }
+.wf__card .link-btn { min-height: 36px; padding: 0; font-size: .8rem; }
+.wf__send { position: absolute; left: 16.5%; width: 48%; top: 80.6%; height: 10%; min-height: 0; padding: 0 .8rem; font-size: clamp(.6rem, 2.8cqw, .78rem); letter-spacing: .12em; }
+.wf [data-errors]:not([hidden]), .wf [data-status]:not(:empty), .wf__photo-err:not([hidden]) { margin-top: 1rem; }
+
 /* View all wishes: every blessing in a pop-up card */
 .ww-all { position: relative; z-index: 2; margin: -1.4rem 0 2.4rem; text-align: center; }
 .ww-all .btn { background: rgba(255, 255, 255, .9); }
@@ -1684,10 +1713,10 @@
 .ct-row { display: flex; flex-direction: column; align-items: center; margin: 0 auto; padding: 0; list-style: none; max-width: 60rem; }
 .ct-item { position: relative; flex: none; display: flex; justify-content: center; }
 /* the pearl chain between the buttons (pearls and silver beads) */
-.ct-chain { width: 15px; height: 46px; background: url("../assets/images/bead-chain-v.webp?v=20261023a") center top / 15px auto repeat-y; filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18)); }
+.ct-chain { width: 15px; height: 46px; background: url("../assets/images/bead-chain-v.webp?v=20261023d") center top / 15px auto repeat-y; filter: drop-shadow(0 2px 2px rgba(60, 50, 35, .18)); }
 @media (min-width: 720px) {
   .ct-row { flex-direction: row; justify-content: center; }
-  .ct-chain { flex: 0 1 130px; width: auto; min-width: 40px; height: 16px; background: url("../assets/images/bead-chain.webp?v=20261023a") left center / auto 16px repeat-x; }
+  .ct-chain { flex: 0 1 130px; width: auto; min-width: 40px; height: 16px; background: url("../assets/images/bead-chain.webp?v=20261023d") left center / auto 16px repeat-x; }
 }
 /* the button: a round picture and a name */
 .ct-pill {

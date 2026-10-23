@@ -13,7 +13,7 @@
   'use strict';
   var AD = window.AD;
 
-  var V = '?v=20261023a';
+  var V = '?v=20261023d';
   var SATIN = 8, ROSE = 6;
   var AUTO = 2000;                  // ms on screen before the petals open by themselves          // petal pictures in assets/images/petals/
   var COUNT = 92;                   // satin petals in the pile / wreath

@@ -295,9 +295,6 @@ window.WEDDING = {
     // true = new wishes appear only after the couple approves them (the
     // guest who sent one still sees it at the top of the wall straight away).
     moderation: true,
-    // "How do you know the couple?" choices; "Other" (always last) opens a
-    // small box where guests write their own answer.
-    relations: ["Bride's family", "Groom's family", "Friend", "College friend", "School friend", "Colleague", "Church family", "Neighbour"],
     // Sample blessings so the wall is not empty in the design preview. They
     // are hidden automatically as soon as one real wish is on the wall.
     // SAMPLES — not real guests; set showSamples to false to hide them.

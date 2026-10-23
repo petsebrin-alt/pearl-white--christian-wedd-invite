@@ -8,7 +8,9 @@
    ring are smaller and fade away, as if going round the far side.
    Every face is black and white (a guest's own photo, or a monogram).
    Behind it all: white roses that sway gently (the couple's "Order of the
-   Day" video); the form sits over them on frosted paper.
+   Day" video). The form over them is a small square card in the couple's
+   flower frame (pearl paper, gold line, white paper flowers at two
+   corners) with four rows only: name, wish, photo, send.
    Wishes are kept by AD.store — in this browser until the Google Sheet is
    connected; once connected they are saved there, and with moderation they
    appear for everyone after approval (the sender sees theirs straight away).
@@ -21,8 +23,7 @@
   var TURN = 1300;                  // ms the ring takes to bring the next face up
   var PHOTO_RE = /^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/;
   var ASSET_RE = /^assets\/images\/wishes\/[a-z0-9-]+\.webp$/;
-  var V = '?v=20261023a';
-  var OTHER = 'Other';
+  var V = '?v=20261023d';
 
   function initials(name) {
     var p = String(name || '?').trim().split(/\s+/);
@@ -88,7 +89,6 @@
   AD.register('wishes', {
     render: function (C) {
       var W = C.wishes || {};
-      var rel = (W.relations || []).filter(function (r) { return AD.has(r) && r !== OTHER; });
       return '' +
         // White roses, swaying gently behind the whole section
         '<div class="ww-bg" aria-hidden="true"><div class="ww-bg__stage">' +
@@ -121,50 +121,39 @@
         // every wish at once, in a pop-up card (for when there are many)
         '<div class="ww-all"><button class="btn btn--secondary btn--sm" type="button" data-all hidden>' + AD.icon('heart') + '<span>View all wishes</span> <span class="ww-all__n numerals" data-all-n></span></button></div>' +
 
-        // The form, on frosted paper over the roses
-        '<form class="wish-form classic reveal" id="wish-form" novalidate>' +
-          '<p class="wish-form__eyebrow">With love</p>' +
-          '<h3 class="wish-form__title">Leave your blessing</h3>' +
-          '<div data-errors hidden></div>' +
-          '<div class="field">' +
-            '<label class="field__label" for="wish-name">Your name</label>' +
-            '<input class="input" id="wish-name" name="name" type="text" autocomplete="name" maxlength="' + W.nameMax + '" required aria-describedby="wish-name-err">' +
-            '<p class="field__error" id="wish-name-err" hidden></p>' +
-          '</div>' +
-          '<div class="field">' +
-            '<label class="field__label" for="wish-rel">How do you know the couple? <span class="opt">(optional)</span></label>' +
-            '<select class="input select" id="wish-rel" name="relation">' +
-              '<option value="">Choose one</option>' +
-              rel.map(function (r) { return '<option>' + AD.esc(r) + '</option>'; }).join('') +
-              '<option value="' + OTHER + '">Other</option>' +
-            '</select>' +
-          '</div>' +
-          '<div class="field ww-other" data-other hidden>' +
-            '<label class="field__label" for="wish-rel-other">Please tell us</label>' +
-            '<input class="input" id="wish-rel-other" name="relationOther" type="text" maxlength="' + (W.relationMax || 60) + '" placeholder="e.g. Cousin from Kottayam" aria-describedby="wish-rel-other-err">' +
-            '<p class="field__error" id="wish-rel-other-err" hidden></p>' +
-          '</div>' +
-          '<div class="field">' +
-            '<label class="field__label" for="wish-msg">Your wish</label>' +
-            '<textarea class="textarea" id="wish-msg" name="message" rows="4" maxlength="' + W.messageMax + '" required aria-describedby="wish-msg-count wish-msg-err"></textarea>' +
-            '<p class="field__counter" id="wish-msg-count" aria-live="off"><span data-count-chars>0</span> / ' + W.messageMax + '</p>' +
-            '<p class="field__error" id="wish-msg-err" hidden></p>' +
-          '</div>' +
-          '<div class="field">' +
-            '<span class="field__label" id="wish-photo-label">Your photo <span class="opt">(optional)</span></span>' +
-            '<div class="ww-pick">' +
-              '<span class="ww-pick__preview" data-pick-preview aria-hidden="true">' + AD.icon('user') + '</span>' +
-              '<label class="btn btn--secondary btn--sm" for="wish-photo">' + AD.icon('image') + '<span data-pick-label>Add a photo</span></label>' +
-              '<input class="sr-only" id="wish-photo" type="file" accept="image/*" aria-labelledby="wish-photo-label">' +
-              '<button class="link-btn" type="button" data-pick-remove hidden>Remove</button>' +
+        // The form: a small square card of pearl paper in a gold frame, with
+        // the couple's white paper flowers at two corners; four rows only
+        '<div class="wf reveal">' +
+          '<form class="wish-form wf__card" id="wish-form" novalidate>' +
+            '<span class="wf__frame" aria-hidden="true"></span>' +
+            '<img class="wf__fl wf__fl--tl" src="assets/images/wishes/flower-frame-tl.webp' + V + '" alt="" width="500" height="500" decoding="async">' +
+            '<img class="wf__fl wf__fl--br" src="assets/images/wishes/flower-frame-br.webp' + V + '" alt="" width="500" height="448" decoding="async">' +
+            '<h3 class="wf__title">Leave your blessing</h3>' +
+            '<div class="wf__rows">' +
+              '<div class="field">' +
+                '<label class="sr-only" for="wish-name">Your name</label>' +
+                '<input class="input" id="wish-name" name="name" type="text" autocomplete="name" maxlength="' + W.nameMax + '" required placeholder="Your name" aria-describedby="wish-name-err">' +
+                '<p class="field__error" id="wish-name-err" hidden></p>' +
+              '</div>' +
+              '<div class="field">' +
+                '<label class="sr-only" for="wish-msg">Your wish</label>' +
+                '<textarea class="textarea" id="wish-msg" name="message" rows="3" maxlength="' + W.messageMax + '" required placeholder="Your wish for the couple…" aria-describedby="wish-msg-err"></textarea>' +
+                '<p class="field__error" id="wish-msg-err" hidden></p>' +
+              '</div>' +
+              '<div class="field ww-pick">' +
+                '<span class="ww-pick__preview" data-pick-preview aria-hidden="true">' + AD.icon('user') + '</span>' +
+                '<label class="wf__pick" for="wish-photo">' + AD.icon('image') + '<span data-pick-label>Add a photo</span></label>' +
+                '<input class="sr-only" id="wish-photo" type="file" accept="image/*" aria-label="Add a photo (optional, shown in black and white)">' +
+                '<button class="link-btn" type="button" data-pick-remove hidden>Remove</button>' +
+              '</div>' +
             '</div>' +
-            '<p class="field__hint">Shown in black and white beside your wish.</p>' +
-            '<p class="field__error" id="wish-photo-err" hidden></p>' +
-          '</div>' +
-          '<div class="hp-field" aria-hidden="true"><label for="wish-website">Website</label><input id="wish-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>' +
-          '<button class="btn btn--primary btn--block" type="submit">' + AD.icon('envelope') + '<span>Send Wish</span></button>' +
+            '<div class="hp-field" aria-hidden="true"><label for="wish-website">Website</label><input id="wish-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>' +
+            '<button class="btn btn--primary wf__send" type="submit">' + AD.icon('envelope') + '<span>Send Wish</span></button>' +
+          '</form>' +
+          '<div data-errors hidden></div>' +
+          '<p class="field__error wf__photo-err" id="wish-photo-err" hidden></p>' +
           '<div data-status aria-live="polite"></div>' +
-        '</form>' +
+        '</div>' +
       '</div>';
     },
 
@@ -393,23 +382,12 @@
 
       /* ---------- The form ---------- */
       var form = el.querySelector('#wish-form');
-      var nameI = form.querySelector('#wish-name'), relI = form.querySelector('#wish-rel'), msgI = form.querySelector('#wish-msg');
-      var otherBox = form.querySelector('[data-other]'), otherI = form.querySelector('#wish-rel-other');
-      var countChars = form.querySelector('[data-count-chars]'), status = form.querySelector('[data-status]'), errors = form.querySelector('[data-errors]');
+      var nameI = form.querySelector('#wish-name'), msgI = form.querySelector('#wish-msg');
+      var status = el.querySelector('[data-status]'), errors = el.querySelector('[data-errors]');
       var submit = form.querySelector('button[type="submit"]');
       var photoI = form.querySelector('#wish-photo'), preview = form.querySelector('[data-pick-preview]');
-      var pickLabel = form.querySelector('[data-pick-label]'), removeB = form.querySelector('[data-pick-remove]'), photoErr = form.querySelector('#wish-photo-err');
+      var pickLabel = form.querySelector('[data-pick-label]'), removeB = form.querySelector('[data-pick-remove]'), photoErr = el.querySelector('#wish-photo-err');
       var photo = '', tried = false;
-
-      // "Other" opens one more box for the guest's own answer
-      relI.addEventListener('change', function () {
-        var other = relI.value === OTHER;
-        otherBox.hidden = !other;
-        relI.classList.toggle('is-chosen', !!relI.value);
-        if (other) otherI.focus();
-        else AD.form.setError(otherI, '');
-      });
-      otherI.addEventListener('input', function () { if (tried) validate(); });
 
       function showPhoto() {
         preview.innerHTML = '';
@@ -429,20 +407,17 @@
       });
       removeB.addEventListener('click', function () { photo = ''; showPhoto(); });
 
-      msgI.addEventListener('input', function () { countChars.textContent = msgI.value.length; if (tried) validate(); });
+      msgI.addEventListener('input', function () { if (tried) validate(); });
       nameI.addEventListener('input', function () { if (tried) validate(); });
 
       function validate() {
         var errs = [];
-        var n = nameI.value.trim(), m = msgI.value.trim(), o = otherI.value.trim();
+        var n = nameI.value.trim(), m = msgI.value.trim();
         var ne = !n ? 'Please enter your name.' : (n.length > W.nameMax ? 'Please keep your name under ' + W.nameMax + ' characters.' : '');
-        var oe = relI.value === OTHER && !o ? 'Please tell us how you know the couple.' : '';
         var me = !m ? 'Please write a wish.' : (m.length < 2 ? 'Your wish is a little short.' : '');
         AD.form.setError(nameI, ne);
-        AD.form.setError(otherI, oe);
         AD.form.setError(msgI, me);
         if (ne) errs.push({ id: 'wish-name', msg: ne });
-        if (oe) errs.push({ id: 'wish-rel-other', msg: oe });
         if (me) errs.push({ id: 'wish-msg', msg: me });
         return errs;
       }
@@ -455,8 +430,7 @@
         AD.form.errorSummary(errors, errs);
         if (errs.length) { errors.querySelector('.status').focus(); return; }
 
-        var relation = relI.value === OTHER ? otherI.value.trim() : relI.value;
-        var payload = { name: nameI.value.trim(), relation: relation, message: msgI.value.trim(), photo: photo, website: form.querySelector('#wish-website').value };
+        var payload = { name: nameI.value.trim(), relation: '', message: msgI.value.trim(), photo: photo, website: form.querySelector('#wish-website').value };
         submit.classList.add('is-busy');
         submit.disabled = true;
         AD.store.submit('wish', payload).then(function (r) {
@@ -471,10 +445,8 @@
           // Saved on the server: show it to this guest at once, at the top.
           if (!r.demo) mine.unshift({ name: payload.name, relation: payload.relation, message: payload.message, photo: payload.photo, submittedAt: new Date().toISOString(), pending: pending });
           form.reset();
-          relI.classList.remove('is-chosen');
-          otherBox.hidden = true;
+          errors.hidden = true;
           photo = ''; showPhoto();
-          countChars.textContent = '0';
           tried = false;
           status.innerHTML = '<div class="status status--success">' + AD.icon('check') + '<div><p><strong>Thank you!</strong> ' +
             (pending ? 'Your blessing is at the top of the wall, and everyone will see it once it is approved.' : 'Your blessing is now at the top of the wall.') + '</p></div></div>';
