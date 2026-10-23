@@ -23,7 +23,7 @@
   'use strict';
   var AD = window.AD;
   var KEY = 'ad-rsvp-accepted';
-  var V = '?v=20261022k';
+  var V = '?v=20261023a';
   var IMG = 'assets/images/dove/';
   // Inside dove-envelope.webp (fractions of its width / height)
   var BODY = { x: .64, y: .61 };       // the sitting dove's body

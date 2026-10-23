@@ -130,6 +130,7 @@ Shadows: soft and low — `0 1px 2px rgba(18,18,18,.06), 0 12px 32px -12px rgba(
 - Easing: `cubic-bezier(.22,.61,.36,1)` for settling; `cubic-bezier(.65,0,.35,1)` for cloth pulling.
 - Scroll-linked, at one steady rate (no easing): the gentle drift of the edge flowers.
 - Opening: before the car only the tall A & D shows; the names and date appear behind the car, travel with it at about a third of its speed and ease to a stop in place.
+- Black buttons on hover: a glassy white shine — a glossy light across the top, a fine bright rim, and a band of white light sweeping across (1.25 s); reduced motion keeps only the gloss.
 - Parking at the end: the car drives in from the left over 3.2 s, turning into a 32° slant and slowing to a stop (once per visit), fully in view; Return to Top comes after it.
 - Wishing wall: the ring of faces turns for 1.3 s every 5–11 s (long enough to read); the white roses behind sway in slow 11–15 s cycles with a light 5 s breeze.
 - RSVP: the dove sits holding the envelope; on RSVP the same dove lifts off gently and flies out on a slanting line through the left side over 5.4 s, wings beating fully about once a second, while a soft, slow harp melody plays (fading when the guest scrolls); the envelope opens into light and satin sweeps across the whole section, waving clearly.

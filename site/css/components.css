@@ -24,7 +24,45 @@
 }
 .btn svg { width: 1.15rem; height: 1.15rem; flex: none; }
 .btn--primary { background: var(--ink); color: #fff; box-shadow: 0 6px 16px -10px rgba(18, 18, 18, .6); }
-.btn--primary:hover { background: #2a2a2a; }
+
+/* Black buttons: a glassy white shine on hover — a glossy light across the
+   top, a fine bright rim, and a soft band of white light that sweeps across
+   (as in the couple's reference button). Used by every black button. */
+.btn--primary, .ev-arrow--next, .tv-btn--main { position: relative; overflow: hidden; isolation: isolate; }
+.btn--primary::before, .ev-arrow--next::before, .tv-btn--main::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .36) 0%, rgba(255, 255, 255, .14) 45%, rgba(255, 255, 255, 0) 53%, rgba(255, 255, 255, .07) 100%);
+  opacity: 0;
+  transition: opacity .35s ease;
+  pointer-events: none;
+}
+.btn--primary:not(.is-busy)::after, .ev-arrow--next::after, .tv-btn--main::after {
+  content: "";
+  position: absolute;
+  top: -20%; bottom: -20%; left: 0;
+  width: 55%;
+  z-index: -1;
+  background: linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .55) 50%, rgba(255, 255, 255, 0));
+  transform: translateX(-170%) skewX(-18deg);
+  pointer-events: none;
+}
+.btn--primary:not(:disabled):not([aria-disabled="true"]):hover, .btn--primary:focus-visible,
+.ev-arrow--next:hover, .ev-arrow--next:focus-visible,
+.tv-btn--main:hover, .tv-btn--main:focus-visible {
+  background-color: var(--ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 0 0 1px rgba(255, 255, 255, .16), 0 10px 24px -12px rgba(18, 18, 18, .75);
+}
+.btn--primary:not(:disabled):not([aria-disabled="true"]):hover::before, .btn--primary:focus-visible::before,
+.ev-arrow--next:hover::before, .ev-arrow--next:focus-visible::before,
+.tv-btn--main:hover::before, .tv-btn--main:focus-visible::before { opacity: 1; }
+.motion-ok .btn--primary:not(:disabled):not([aria-disabled="true"]):not(.is-busy):hover::after,
+.motion-ok .ev-arrow--next:hover::after,
+.motion-ok .tv-btn--main:hover::after { animation: btn-shine 1.25s cubic-bezier(.35, .1, .25, 1) both; }
+@keyframes btn-shine { to { transform: translateX(270%) skewX(-18deg); } }
 .btn--secondary { background: #fff; color: var(--ink); border-color: var(--charcoal); }
 .btn--secondary:hover { background: var(--ivory); }
 .btn--ghost { background: transparent; color: var(--ink); border-color: transparent; }
